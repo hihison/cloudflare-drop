@@ -137,7 +137,7 @@ function RecordList(props: RecordListProps) {
     return (
       <Box className="flex items-center justify-center" sx={{ p: 4 }}>
         <Typography variant="caption" color="textDisabled">
-          记录为空
+          Blank
         </Typography>
       </Box>
     )
@@ -168,7 +168,7 @@ function RecordList(props: RecordListProps) {
             {!item.file && <TextFieldsIcon fontSize="medium" />}
           </ListItemIcon>
           <ListItemText
-            primary={<Typography>分享码 {item.code}，点击查看</Typography>}
+            primary={<Typography>Code {item.code}，View</Typography>}
             secondary={
               <Typography color="textDisabled" variant="caption">
                 {dayjs(item.date).fromNow()}
@@ -210,8 +210,8 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           <TabList onChange={(_e, tab) => updateTab(tab)}>
-            <Tab label="已分享" value="shared" />
-            <Tab label="已接收" value="received" />
+            <Tab label="Shared" value="shared" />
+            <Tab label="Received" value="received" />
           </TabList>
         </Box>
         <Box className="min-h-0 overflow-auto">
