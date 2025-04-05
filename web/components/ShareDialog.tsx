@@ -31,7 +31,7 @@ export function ShareDialog({
   }
 >) {
   const url = `${window.location.protocol}//${window.location.host}?code=${payload.code}`
-  const desc = `链接: ${url} 提取码: ${payload.code} ${payload.is_encrypted ? '' : ` SHA256 Hash 值: ${payload.hash}`} `
+  const desc = `URL: ${url} Link: ${payload.code} ${payload.is_encrypted ? '' : ` SHA256 Hash: ${payload.hash}`} `
   const qr = useRef(
     new QrCode({
       content: url,
@@ -41,10 +41,10 @@ export function ShareDialog({
   const handleCopy = (str: string) => {
     copyToClipboard(str)
       .then(() => {
-        payload.message.success('复制成功')
+        payload.message.success('Copied')
       })
       .catch(() => {
-        payload.message.success('复制失败')
+        payload.message.success('Copy Failed')
       })
   }
 
@@ -102,15 +102,15 @@ export function ShareDialog({
               },
             })}
           >
-            复制
+            Copy
           </Button>
         </Box>
 
         <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="textDisabled">
-            原始分享 SHA256 Hash 值{' '}
+            Share RAW SHA256 Hash{' '}
             <a target="_blank" href="https://www.lzltool.com/data-hash">
-              (校验工具)
+              (Verify Tool)
             </a>
             {'：'}
           </Typography>
@@ -126,7 +126,7 @@ export function ShareDialog({
           </Typography>
           {}
           <Typography className="mt-1" variant="body2" color="textDisabled">
-            {payload.due_date ? '预计过期于：' : '永久有效'}
+            {payload.due_date ? 'Delete Date：' : 'Forever'}
           </Typography>
           {payload.due_date && (
             <Typography className="mt-1" variant="body2">
