@@ -19,35 +19,35 @@ const duration = ['day', 'week', 'month', 'year', 'hour', 'minute']
 // `minute`, `hour`, `day`, `week`, `month`, `year`
 const CONFIG = [
   {
-    label: '默认',
+    label: 'Default',
     value: DEFAULT_VALUE,
   },
   {
-    label: '分钟',
+    label: 'Minute',
     value: 'minute',
   },
   {
-    label: '小时',
+    label: 'Hour',
     value: 'hour',
   },
   {
-    label: '天',
+    label: 'Day',
     value: 'day',
   },
   {
-    label: '周',
+    label: 'Week',
     value: 'week',
   },
   {
-    label: '月',
+    label: 'Month',
     value: 'month',
   },
   {
-    label: '年',
+    label: 'Year',
     value: 'year',
   },
   {
-    label: '永久有效',
+    label: 'Forever',
     value: '999year',
   },
 ]
