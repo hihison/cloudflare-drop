@@ -62,7 +62,7 @@ export function BasicDialog({
         className="w-full"
         sx={{
           margin: 'auto',
-          maxWidth: 600,
+          maxWidth: 1000,
         }}
       >
         {children}
