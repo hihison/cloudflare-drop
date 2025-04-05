@@ -38,7 +38,7 @@ export function FileDialog({
   const dialogs = useDialogs()
   const isText = payload.type === 'plain/string'
   const [text, updateText] = useState(
-    payload.is_encrypted ? '分享已加密，请使用密码解密' : '',
+    payload.is_encrypted ? 'Passcode protected, Please input Passcode' : '',
   )
   const [password, updatePassword] = useState('')
   const [backdrop] = useState(payload.is_encrypted ?? false)
@@ -52,10 +52,10 @@ export function FileDialog({
   const handleCopy = (str: string) => {
     copyToClipboard(str)
       .then(() => {
-        payload.message.success('复制成功')
+        payload.message.success('Copied')
       })
       .catch(() => {
-        payload.message.success('复制失败')
+        payload.message.success('Copy Failed')
       })
   }
 
@@ -73,10 +73,10 @@ export function FileDialog({
     if (!payload.is_ephemeral) {
       return onClose()
     }
-    const confirmed = await dialogs.confirm('关闭后无法再次查看，确认关闭？', {
-      okText: '确认',
-      cancelText: '取消',
-      title: '阅后即焚',
+    const confirmed = await dialogs.confirm('Burn after closed, Confirm？', {
+      okText: 'Confirm',
+      cancelText: 'Cancel',
+      title: 'Burn After Read',
     })
     if (confirmed) {
       return onClose()
@@ -93,7 +93,7 @@ export function FileDialog({
       updateText(data)
       updatePassword(password)
     } catch (_e) {
-      payload.message.error('解密失败')
+      payload.message.error('Decryption Failed')
     }
   }
 
@@ -121,11 +121,11 @@ export function FileDialog({
       if (!e) {
         updatePassword(password)
       } else {
-        payload.message.error('解密失败')
+        payload.message.error('Decryption Failed')
       }
       setFile(originFile)
     } catch (_e) {
-      payload.message.error('解密失败')
+      payload.message.error('Decryption Failed')
     }
     updateDownloading(false)
     updateProgress(0)
@@ -135,7 +135,7 @@ export function FileDialog({
     <BasicDialog
       open={open}
       onClose={handleClose}
-      title={isText ? '文本分享' : '文件分享'}
+      title={isText ? 'Text' : 'File'}
     >
       <Box>
         {isText && (
@@ -227,7 +227,7 @@ export function FileDialog({
                 {(openPassword) => (
                   <Button
                     loading={downloading}
-                    loadingIndicator={`下载中(${((progress / payload.size) * 100).toFixed(1)}%)...`}
+                    loadingIndicator={`Downloading(${((progress / payload.size) * 100).toFixed(1)}%)...`}
                     startIcon={!password ? <LockClose /> : <LockOpen />}
                     variant="contained"
                     color={!password ? 'warning' : 'primary'}
@@ -259,9 +259,9 @@ export function FileDialog({
           {!payload.is_encrypted && (
             <>
               <Typography variant="body2" color="textDisabled">
-                原始分享 SHA256 Hash 值{' '}
+                Share RAW SHA256 Hash{' '}
                 <a target="_blank" href="https://www.lzltool.com/data-hash">
-                  (校验工具)
+                  (Verify Tool)
                 </a>
                 {'：'}
               </Typography>
@@ -278,7 +278,7 @@ export function FileDialog({
             </>
           )}
           <Typography className="mt-1" variant="body2" color="textDisabled">
-            {payload.due_date ? '预计过期于：' : '永久有效'}
+            {payload.due_date ? 'Delete Date：' : 'Forever'}
           </Typography>
           {payload.due_date && (
             <Typography className="mt-1" variant="body2">
