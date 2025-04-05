@@ -146,7 +146,7 @@ export function App() {
     const target: HTMLInputElement = e.target as HTMLInputElement
     const file = target?.files?.[0] ?? null
     if (file && file.size > MAX_SIZE * 1000 * 1000) {
-      message.error(`文件大于 ${MAX_SIZE}M`)
+      message.error(`File Too Large! Size Limit: ${MAX_SIZE}M`)
       ;(e.target as HTMLInputElement).value = ''
       return
     }
@@ -243,7 +243,7 @@ export function App() {
           >
             <InputLabel>
               <Typography variant="h4" align="left">
-                分享码：
+                Sharing Code：
               </Typography>
             </InputLabel>
             <Code
@@ -266,8 +266,8 @@ export function App() {
                   onChange={handleChangeTab}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label="文本分享" value="text" />
-                  <Tab label="文件分享" value="file" />
+                  <Tab label="Text" value="text" />
+                  <Tab label="File" value="file" />
                 </TabList>
               </Box>
               <TabPanel value="text" sx={{ height: 230, pl: 0, pr: 0 }}>
@@ -289,7 +289,7 @@ export function App() {
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
                   >
-                    选择文件
+                    Select File
                     <VisuallyHiddenInput
                       type="file"
                       onChange={handleFileChange}
@@ -318,7 +318,7 @@ export function App() {
                   onChange={handleChangeEphemeral}
                 />
               }
-              label="阅后即焚"
+              label="Read and Burn"
             />
           </Box>
           <Box className="flex flex-row-reverse justify-between">
@@ -336,11 +336,11 @@ export function App() {
                 }}
                 onClick={handleShare}
               >
-                分享
+                Share
               </Button>
             </div>
             <Button variant="text" color="primary" onClick={toggleDrawer(true)}>
-              历史记录
+              History
               <ReceiptLongIcon fontSize="small" />
             </Button>
           </Box>
