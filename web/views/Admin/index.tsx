@@ -17,6 +17,7 @@ import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
+import DownloadIcon from '@mui/icons-material/FileDownload'
 import { visuallyHidden } from '@mui/utils'
 import { useRoute } from 'preact-iso'
 import Info from '@mui/icons-material/InfoOutlined'
@@ -80,7 +81,7 @@ const headCells: readonly HeadCell[] = [
   {
     disablePadding: true,
     label: '操作',
-    width: 100,
+    width: 150,
   },
 ]
 
@@ -326,6 +327,19 @@ function AdminMain(props: AdminProps) {
     }
   }
 
+  const createDownloadHandler = (file: FileType) => async (event: Event) => {
+    event.stopPropagation()
+    try {
+      setBackdropOpen(true)
+      await adminApi.downloadFile(file.id, file.filename)
+      message.success('文件下载开始')
+    } catch (error) {
+      message.error('下载失败：' + (error as Error).message)
+    } finally {
+      setBackdropOpen(false)
+    }
+  }
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = rowsPerPage - rows.length
 
@@ -430,12 +444,22 @@ function AdminMain(props: AdminProps) {
                       </Tooltip>
                     </TableCell>
                     <TableCell padding="none">
-                      <IconButton
-                        aria-label="delete"
-                        onClick={createRemoveHandler(row.id)}
-                      >
-                        <DeleteIcon color="action" />
-                      </IconButton>
+                      <Tooltip title="下载文件">
+                        <IconButton
+                          aria-label="download"
+                          onClick={createDownloadHandler(row)}
+                        >
+                          <DownloadIcon color="action" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="删除分享">
+                        <IconButton
+                          aria-label="delete"
+                          onClick={createRemoveHandler(row.id)}
+                        >
+                          <DeleteIcon color="action" />
+                        </IconButton>
+                      </Tooltip>
                     </TableCell>
                   </TableRow>
                 )
@@ -446,7 +470,7 @@ function AdminMain(props: AdminProps) {
                     height: 53 * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={8} />
                 </TableRow>
               )}
             </TableBody>
