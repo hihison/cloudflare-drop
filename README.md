@@ -1,4 +1,4 @@
-# Cloudflare Drop
+# Cloudflare Drop.
 
 基于 Cloudflare Worker、D1Database 和 KV 实现的轻量级文件分享工具。
 
