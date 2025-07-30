@@ -88,7 +88,7 @@ const GlassContainer = styled(Container)(() => ({
 }))
 
 // Modern card with enhanced glassmorphism
-const ModernCard = styled(Card)(({ theme }) => ({
+const ModernCard = styled(Card)(() => ({
   background: alpha('#ffffff', 0.1),
   backdropFilter: 'blur(20px) saturate(180%)',
   border: `1px solid ${alpha('#ffffff', 0.2)}`,
