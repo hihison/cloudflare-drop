@@ -1,5 +1,6 @@
 import { useState, useRef } from 'preact/hooks'
 import { useDialogs } from '@toolpad/core/useDialogs'
+import { useLanguage } from '../../helpers/i18n'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -305,6 +306,7 @@ const MAX_SIZE = Number.isNaN(envMax) || envMax <= 0 ? 10 : envMax
 export function AppMain(props: LayoutProps) {
   const setBackdropOpen = props.setBackdropOpen!
   const message = props.message!
+  const { t } = useLanguage()
   const [tab, setTab] = useState('text')
   const dialogs = useDialogs()
   const [duration, updateDuration] = useState('')
@@ -465,7 +467,7 @@ export function AppMain(props: LayoutProps) {
                   Cloudflare Drop
                 </HeroTitle>
                 <HeroSubtitle variant="h6">
-                  安全、快速、简单的文件分享平台
+                  {t('home.subtitle')}
                 </HeroSubtitle>
               </Box>
             </Slide>
@@ -490,7 +492,7 @@ export function AppMain(props: LayoutProps) {
                       minWidth: 'fit-content'
                     }}
                   >
-                    分享码：
+                    {t('home.shareCode')}：
                   </Typography>
                   <Code
                     length={6}
@@ -516,11 +518,11 @@ export function AppMain(props: LayoutProps) {
                   <Box sx={{ mb: 3 }}>
                     <ModernTabList
                       onChange={handleChangeTab}
-                      aria-label="分享类型选择"
+                      aria-label={t('home.shareTypeLabel')}
                       centered
                     >
-                      <ModernTab label="文本分享" value="text" />
-                      <ModernTab label="文件分享" value="file" />
+                      <ModernTab label={t('home.textShare')} value="text" />
+                      <ModernTab label={t('home.fileShare')} value="file" />
                     </ModernTabList>
                   </Box>
                   
@@ -531,7 +533,7 @@ export function AppMain(props: LayoutProps) {
                       rows={8}
                       value={text}
                       onInput={handleTextInput}
-                      placeholder="在此输入要分享的文本内容..."
+                      placeholder={t('home.textPlaceholder')}
                       sx={{
                         '& .MuiOutlinedInput-root': {
                           borderRadius: 3,
@@ -620,7 +622,7 @@ export function AppMain(props: LayoutProps) {
                           },
                         }}
                       >
-                        选择文件上传
+                        {t('home.selectFile')}
                         <VisuallyHiddenInput
                           type="file"
                           onChange={handleFileChange}
@@ -761,7 +763,7 @@ export function AppMain(props: LayoutProps) {
                       }
                     }}
                   >
-                    历史记录
+                    {t('home.history')}
                   </Button>
                   
                   <Box sx={{ 
@@ -790,7 +792,7 @@ export function AppMain(props: LayoutProps) {
                         },
                       }}
                     >
-                      立即分享
+                      {t('home.shareNow')}
                     </ModernUploadButton>
                   </Box>
                 </Box>

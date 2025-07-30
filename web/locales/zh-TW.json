@@ -1,0 +1,108 @@
+{
+  "common": {
+    "confirm": "確認",
+    "cancel": "取消",
+    "close": "關閉",
+    "delete": "刪除",
+    "download": "下載",
+    "upload": "上傳",
+    "share": "分享",
+    "preview": "預覽",
+    "copy": "複製",
+    "copied": "已複製",
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "warning": "警告",
+    "info": "資訊"
+  },
+  "header": {
+    "title": "Cloudflare Drop",
+    "subtitle": "安全、快速、簡單的檔案分享平台"
+  },
+  "home": {
+    "downloadSection": {
+      "title": "分享碼",
+      "placeholder": "請輸入6位分享碼"
+    },
+    "uploadSection": {
+      "textTab": "文字分享",
+      "fileTab": "檔案分享",
+      "textPlaceholder": "在此輸入要分享的文字內容...",
+      "fileUpload": "選擇檔案上傳",
+      "fileReselect": "重新選擇",
+      "fileSelectLabel": "選擇檔案",
+      "maxSizeLabel": "支援最大 {size}MB",
+      "shareButton": "立即分享"
+    },
+    "settings": {
+      "duration": "有效期",
+      "ephemeral": "閱後即焚",
+      "password": "存取密碼",
+      "history": "歷史記錄"
+    },
+    "durations": {
+      "5m": "5分鐘",
+      "1h": "1小時",
+      "1d": "1天",
+      "7d": "7天",
+      "30d": "30天",
+      "permanent": "永久"
+    }
+  },
+  "admin": {
+    "title": "管理面板",
+    "table": {
+      "filename": "檔案名稱",
+      "shareCode": "分享碼",
+      "size": "大小",
+      "dueDate": "有效期至",
+      "encrypted": "是否加密",
+      "createdAt": "建立時間",
+      "actions": "操作"
+    },
+    "actions": {
+      "download": "下載檔案",
+      "preview": "預覽文字",
+      "delete": "刪除檔案",
+      "deleteSelected": "刪除所選"
+    },
+    "status": {
+      "permanent": "永久",
+      "encrypted": "已加密",
+      "text": "[文字]"
+    },
+    "pagination": {
+      "rowsPerPage": "分頁大小",
+      "displayedRows": "{from} - {to} 共 {count} 條"
+    },
+    "preview": {
+      "title": "文字預覽"
+    }
+  },
+  "messages": {
+    "fileTooLarge": "檔案大於 {size}M",
+    "uploadSuccess": "上傳成功",
+    "uploadFailed": "上傳失敗",
+    "copySuccess": "分享連結已複製到剪貼簿",
+    "copyFailed": "複製失敗",
+    "invalidCode": "無效的分享碼",
+    "fileNotFound": "檔案未找到",
+    "downloadFailed": "下載失敗"
+  },
+  "dialogs": {
+    "shareSuccess": {
+      "title": "分享成功",
+      "shareCode": "分享碼",
+      "shareLink": "分享連結",
+      "qrCode": "二維碼",
+      "copyLink": "複製連結",
+      "downloadQR": "下載二維碼"
+    },
+    "filePreview": {
+      "title": "檔案預覽",
+      "download": "下載檔案",
+      "share": "分享檔案"
+    }
+  }
+}

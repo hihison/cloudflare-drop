@@ -8,7 +8,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 
-import { Message, useMessage, Github } from './'
+import { Message, useMessage, Github, LanguageSelector } from './'
 
 export interface LayoutProps {
   children?: ComponentChildren
@@ -100,20 +100,31 @@ export function Layout({ children }: LayoutProps) {
               </span>
             </Typography>
           </Link>
-          <IconButton
+          <Box
             sx={{
-              position: 'relative',
-              top: -10,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
               '@media (max-width: 480px)': {
-                top: 0,
                 marginTop: 1,
               },
             }}
-            href="https://github.com/oustn/cloudflare-drop"
-            target="_blank"
           >
-            <Github />
-          </IconButton>
+            <LanguageSelector />
+            <IconButton
+              sx={{
+                position: 'relative',
+                top: -10,
+                '@media (max-width: 480px)': {
+                  top: 0,
+                },
+              }}
+              href="https://github.com/oustn/cloudflare-drop"
+              target="_blank"
+            >
+              <Github />
+            </IconButton>
+          </Box>
         </Box>
         {injectedChildren}
       </div>

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'preact/hooks'
+import { useLanguage } from '../../helpers/i18n'
 import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'

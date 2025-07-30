@@ -6,6 +6,7 @@ import { DialogsProvider } from '@toolpad/core/useDialogs'
 
 import AppTheme from './theme/AppTheme'
 import { Home, Admin } from './views'
+import { LanguageProvider } from './helpers/i18n'
 
 import './index.css'
 
@@ -17,18 +18,20 @@ function Main() {
   return (
     <LocationProvider>
       <ErrorBoundary>
-        <StyledEngineProvider injectFirst>
-          <AppTheme>
-            <CssBaseline enableColorScheme />
-            <DialogsProvider>
-              <Router>
-                <Route component={Home} path="/" />
-                <Route component={Admin} path="/admin/:token" />
-                <Route component={NotFound} default />
-              </Router>
-            </DialogsProvider>
-          </AppTheme>
-        </StyledEngineProvider>
+        <LanguageProvider>
+          <StyledEngineProvider injectFirst>
+            <AppTheme>
+              <CssBaseline enableColorScheme />
+              <DialogsProvider>
+                <Router>
+                  <Route component={Home} path="/" />
+                  <Route component={Admin} path="/admin/:token" />
+                  <Route component={NotFound} default />
+                </Router>
+              </DialogsProvider>
+            </AppTheme>
+          </StyledEngineProvider>
+        </LanguageProvider>
       </ErrorBoundary>
     </LocationProvider>
   )
