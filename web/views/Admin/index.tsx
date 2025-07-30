@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'preact/hooks'
-import { alpha, styled, useTheme } from '@mui/material/styles'
+import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -24,11 +24,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import Chip from '@mui/material/Chip'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import { visuallyHidden } from '@mui/utils'
 import { useRoute } from 'preact-iso'
 import Info from '@mui/icons-material/InfoOutlined'
@@ -152,7 +147,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                   </Tooltip>
                 )}
                 {orderBy === headCell.id ? (
-                  // @ts-expect-error unknown
                   <Box component="span" sx={visuallyHidden}>
                     {order === 'desc'
                       ? 'sorted descending'
@@ -185,7 +179,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           pr: { xs: 1, sm: 1 },
         },
         numSelected > 0 && {
-          bgcolor: (theme) =>
+          bgcolor: (theme: any) =>
             alpha(
               theme.palette.primary.main,
               theme.palette.action.activatedOpacity,
@@ -289,7 +283,7 @@ function AdminMain(props: AdminProps) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if ((event?.target as HTMLInputElement)?.checked) {
-      const newSelected = rows.map((n) => n.id)
+      const newSelected = rows.map((n: any) => n.id)
       setSelected(newSelected)
       return
     }
@@ -395,7 +389,7 @@ function AdminMain(props: AdminProps) {
           numSelected={selected.length}
           onDelete={createRemoveHandler()}
         />
-        <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
+        <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
@@ -410,14 +404,14 @@ function AdminMain(props: AdminProps) {
               rowCount={rows.length}
             />
             <TableBody>
-              {rows.map((row, index) => {
+              {rows.map((row: any, index: number) => {
                 const isItemSelected = selected.includes(row.id)
                 const labelId = `enhanced-table-checkbox-${index}`
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event: any) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -459,11 +453,11 @@ function AdminMain(props: AdminProps) {
                             : '永久有效'
                         }
                       >
-                        <span>
+                        <Box component="span">
                           {row.due_date
                             ? dayjs(row.due_date).fromNow()
                             : '永久有效'}
-                        </span>
+                        </Box>
                       </Tooltip>
                     </TableCell>
                     <TableCell sx={{ fontSize: 0 }} padding="none">
@@ -475,11 +469,11 @@ function AdminMain(props: AdminProps) {
                       <Tooltip
                         title={dayjs(row.created_at).format(DATE_FORMAT)}
                       >
-                        <span>
+                        <Box component="span">
                           {row.created_at
                             ? dayjs(row.created_at).fromNow()
                             : ''}
-                        </span>
+                        </Box>
                       </Tooltip>
                     </TableCell>
                     <TableCell padding="none">
@@ -516,154 +510,9 @@ function AdminMain(props: AdminProps) {
           </Table>
         </TableContainer>
         
-        {/* Mobile Card View */}
-        <Box 
-          sx={{ 
-            display: { xs: 'block', md: 'none' },
-            mt: 2,
-          }}
-        >
-          {rows.map((row, index) => {
-            const isItemSelected = selected.includes(row.id)
-            
-            return (
-              <Card 
-                key={row.id} 
-                sx={{ 
-                  mb: 2, 
-                  border: isItemSelected ? '2px solid' : '1px solid',
-                  borderColor: isItemSelected ? 'primary.main' : 'divider',
-                  transition: 'all 0.2s ease-in-out',
-                }}
-                onClick={(event) => handleClick(event, row.id)}
-              >
-                <CardContent sx={{ pb: 1 }}>
-                  {/* Header with checkbox and file name */}
-                  <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 2 }}>
-                    <Checkbox
-                      color="primary"
-                      checked={isItemSelected}
-                      size="small"
-                      sx={{ mt: -1, mr: 1 }}
-                    />
-                    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-                      <Typography 
-                        variant="h6" 
-                        sx={{ 
-                          fontSize: '1rem',
-                          fontWeight: 600,
-                          wordBreak: 'break-word',
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {row.type === 'plain/string' ? '[文本]' : row.filename}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  
-                  {/* File details grid */}
-                  <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, mb: 2 }}>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                        分享码
-                      </Typography>
-                      <Typography variant="body2" sx={{ fontFamily: 'monospace', fontWeight: 500 }}>
-                        {row.code}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                        大小
-                      </Typography>
-                      <Typography variant="body2">
-                        {humanFileSize(row.size)}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                        有效期至
-                      </Typography>
-                      <Typography variant="body2">
-                        {row.due_date
-                          ? dayjs(row.due_date).format('MM-DD HH:mm')
-                          : '永久'}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-                        创建时间
-                      </Typography>
-                      <Typography variant="body2">
-                        {dayjs(row.created_at).format('MM-DD HH:mm')}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  
-                  {/* Encryption status */}
-                  {row.password && (
-                    <Box sx={{ mb: 2 }}>
-                      <Chip 
-                        icon={<LockClose />} 
-                        label="已加密" 
-                        size="small" 
-                        color="warning"
-                        variant="outlined"
-                      />
-                    </Box>
-                  )}
-                </CardContent>
-                
-                {/* Action buttons */}
-                <CardActions sx={{ justifyContent: 'space-between', px: 2, pb: 2 }}>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    {row.type === 'plain/string' && (
-                      <Tooltip title="预览文本">
-                        <IconButton 
-                          size="small" 
-                          color="primary"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handlePreview(row)
-                          }}
-                        >
-                          <VisibilityIcon fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    )}
-                    <Tooltip title="下载文件">
-                      <IconButton 
-                        size="small" 
-                        color="primary"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          handleDownload(row)
-                        }}
-                      >
-                        <DownloadIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  </Box>
-                  <Tooltip title="删除文件">
-                    <IconButton 
-                      size="small" 
-                      color="error"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleDeleteSingle(row)
-                      }}
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </CardActions>
-              </Card>
-            )
-          })}
-        </Box>
-        
         <TablePagination
           className="flex-shrink-0"
-          labelDisplayedRows={({ from, to, count }) =>
+          labelDisplayedRows={({ from, to, count }: {from: number, to: number, count: number}) =>
             `${from} - ${to} 共 ${count} 条`
           }
           labelRowsPerPage="分页大小"
@@ -680,31 +529,34 @@ function AdminMain(props: AdminProps) {
       {/* Text Preview Dialog */}
       <Dialog
         open={textPreview.open}
-        onClose={() => setTextPreview(prev => ({ ...prev, open: false }))}
+        onClose={() => setTextPreview((prev: any) => ({ ...prev, open: false }))}
         maxWidth="md"
         fullWidth
       >
         <DialogTitle>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <VisibilityIcon />
             {textPreview.filename}
-          </div>
+          </Box>
         </DialogTitle>
         <DialogContent>
-          <pre style={{ 
-            whiteSpace: 'pre-wrap', 
-            wordWrap: 'break-word',
-            fontSize: '14px',
-            fontFamily: 'monospace',
-            maxHeight: '60vh',
-            overflow: 'auto'
-          }}>
+          <Box 
+            component="pre"
+            sx={{ 
+              whiteSpace: 'pre-wrap', 
+              wordWrap: 'break-word',
+              fontSize: '14px',
+              fontFamily: 'monospace',
+              maxHeight: '60vh',
+              overflow: 'auto'
+            }}
+          >
             {textPreview.content}
-          </pre>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button 
-            onClick={() => setTextPreview(prev => ({ ...prev, open: false }))}
+            onClick={() => setTextPreview((prev: any) => ({ ...prev, open: false }))}
           >
             关闭
           </Button>

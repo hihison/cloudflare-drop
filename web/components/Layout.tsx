@@ -73,9 +73,7 @@ export function Layout({ children }: LayoutProps) {
               alt="brand" 
               height="80"
               style={{
-                '@media (max-width: 480px)': {
-                  height: '60px',
-                },
+                height: '80px',
               }}
             />
             <Typography
@@ -96,9 +94,6 @@ export function Layout({ children }: LayoutProps) {
                 class="relative" 
                 style={{
                   top: '14px',
-                  '@media (max-width: 480px)': {
-                    top: '0px',
-                  },
                 }}
               >
                 Cloudflare Drop
