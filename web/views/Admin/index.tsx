@@ -332,8 +332,9 @@ function AdminMain(props: AdminProps) {
     try {
       setBackdropOpen(true)
       await adminApi.downloadFile(file.id, file.filename)
-      message.success('文件下载开始')
+      message.success('文件下载完成')
     } catch (error) {
+      console.error('Download failed:', error)
       message.error('下载失败：' + (error as Error).message)
     } finally {
       setBackdropOpen(false)

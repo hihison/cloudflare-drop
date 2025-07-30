@@ -90,7 +90,7 @@ export class AdminDownloadFile extends Endpoint {
         status: 200,
         headers: {
           'Content-Type': record.type ?? 'application/octet-stream',
-          'Content-Disposition': `attachment; filename="${record.filename}"`,
+          'Content-Disposition': `attachment; filename="${encodeURIComponent(record.filename)}"`,
           'Content-Length': record.size.toString(),
         },
       })
@@ -100,8 +100,8 @@ export class AdminDownloadFile extends Endpoint {
     return new Response(file, {
       status: 200,
       headers: {
-        'Content-Type': record.type ?? 'application/octet-stream',
-        'Content-Disposition': `attachment; filename="${record.filename}"`,
+        'Content-Type': record.type ?? 'application/octet-stream',  
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(record.filename)}"`,
         'Content-Length': record.size.toString(),
       },
     })

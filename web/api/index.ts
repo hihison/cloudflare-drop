@@ -151,14 +151,27 @@ export function createAdminApi(token: string) {
         })
         
         if (!response.ok) {
-          throw new Error('Download failed')
+          const errorText = await response.text()
+          throw new Error(`Download failed: ${response.status} - ${errorText}`)
+        }
+
+        // Check if response has content
+        const contentLength = response.headers.get('content-length')
+        if (!contentLength || contentLength === '0') {
+          throw new Error('File is empty or missing')
         }
 
         const blob = await response.blob()
+        if (blob.size === 0) {
+          throw new Error('Downloaded file is empty')
+        }
+
+        // Create download link
         const url = URL.createObjectURL(blob)
         const a = document.createElement('a')
         a.href = url
         a.download = filename
+        a.style.display = 'none'
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
