@@ -1,10 +1,29 @@
-import * as React from 'react'
-import { ThemeProvider, createTheme, alpha } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
+import { createTheme, alpha } from '@mui/material/styles'
 
-interface AppThemeProps {
-  children: React.ReactNode
-  mode?: 'light' | 'dark' | 'system'
+declare module '@mui/material/styles' {
+  interface Theme {
+    status: {
+      danger: string
+    }
+  }
+
+  interface ThemeOptions {
+    status?: {
+      danger?: string
+    }
+  }
+
+  interface Palette {
+    surface: {
+      main: string
+    }
+  }
+
+  interface PaletteOptions {
+    surface?: {
+      main?: string
+    }
+  }
 }
 
 // Modern 2025 color palette
@@ -21,6 +40,18 @@ const modernColors = {
     800: '#075985',
     900: '#0c4a6e',
   },
+  secondary: {
+    50: '#fdf2f8',
+    100: '#fce7f3',
+    200: '#fbcfe8',
+    300: '#f9a8d4',
+    400: '#f472b6',
+    500: '#ec4899',
+    600: '#db2777',
+    700: '#be185d',
+    800: '#9d174d',
+    900: '#831843',
+  },
   neutral: {
     50: '#fafafa',
     100: '#f5f5f5',
@@ -35,7 +66,7 @@ const modernColors = {
   }
 }
 
-const getModern2025Theme = (mode: 'light' | 'dark') => {
+export const getModern2025Theme = (mode: 'light' | 'dark') => {
   return createTheme({
     palette: {
       mode,
@@ -46,9 +77,9 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         contrastText: '#ffffff',
       },
       secondary: {
-        main: '#ec4899',
-        light: '#f472b6',
-        dark: '#be185d',
+        main: modernColors.secondary[600],
+        light: modernColors.secondary[400],
+        dark: modernColors.secondary[800],
         contrastText: '#ffffff',
       },
       error: {
@@ -73,6 +104,11 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         paper: mode === 'light'
           ? alpha('#ffffff', 0.9)
           : alpha('#1e293b', 0.9),
+      },
+      surface: {
+        main: mode === 'light' 
+          ? alpha('#ffffff', 0.7)
+          : alpha('#374151', 0.7),
       },
       text: {
         primary: mode === 'light' ? modernColors.neutral[900] : modernColors.neutral[50],
@@ -189,7 +225,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
             '&:hover': {
               backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.15),
-              transform: 'translateY(-2px)',
+              transform: 'translateY(-4px) scale(1.02)',
               boxShadow: mode === 'light' 
                 ? '0 25px 50px rgba(102, 126, 234, 0.15), 0 15px 35px rgba(102, 126, 234, 0.1)' 
                 : '0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.3)',
@@ -248,6 +284,11 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               borderColor: alpha('#ffffff', 0.3),
             },
           },
+          text: {
+            '&:hover': {
+              backgroundColor: alpha('#ffffff', 0.1),
+            },
+          },
         },
       },
       MuiCard: {
@@ -270,7 +311,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
             },
             '&:hover': {
-              transform: 'translateY(-4px)',
+              transform: 'translateY(-6px) rotate(1deg)',
               boxShadow: mode === 'light' 
                 ? '0 30px 60px rgba(102, 126, 234, 0.15)' 
                 : '0 30px 60px rgba(0, 0, 0, 0.4)',
@@ -367,6 +408,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             transition: 'all 0.2s ease-in-out',
             '&:hover': {
               backgroundColor: alpha('#ffffff', mode === 'light' ? 0.05 : 0.02),
+              transform: 'scale(1.01)',
             },
           },
         },
@@ -398,33 +440,4 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
   })
 }
 
-export default function AppTheme({ children, mode = 'light' }: AppThemeProps) {
-  const [currentMode, setCurrentMode] = React.useState<'light' | 'dark'>('light')
-
-  React.useEffect(() => {
-    if (mode === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      setCurrentMode(mediaQuery.matches ? 'dark' : 'light')
-      
-      const handleChange = (e: MediaQueryListEvent) => {
-        setCurrentMode(e.matches ? 'dark' : 'light')
-      }
-      
-      mediaQuery.addEventListener('change', handleChange)
-      return () => mediaQuery.removeEventListener('change', handleChange)
-    } else {
-      setCurrentMode(mode)
-    }
-  }, [mode])
-
-  const theme = React.useMemo(() => {
-    return getModern2025Theme(currentMode)
-  }, [currentMode])
-
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
-      {children}
-    </ThemeProvider>
-  )
-}
+export default getModern2025Theme

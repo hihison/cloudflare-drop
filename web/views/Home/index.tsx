@@ -10,7 +10,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import TextField from '@mui/material/TextField'
-import { styled } from '@mui/material/styles'
+import { styled, alpha } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import SendIcon from '@mui/icons-material/Send'
@@ -20,6 +20,11 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import Drawer from '@mui/material/Drawer'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Fade from '@mui/material/Fade'
+import Slide from '@mui/material/Slide'
+import { keyframes } from '@mui/system'
 
 import {
   Code,
@@ -34,6 +39,25 @@ import {
 import { resolveFileByCode, uploadFile } from '../../api'
 import { Layout, LayoutProps } from '../../components'
 
+// Modern animations
+const floatAnimation = keyframes`
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+`
+
+const gradientShift = keyframes`
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+`
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -45,6 +69,159 @@ const VisuallyHiddenInput = styled('input')({
   whiteSpace: 'nowrap',
   width: 1,
 })
+
+// Modern glassmorphism container
+const GlassContainer = styled(Container)(({ theme }) => ({
+  minHeight: '100vh',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: theme.spacing(3),
+  position: 'relative',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.15) 0%, transparent 50%)',
+    pointerEvents: 'none',
+  },
+}))
+
+// Modern card with enhanced glassmorphism
+const ModernCard = styled(Card)(({ theme }) => ({
+  background: alpha('#ffffff', 0.1),
+  backdropFilter: 'blur(20px) saturate(180%)',
+  border: `1px solid ${alpha('#ffffff', 0.2)}`,
+  borderRadius: 32,
+  boxShadow: '0 25px 45px rgba(0, 0, 0, 0.1), 0 15px 35px rgba(0, 0, 0, 0.05)',
+  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+  overflow: 'hidden',
+  position: 'relative',
+  maxWidth: 600,
+  width: '100%',
+  animation: `${floatAnimation} 6s ease-in-out infinite`,
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: '2px',
+    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
+    animation: `${gradientShift} 3s ease-in-out infinite`,
+  },
+  '&:hover': {
+    transform: 'translateY(-8px) scale(1.02)',
+    background: alpha('#ffffff', 0.15),
+    boxShadow: '0 35px 60px rgba(102, 126, 234, 0.15), 0 25px 45px rgba(102, 126, 234, 0.1)',
+  },
+}))
+
+// Hero section with gradient text
+const HeroTitle = styled(Typography)(({ theme }) => ({
+  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  backgroundClip: 'text',
+  fontWeight: 900,
+  fontSize: '3.5rem',
+  textAlign: 'center',
+  marginBottom: theme.spacing(2),
+  letterSpacing: '-0.02em',
+  [theme.breakpoints.down('md')]: {
+    fontSize: '2.5rem',
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '2rem',
+  },
+}))
+
+const HeroSubtitle = styled(Typography)(({ theme }) => ({
+  color: alpha('#ffffff', 0.8),
+  textAlign: 'center',
+  fontSize: '1.25rem',
+  fontWeight: 400,
+  marginBottom: theme.spacing(4),
+  lineHeight: 1.6,
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '1.1rem',
+  },
+}))
+
+// Modern tab styling
+const ModernTabList = styled(TabList)(({ theme }) => ({
+  background: alpha('#ffffff', 0.1),
+  borderRadius: 20,
+  padding: 4,
+  marginBottom: theme.spacing(3),
+  backdropFilter: 'blur(10px)',
+  border: `1px solid ${alpha('#ffffff', 0.1)}`,
+  '& .MuiTabs-indicator': {
+    height: '100%',
+    borderRadius: 16,
+    background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
+    backdropFilter: 'blur(10px)',
+    boxShadow: '0 4px 20px rgba(102, 126, 234, 0.2)',
+  },
+}))
+
+const ModernTab = styled(Tab)(({ theme }) => ({
+  borderRadius: 16,
+  margin: '0 4px',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  fontWeight: 500,
+  textTransform: 'none',
+  fontSize: '0.95rem',
+  color: alpha('#ffffff', 0.7),
+  '&.Mui-selected': {
+    color: '#ffffff',
+    fontWeight: 600,
+  },
+  '&:hover': {
+    backgroundColor: alpha('#ffffff', 0.1),
+    color: '#ffffff',
+  },
+}))
+
+// Enhanced upload button
+const ModernUploadButton = styled(Button)(({ theme }) => ({
+  borderRadius: 20,
+  padding: '16px 32px',
+  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  backgroundSize: '200% 200%',
+  animation: `${gradientShift} 4s ease infinite`,
+  boxShadow: '0 8px 32px rgba(102, 126, 234, 0.25)',
+  border: 'none',
+  fontWeight: 600,
+  fontSize: '1rem',
+  textTransform: 'none',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  position: 'relative',
+  overflow: 'hidden',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: '-100%',
+    width: '100%',
+    height: '100%',
+    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+    transition: 'left 0.5s',
+  },
+  '&:hover': {
+    transform: 'translateY(-3px)',
+    boxShadow: '0 12px 40px rgba(102, 126, 234, 0.35)',
+    '&::before': {
+      left: '100%',
+    },
+  },
+  '&:active': {
+    transform: 'translateY(-1px)',
+  },
+}))
 
 const envMax = Number.parseInt(import.meta.env.SHARE_MAX_SIZE_IN_MB, 10)
 const MAX_SIZE = Number.isNaN(envMax) || envMax <= 0 ? 10 : envMax
@@ -191,139 +368,255 @@ export function AppMain(props: LayoutProps) {
   }
 
   return (
-    <>
-      <Paper
-        className="ml-auto mr-auto"
-        elevation={6}
-        style={{ maxWidth: 600 }}
-      >
-        <Container className="flex flex-col" sx={{ p: 2 }}>
-          <Box
-            className="flex gap-2"
-            sx={(theme) => ({
-              alignItems: 'center',
-              [theme.breakpoints.down('sm')]: {
-                flexDirection: 'column',
-                alignItems: 'start',
-              },
-            })}
-          >
-            <InputLabel>
-              <Typography variant="h4" align="left">
-                分享码：
-              </Typography>
-            </InputLabel>
-            <Code
-              length={6}
-              onChange={handleResolveFile.current}
-              value={code}
-            />
-          </Box>
+    <Fade in timeout={800}>
+      <GlassContainer maxWidth="md">
+        <ModernCard>
+          <CardContent sx={{ p: 4 }}>
+            {/* Hero Section */}
+            <Slide in timeout={1000} direction="down">
+              <Box sx={{ mb: 4, textAlign: 'center' }}>
+                <HeroTitle variant="h1">
+                  Cloudflare Drop
+                </HeroTitle>
+                <HeroSubtitle variant="h6">
+                  安全、快速、简单的文件分享平台
+                </HeroSubtitle>
+              </Box>
+            </Slide>
 
-          <Divider
-            sx={{
-              mt: 2,
+            {/* Download Section */}
+            <Slide in timeout={1200} direction="up">
+              <Box sx={{ mb: 4 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    gap: 2,
+                    alignItems: 'center',
+                    mb: 3,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'start', sm: 'center' },
+                  }}
+                >
+                  <Typography 
+                    variant="h5" 
+                    sx={{ 
+                      color: alpha('#ffffff', 0.9),
+                      fontWeight: 600,
+                      minWidth: 'fit-content'
+                    }}
+                  >
+                    分享码：
+                  </Typography>
+                  <Code
+                    length={6}
+                    onChange={handleResolveFile.current}
+                    value={code}
+                  />
+                </Box>
+
+                <Divider sx={{ 
+                  my: 3, 
+                  borderColor: alpha('#ffffff', 0.1),
+                  '&::before, &::after': {
+                    borderColor: alpha('#ffffff', 0.1),
+                  }
+                }} />
+              </Box>
+            </Slide>
+
+            {/* Upload Section */}
+            <Slide in timeout={1400} direction="up">
+              <Box>
+                <TabContext value={tab}>
+                  <Box sx={{ mb: 3 }}>
+                    <ModernTabList
+                      onChange={handleChangeTab}
+                      aria-label="分享类型选择"
+                      centered
+                    >
+                      <ModernTab label="文本分享" value="text" />
+                      <ModernTab label="文件分享" value="file" />
+                    </ModernTabList>
+                  </Box>
+                  
+                  <TabPanel value="text" sx={{ p: 0, minHeight: 240 }}>
+                    <TextField
+                      multiline
+                      fullWidth
+                      rows={8}
+                      value={text}
+                      onInput={handleTextInput}
+                      placeholder="在此输入要分享的文本内容..."
+                      sx={{
+                        '& .MuiOutlinedInput-root': {
+                          borderRadius: 3,
+                          background: alpha('#ffffff', 0.1),
+                          backdropFilter: 'blur(10px)',
+                          border: `1px solid ${alpha('#ffffff', 0.2)}`,
+                          transition: 'all 0.3s ease',
+                          '& fieldset': {
+                            border: 'none',
+                          },
+                          '&:hover': {
+                            background: alpha('#ffffff', 0.15),
+                            transform: 'translateY(-1px)',
+                          },
+                          '&.Mui-focused': {
+                            background: alpha('#ffffff', 0.2),
+                            transform: 'translateY(-2px)',
+                            boxShadow: '0 8px 25px rgba(102, 126, 234, 0.15)',
+                          },
+                        },
+                        '& .MuiInputBase-input': {
+                          color: alpha('#ffffff', 0.9),
+                          '&::placeholder': {
+                            color: alpha('#ffffff', 0.5),
+                          },
+                        },
+                      }}
+                    />
+                  </TabPanel>
+                  
+                  <TabPanel value="file" sx={{ p: 0, minHeight: 240 }}>
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      minHeight: 200,
+                      border: `2px dashed ${alpha('#ffffff', 0.2)}`,
+                      borderRadius: 3,
+                      background: alpha('#ffffff', 0.05),
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        borderColor: alpha('#ffffff', 0.4),
+                        background: alpha('#ffffff', 0.1),
+                      }
+                    }}>
+                      <ModernUploadButton
+                        component="label"
+                        variant="contained"
+                        startIcon={<CloudUploadIcon />}
+                        size="large"
+                      >
+                        选择文件上传
+                        <VisuallyHiddenInput
+                          type="file"
+                          onChange={handleFileChange}
+                        />
+                      </ModernUploadButton>
+                      
+                      {file && (
+                        <Box sx={{ 
+                          mt: 3, 
+                          display: 'flex', 
+                          alignItems: 'center',
+                          background: alpha('#ffffff', 0.1),
+                          padding: 2,
+                          borderRadius: 2,
+                          backdropFilter: 'blur(10px)',
+                        }}>
+                          <FileIcon sx={{ mr: 1, color: alpha('#ffffff', 0.7) }} />
+                          <Typography sx={{ color: alpha('#ffffff', 0.9) }}>
+                            {file.name}
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+                  </TabPanel>
+                </TabContext>
+
+                {/* Settings */}
+                <Box sx={{ mt: 3, mb: 3 }}>
+                  <Duration value={duration} onChange={updateDuration} />
+                  
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isEphemeral}
+                        onChange={handleChangeEphemeral}
+                        sx={{
+                          color: alpha('#ffffff', 0.6),
+                          '&.Mui-checked': {
+                            color: '#ffffff',
+                          },
+                        }}
+                      />
+                    }
+                    label={
+                      <Typography sx={{ color: alpha('#ffffff', 0.8) }}>
+                        阅后即焚
+                      </Typography>
+                    }
+                    sx={{ mt: 2 }}
+                  />
+                </Box>
+
+                {/* Action Buttons */}
+                <Box sx={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  gap: 2
+                }}>
+                  <Button 
+                    variant="text" 
+                    onClick={toggleDrawer(true)}
+                    startIcon={<ReceiptLongIcon />}
+                    sx={{
+                      color: alpha('#ffffff', 0.7),
+                      '&:hover': {
+                        color: '#ffffff',
+                        background: alpha('#ffffff', 0.1),
+                      }
+                    }}
+                  >
+                    历史记录
+                  </Button>
+                  
+                  <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                    <PasswordSwitch value={password} onChange={updatePassword} />
+                    <ModernUploadButton
+                      variant="contained"
+                      disabled={
+                        (tab === 'text' && !text) || (tab === 'file' && !file)
+                      }
+                      endIcon={<SendIcon />}
+                      onClick={handleShare}
+                    >
+                      立即分享
+                    </ModernUploadButton>
+                  </Box>
+                </Box>
+              </Box>
+            </Slide>
+          </CardContent>
+        </ModernCard>
+
+        <Drawer 
+          open={drawerOpened} 
+          onClose={toggleDrawer(false)} 
+          anchor="right"
+          PaperProps={{
+            sx: {
+              background: alpha('#ffffff', 0.1),
+              backdropFilter: 'blur(20px)',
+              border: `1px solid ${alpha('#ffffff', 0.1)}`,
+            }
+          }}
+        >
+          <History
+            onItemClick={(item) => {
+              updateDrawerOpened(false)
+              setCode(item.code)
             }}
           />
-
-          <Box sx={{ width: '100%', typography: 'body1' }}>
-            <TabContext value={tab}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList
-                  onChange={handleChangeTab}
-                  aria-label="lab API tabs example"
-                >
-                  <Tab label="文本分享" value="text" />
-                  <Tab label="文件分享" value="file" />
-                </TabList>
-              </Box>
-              <TabPanel value="text" sx={{ height: 230, pl: 0, pr: 0 }}>
-                <TextField
-                  multiline
-                  fullWidth
-                  rows={8}
-                  value={text}
-                  onInput={handleTextInput}
-                />
-              </TabPanel>
-              <TabPanel value="file" sx={{ height: 230, pl: 0, pr: 0, pb: 0 }}>
-                <Box className="flex">
-                  <Button
-                    className="shrink-0"
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}
-                  >
-                    选择文件
-                    <VisuallyHiddenInput
-                      type="file"
-                      onChange={handleFileChange}
-                    />
-                  </Button>
-                  {file && (
-                    <div class="flex flex-col ml-2 min-w-0">
-                      <FileIcon fontSize="small" color="disabled" />
-                      <Typography color="textDisabled" noWrap lineHeight="16px">
-                        {file.name}
-                      </Typography>
-                    </div>
-                  )}
-                </Box>
-              </TabPanel>
-            </TabContext>
-          </Box>
-          <Box>
-            <Duration value={duration} onChange={updateDuration} />
-          </Box>
-          <Box sx={{ mt: 2 }}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isEphemeral}
-                  onChange={handleChangeEphemeral}
-                />
-              }
-              label="阅后即焚"
-            />
-          </Box>
-          <Box className="flex flex-row-reverse justify-between">
-            <div>
-              <PasswordSwitch value={password} onChange={updatePassword} />
-              <Button
-                variant="contained"
-                disabled={
-                  (tab === 'text' && !text) || (tab === 'file' && !file)
-                }
-                endIcon={<SendIcon />}
-                sx={{
-                  pl: 3,
-                  pr: 3,
-                }}
-                onClick={handleShare}
-              >
-                分享
-              </Button>
-            </div>
-            <Button variant="text" color="primary" onClick={toggleDrawer(true)}>
-              历史记录
-              <ReceiptLongIcon fontSize="small" />
-            </Button>
-          </Box>
-        </Container>
-      </Paper>
-
-      <Drawer open={drawerOpened} onClose={toggleDrawer(false)} anchor="right">
-        <History
-          onItemClick={(item) => {
-            updateDrawerOpened(false)
-            setCode(item.code)
-          }}
-        />
-      </Drawer>
-      <Progress open={progress !== null} value={progress ?? 0} />
-    </>
+        </Drawer>
+        
+        <Progress open={progress !== null} value={progress ?? 0} />
+      </GlassContainer>
+    </Fade>
   )
 }
 export function Home() {
