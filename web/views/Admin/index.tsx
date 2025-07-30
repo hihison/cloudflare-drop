@@ -24,7 +24,6 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
-import { visuallyHidden } from '@mui/utils'
 import { useRoute } from 'preact-iso'
 import Info from '@mui/icons-material/InfoOutlined'
 import LockClose from '@mui/icons-material/Lock'
@@ -147,7 +146,20 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                   </Tooltip>
                 )}
                 {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
+                  <Box 
+                    component="span" 
+                    sx={{
+                      position: 'absolute',
+                      width: 1,
+                      height: 1,
+                      padding: 0,
+                      margin: -1,
+                      overflow: 'hidden',
+                      clip: 'rect(0, 0, 0, 0)',
+                      whiteSpace: 'nowrap',
+                      border: 0,
+                    }}
+                  >
                     {order === 'desc'
                       ? 'sorted descending'
                       : 'sorted ascending'}
