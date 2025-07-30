@@ -37,23 +37,70 @@ export function Layout({ children }: LayoutProps) {
       sx={{
         maxWidth: `1200px !important`,
         p: 2,
+        '@media (max-width: 768px)': {
+          p: 1,
+        },
+        '@media (max-width: 480px)': {
+          p: 0.5,
+        },
       }}
     >
       <div
         class="flex flex-col mr-auto ml-auto"
         style="max-height: calc(100vh - 32px)"
       >
-        <Box className="flex justify-between items-center" sx={{ p: 0 }}>
-          <Link href="/" className="flex flex-row no-underline">
-            <img src="/logo.png" alt="brand" height="80" />
+        <Box 
+          className="flex justify-between items-center" 
+          sx={{ 
+            p: 0,
+            flexDirection: { xs: 'column', sm: 'row' },
+            gap: { xs: 1, sm: 0 },
+          }}
+        >
+          <Link 
+            href="/" 
+            className="flex flex-row no-underline"
+            sx={{
+              alignItems: 'center',
+              '@media (max-width: 480px)': {
+                flexDirection: 'column',
+                textAlign: 'center',
+              },
+            }}
+          >
+            <img 
+              src="/logo.png" 
+              alt="brand" 
+              height="80"
+              style={{
+                '@media (max-width: 480px)': {
+                  height: '60px',
+                },
+              }}
+            />
             <Typography
               variant="h4"
               color="primary"
               sx={{
                 fontFamily: 'DingDing',
+                '@media (max-width: 768px)': {
+                  fontSize: '1.75rem',
+                },
+                '@media (max-width: 480px)': {
+                  fontSize: '1.5rem',
+                  marginTop: 1,
+                },
               }}
             >
-              <span class="relative" style="top: 14px">
+              <span 
+                class="relative" 
+                style={{
+                  top: '14px',
+                  '@media (max-width: 480px)': {
+                    top: '0px',
+                  },
+                }}
+              >
                 Cloudflare Drop
               </span>
             </Typography>
@@ -62,6 +109,10 @@ export function Layout({ children }: LayoutProps) {
             sx={{
               position: 'relative',
               top: -10,
+              '@media (max-width: 480px)': {
+                top: 0,
+                marginTop: 1,
+              },
             }}
             href="https://github.com/oustn/cloudflare-drop"
             target="_blank"

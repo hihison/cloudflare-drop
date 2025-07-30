@@ -35,6 +35,7 @@ import {
 } from './components'
 import { resolveFileByCode, uploadFile } from '../../api'
 import { Layout, LayoutProps } from '../../components'
+import { humanFileSize } from '../../helpers'
 
 // Modern animations
 const floatAnimation = keyframes`
@@ -75,6 +76,17 @@ const GlassContainer = styled(Container)(() => ({
   justifyContent: 'center',
   padding: 24,
   position: 'relative',
+  '@media (max-width: 768px)': {
+    padding: 16,
+    minHeight: 'auto',
+    paddingTop: 32,
+    paddingBottom: 32,
+  },
+  '@media (max-width: 480px)': {
+    padding: 12,
+    paddingTop: 24,
+    paddingBottom: 24,
+  },
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -99,7 +111,17 @@ const ModernCard = styled(Card)(() => ({
   position: 'relative',
   maxWidth: 600,
   width: '100%',
+  margin: '0 auto',
   animation: `${floatAnimation} 6s ease-in-out infinite`,
+  '@media (max-width: 768px)': {
+    borderRadius: 24,
+    maxWidth: '100%',
+    margin: '0 8px',
+  },
+  '@media (max-width: 480px)': {
+    borderRadius: 20,
+    margin: '0 4px',
+  },
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -114,6 +136,9 @@ const ModernCard = styled(Card)(() => ({
     transform: 'translateY(-8px) scale(1.02)',
     background: alpha('#ffffff', 0.15),
     boxShadow: '0 35px 60px rgba(102, 126, 234, 0.15), 0 25px 45px rgba(102, 126, 234, 0.1)',
+    '@media (max-width: 768px)': {
+      transform: 'translateY(-4px) scale(1.01)',
+    },
   },
 }))
 
@@ -133,6 +158,11 @@ const HeroTitle = styled(Typography)(() => ({
   },
   '@media (max-width: 600px)': {
     fontSize: '2rem',
+    marginBottom: 12,
+  },
+  '@media (max-width: 480px)': {
+    fontSize: '1.75rem',
+    marginBottom: 8,
   },
 }))
 
@@ -145,6 +175,12 @@ const HeroSubtitle = styled(Typography)(() => ({
   lineHeight: 1.6,
   '@media (max-width: 600px)': {
     fontSize: '1.1rem',
+    marginBottom: 24,
+  },
+  '@media (max-width: 480px)': {
+    fontSize: '1rem',
+    marginBottom: 20,
+    lineHeight: 1.5,
   },
 }))
 
@@ -156,12 +192,28 @@ const ModernTabList = styled(TabList)(() => ({
   marginBottom: 24,
   backdropFilter: 'blur(10px)',
   border: `1px solid ${alpha('#ffffff', 0.1)}`,
+  '@media (max-width: 768px)': {
+    borderRadius: 16,
+    padding: 3,
+    marginBottom: 20,
+  },
+  '@media (max-width: 480px)': {
+    borderRadius: 14,
+    padding: 2,
+    marginBottom: 16,
+  },
   '& .MuiTabs-indicator': {
     height: '100%',
     borderRadius: 16,
     background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
     backdropFilter: 'blur(10px)',
     boxShadow: '0 4px 20px rgba(102, 126, 234, 0.2)',
+    '@media (max-width: 768px)': {
+      borderRadius: 12,
+    },
+    '@media (max-width: 480px)': {
+      borderRadius: 10,
+    },
   },
 }))
 
@@ -173,6 +225,18 @@ const ModernTab = styled(Tab)(() => ({
   textTransform: 'none',
   fontSize: '0.95rem',
   color: alpha('#ffffff', 0.7),
+  '@media (max-width: 768px)': {
+    borderRadius: 12,
+    margin: '0 2px',
+    fontSize: '0.9rem',
+  },
+  '@media (max-width: 480px)': {
+    borderRadius: 10,
+    margin: '0 1px',
+    fontSize: '0.85rem',
+    minWidth: 'auto',
+    padding: '8px 12px',
+  },
   '&.Mui-selected': {
     color: '#ffffff',
     fontWeight: 600,
@@ -198,6 +262,18 @@ const ModernUploadButton = styled(Button)(() => ({
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
+  width: '100%',
+  maxWidth: 400,
+  '@media (max-width: 768px)': {
+    padding: '14px 28px',
+    fontSize: '0.95rem',
+    borderRadius: 16,
+  },
+  '@media (max-width: 480px)': {
+    padding: '12px 24px',
+    fontSize: '0.9rem',
+    borderRadius: 14,
+  },
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -211,6 +287,9 @@ const ModernUploadButton = styled(Button)(() => ({
   '&:hover': {
     transform: 'translateY(-3px)',
     boxShadow: '0 12px 40px rgba(102, 126, 234, 0.35)',
+    '@media (max-width: 768px)': {
+      transform: 'translateY(-2px)',
+    },
     '&::before': {
       left: '100%',
     },
@@ -368,7 +447,17 @@ export function AppMain(props: LayoutProps) {
     <Fade in timeout={800}>
       <GlassContainer maxWidth="md">
         <ModernCard>
-          <CardContent sx={{ p: 4 }}>
+          <CardContent 
+            sx={{ 
+              p: 4,
+              '@media (max-width: 768px)': {
+                p: 3,
+              },
+              '@media (max-width: 480px)': {
+                p: 2,
+              },
+            }}
+          >
             {/* Hero Section */}
             <Slide in timeout={1000} direction="down">
               <Box sx={{ mb: 4, textAlign: 'center' }}>
@@ -450,21 +539,42 @@ export function AppMain(props: LayoutProps) {
                           backdropFilter: 'blur(10px)',
                           border: `1px solid ${alpha('#ffffff', 0.2)}`,
                           transition: 'all 0.3s ease',
+                          '@media (max-width: 768px)': {
+                            borderRadius: 2,
+                          },
+                          '@media (max-width: 480px)': {
+                            borderRadius: 1.5,
+                          },
                           '& fieldset': {
                             border: 'none',
                           },
                           '&:hover': {
                             background: alpha('#ffffff', 0.15),
                             transform: 'translateY(-1px)',
+                            '@media (max-width: 768px)': {
+                              transform: 'translateY(0px)',
+                            },
                           },
                           '&.Mui-focused': {
                             background: alpha('#ffffff', 0.2),
                             transform: 'translateY(-2px)',
                             boxShadow: '0 8px 25px rgba(102, 126, 234, 0.15)',
+                            '@media (max-width: 768px)': {
+                              transform: 'translateY(0px)',
+                              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.15)',
+                            },
                           },
                         },
                         '& .MuiInputBase-input': {
                           color: alpha('#ffffff', 0.9),
+                          fontSize: '1rem',
+                          '@media (max-width: 768px)': {
+                            fontSize: '16px', // Prevents zoom on iOS
+                          },
+                          '@media (max-width: 480px)': {
+                            fontSize: '16px',
+                            lineHeight: 1.4,
+                          },
                           '&::placeholder': {
                             color: alpha('#ffffff', 0.5),
                           },
@@ -484,6 +594,15 @@ export function AppMain(props: LayoutProps) {
                       borderRadius: 3,
                       background: alpha('#ffffff', 0.05),
                       transition: 'all 0.3s ease',
+                      '@media (max-width: 768px)': {
+                        minHeight: 180,
+                        borderRadius: 2,
+                      },
+                      '@media (max-width: 480px)': {
+                        minHeight: 160,
+                        borderRadius: 1.5,
+                        padding: 2,
+                      },
                       '&:hover': {
                         borderColor: alpha('#ffffff', 0.4),
                         background: alpha('#ffffff', 0.1),
@@ -494,6 +613,12 @@ export function AppMain(props: LayoutProps) {
                         variant="contained"
                         startIcon={<CloudUploadIcon />}
                         size="large"
+                        sx={{
+                          '@media (max-width: 480px)': {
+                            size: 'medium',
+                            fontSize: '0.85rem',
+                          },
+                        }}
                       >
                         选择文件上传
                         <VisuallyHiddenInput
@@ -511,11 +636,52 @@ export function AppMain(props: LayoutProps) {
                           padding: 2,
                           borderRadius: 2,
                           backdropFilter: 'blur(10px)',
+                          maxWidth: '100%',
+                          '@media (max-width: 480px)': {
+                            mt: 2,
+                            padding: 1.5,
+                            borderRadius: 1.5,
+                            flexDirection: 'column',
+                            textAlign: 'center',
+                          },
                         }}>
-                          <FileIcon sx={{ mr: 1, color: alpha('#ffffff', 0.7) }} />
-                          <Typography sx={{ color: alpha('#ffffff', 0.9) }}>
-                            {file.name}
-                          </Typography>
+                          <FileIcon sx={{ 
+                            mr: 1, 
+                            color: alpha('#ffffff', 0.7),
+                            '@media (max-width: 480px)': {
+                              mr: 0,
+                              mb: 1,
+                            },
+                          }} />
+                          <Box sx={{ 
+                            minWidth: 0,
+                            '@media (max-width: 480px)': {
+                              width: '100%',
+                            },
+                          }}>
+                            <Typography 
+                              sx={{ 
+                                color: alpha('#ffffff', 0.9),
+                                wordBreak: 'break-word',
+                                '@media (max-width: 480px)': {
+                                  fontSize: '0.9rem',
+                                },
+                              }}
+                            >
+                              {file.name}
+                            </Typography>
+                            <Typography 
+                              variant="body2" 
+                              sx={{ 
+                                color: alpha('#ffffff', 0.6),
+                                '@media (max-width: 480px)': {
+                                  fontSize: '0.8rem',
+                                },
+                              }}
+                            >
+                              {humanFileSize(file.size)}
+                            </Typography>
+                          </Box>
                         </Box>
                       )}
                     </Box>
@@ -523,7 +689,14 @@ export function AppMain(props: LayoutProps) {
                 </TabContext>
 
                 {/* Settings */}
-                <Box sx={{ mt: 3, mb: 3 }}>
+                <Box sx={{ 
+                  mt: 3, 
+                  mb: 3,
+                  '@media (max-width: 480px)': {
+                    mt: 2,
+                    mb: 2,
+                  },
+                }}>
                   <Duration value={duration} onChange={updateDuration} />
                   
                   <FormControlLabel
@@ -540,11 +713,23 @@ export function AppMain(props: LayoutProps) {
                       />
                     }
                     label={
-                      <Typography sx={{ color: alpha('#ffffff', 0.8) }}>
+                      <Typography 
+                        sx={{ 
+                          color: alpha('#ffffff', 0.8),
+                          '@media (max-width: 480px)': {
+                            fontSize: '0.9rem',
+                          },
+                        }}
+                      >
                         阅后即焚
                       </Typography>
                     }
-                    sx={{ mt: 2 }}
+                    sx={{ 
+                      mt: 2,
+                      '@media (max-width: 480px)': {
+                        mt: 1.5,
+                      },
+                    }}
                   />
                 </Box>
 
@@ -554,7 +739,10 @@ export function AppMain(props: LayoutProps) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   flexDirection: { xs: 'column', sm: 'row' },
-                  gap: 2
+                  gap: 2,
+                  '@media (max-width: 480px)': {
+                    gap: 1.5,
+                  },
                 }}>
                   <Button 
                     variant="text" 
@@ -562,6 +750,11 @@ export function AppMain(props: LayoutProps) {
                     startIcon={<ReceiptLongIcon />}
                     sx={{
                       color: alpha('#ffffff', 0.7),
+                      '@media (max-width: 480px)': {
+                        fontSize: '0.85rem',
+                        minWidth: 'auto',
+                        padding: '8px 16px',
+                      },
                       '&:hover': {
                         color: '#ffffff',
                         background: alpha('#ffffff', 0.1),
@@ -571,7 +764,16 @@ export function AppMain(props: LayoutProps) {
                     历史记录
                   </Button>
                   
-                  <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    gap: 2, 
+                    alignItems: 'center',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    width: { xs: '100%', sm: 'auto' },
+                    '@media (max-width: 480px)': {
+                      gap: 1.5,
+                    },
+                  }}>
                     <PasswordSwitch value={password} onChange={updatePassword} />
                     <ModernUploadButton
                       variant="contained"
@@ -580,6 +782,13 @@ export function AppMain(props: LayoutProps) {
                       }
                       endIcon={<SendIcon />}
                       onClick={handleShare}
+                      sx={{
+                        width: { xs: '100%', sm: 'auto' },
+                        minWidth: { sm: 'auto' },
+                        '@media (max-width: 480px)': {
+                          fontSize: '0.9rem',
+                        },
+                      }}
                     >
                       立即分享
                     </ModernUploadButton>
@@ -599,6 +808,14 @@ export function AppMain(props: LayoutProps) {
               background: alpha('#ffffff', 0.1),
               backdropFilter: 'blur(20px)',
               border: `1px solid ${alpha('#ffffff', 0.1)}`,
+              '@media (max-width: 768px)': {
+                width: '85vw',
+                maxWidth: '400px',
+              },
+              '@media (max-width: 480px)': {
+                width: '90vw',
+                maxWidth: 'none',
+              },
             }
           }}
         >

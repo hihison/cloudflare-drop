@@ -208,6 +208,16 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             position: 'relative',
             overflow: 'hidden',
+            '@media (max-width: 768px)': {
+              padding: '12px 24px',
+              fontSize: '0.9rem',
+              borderRadius: 14,
+            },
+            '@media (max-width: 480px)': {
+              padding: '10px 20px',
+              fontSize: '0.85rem',
+              borderRadius: 12,
+            },
             '&::before': {
               content: '""',
               position: 'absolute',
@@ -220,6 +230,9 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             },
             '&:hover': {
               transform: 'translateY(-2px)',
+              '@media (max-width: 768px)': {
+                transform: 'translateY(-1px)',
+              },
               '&::before': {
                 left: '100%',
               },
@@ -260,6 +273,13 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
             overflow: 'hidden',
             position: 'relative',
+            '@media (max-width: 768px)': {
+              borderRadius: 20,
+            },
+            '@media (max-width: 480px)': {
+              borderRadius: 16,
+              margin: '0 4px',
+            },
             '&::before': {
               content: '""',
               position: 'absolute',
@@ -271,6 +291,9 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             },
             '&:hover': {
               transform: 'translateY(-4px)',
+              '@media (max-width: 768px)': {
+                transform: 'translateY(-2px)',
+              },
               boxShadow: mode === 'light' 
                 ? '0 30px 60px rgba(102, 126, 234, 0.15)' 
                 : '0 30px 60px rgba(0, 0, 0, 0.4)',
@@ -288,6 +311,18 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             boxShadow: mode === 'light' 
               ? '0 25px 50px rgba(0, 0, 0, 0.1)' 
               : '0 25px 50px rgba(0, 0, 0, 0.5)',
+            '@media (max-width: 768px)': {
+              borderRadius: 20,
+              margin: 16,
+              maxHeight: 'calc(100vh - 32px)',
+              width: 'calc(100vw - 32px)',
+            },
+            '@media (max-width: 480px)': {
+              borderRadius: 16,
+              margin: 8,
+              maxHeight: 'calc(100vh - 16px)',
+              width: 'calc(100vw - 16px)',
+            },
           },
         },
       },
@@ -299,14 +334,34 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               backgroundColor: alpha('#ffffff', mode === 'light' ? 0.8 : 0.1),
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              '@media (max-width: 768px)': {
+                borderRadius: 14,
+                fontSize: '16px', // Prevents zoom on iOS
+              },
+              '@media (max-width: 480px)': {
+                borderRadius: 12,
+                padding: '4px 8px',
+              },
               '&:hover': {
                 backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.15),
                 transform: 'translateY(-1px)',
+                '@media (max-width: 768px)': {
+                  transform: 'translateY(0px)',
+                },
               },
               '&.Mui-focused': {
                 backgroundColor: alpha('#ffffff', mode === 'light' ? 0.95 : 0.2),
                 transform: 'translateY(-2px)',
                 boxShadow: '0 8px 25px rgba(102, 126, 234, 0.15)',
+                '@media (max-width: 768px)': {
+                  transform: 'translateY(0px)',
+                  boxShadow: '0 4px 15px rgba(102, 126, 234, 0.15)',
+                },
+              },
+            },
+            '& .MuiInputLabel-root': {
+              '@media (max-width: 480px)': {
+                fontSize: '0.9rem',
               },
             },
           },
