@@ -1,6 +1,11 @@
 import { createContext } from 'preact'
-import { useContext, useState, useEffect } from 'preact/hooks'
+import { useContext, useState } from 'preact/hooks'
 import { ComponentChildren } from 'preact'
+
+// Import translation files directly
+import enTranslations from '../../public/locales/en.json'
+import zhCNTranslations from '../../public/locales/zh-CN.json'
+import zhTWTranslations from '../../public/locales/zh-TW.json'
 
 // Language type definitions
 export type Language = 'zh-CN' | 'zh-TW' | 'en'
@@ -22,31 +27,11 @@ export const AVAILABLE_LANGUAGES = [
 // Language context
 export const LanguageContext = createContext<LanguageContextType | null>(null)
 
-// Translation cache
-const translationCache: Record<Language, any> = {} as Record<Language, any>
-
-// Load translation function
-async function loadTranslation(language: Language): Promise<any> {
-  if (translationCache[language]) {
-    return translationCache[language]
-  }
-
-  try {
-    const response = await fetch(`/locales/${language}.json`)
-    if (!response.ok) {
-      throw new Error(`Failed to load translation for ${language}`)
-    }
-    const translation = await response.json()
-    translationCache[language] = translation
-    return translation
-  } catch (error) {
-    console.error(`Error loading translation for ${language}:`, error)
-    // Fallback to English if available, otherwise return empty object
-    if (language !== 'en' && translationCache['en']) {
-      return translationCache['en']
-    }
-    return {}
-  }
+// Static translations object
+const translations: Record<Language, any> = {
+  'en': enTranslations,
+  'zh-CN': zhCNTranslations,
+  'zh-TW': zhTWTranslations,
 }
 
 // Translation function
@@ -129,12 +114,6 @@ export function useLanguageProvider() {
   const [language, setLanguageState] = useState<Language>(() => {
     return getStoredLanguage() || getBrowserLanguage()
   })
-  const [translations, setTranslations] = useState<any>({})
-
-  // Load translations when language changes
-  useEffect(() => {
-    loadTranslation(language).then(setTranslations)
-  }, [language])
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
@@ -142,7 +121,8 @@ export function useLanguageProvider() {
   }
 
   const t = (key: string, params?: Record<string, string | number>) => {
-    return translate(translations, key, params)
+    const currentTranslations = translations[language as keyof typeof translations] || translations['en']
+    return translate(currentTranslations, key, params)
   }
 
   return {
