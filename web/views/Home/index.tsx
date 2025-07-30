@@ -1,16 +1,14 @@
 import { useState, useRef } from 'preact/hooks'
 import { useDialogs } from '@toolpad/core/useDialogs'
 import Container from '@mui/material/Container'
-import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
-import InputLabel from '@mui/material/InputLabel'
 import Typography from '@mui/material/Typography'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import TextField from '@mui/material/TextField'
-import { styled, alpha } from '@mui/material/styles'
+import { styled, alpha, keyframes } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import SendIcon from '@mui/icons-material/Send'
@@ -24,7 +22,6 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Fade from '@mui/material/Fade'
 import Slide from '@mui/material/Slide'
-import { keyframes } from '@mui/system'
 
 import {
   Code,
@@ -71,12 +68,12 @@ const VisuallyHiddenInput = styled('input')({
 })
 
 // Modern glassmorphism container
-const GlassContainer = styled(Container)(({ theme }) => ({
+const GlassContainer = styled(Container)(() => ({
   minHeight: '100vh',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  padding: theme.spacing(3),
+  padding: 24,
   position: 'relative',
   '&::before': {
     content: '""',
@@ -121,7 +118,7 @@ const ModernCard = styled(Card)(({ theme }) => ({
 }))
 
 // Hero section with gradient text
-const HeroTitle = styled(Typography)(({ theme }) => ({
+const HeroTitle = styled(Typography)(() => ({
   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
   WebkitBackgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
@@ -129,34 +126,34 @@ const HeroTitle = styled(Typography)(({ theme }) => ({
   fontWeight: 900,
   fontSize: '3.5rem',
   textAlign: 'center',
-  marginBottom: theme.spacing(2),
+  marginBottom: 16,
   letterSpacing: '-0.02em',
-  [theme.breakpoints.down('md')]: {
+  '@media (max-width: 960px)': {
     fontSize: '2.5rem',
   },
-  [theme.breakpoints.down('sm')]: {
+  '@media (max-width: 600px)': {
     fontSize: '2rem',
   },
 }))
 
-const HeroSubtitle = styled(Typography)(({ theme }) => ({
+const HeroSubtitle = styled(Typography)(() => ({
   color: alpha('#ffffff', 0.8),
   textAlign: 'center',
   fontSize: '1.25rem',
   fontWeight: 400,
-  marginBottom: theme.spacing(4),
+  marginBottom: 32,
   lineHeight: 1.6,
-  [theme.breakpoints.down('sm')]: {
+  '@media (max-width: 600px)': {
     fontSize: '1.1rem',
   },
 }))
 
 // Modern tab styling
-const ModernTabList = styled(TabList)(({ theme }) => ({
+const ModernTabList = styled(TabList)(() => ({
   background: alpha('#ffffff', 0.1),
   borderRadius: 20,
   padding: 4,
-  marginBottom: theme.spacing(3),
+  marginBottom: 24,
   backdropFilter: 'blur(10px)',
   border: `1px solid ${alpha('#ffffff', 0.1)}`,
   '& .MuiTabs-indicator': {
@@ -168,7 +165,7 @@ const ModernTabList = styled(TabList)(({ theme }) => ({
   },
 }))
 
-const ModernTab = styled(Tab)(({ theme }) => ({
+const ModernTab = styled(Tab)(() => ({
   borderRadius: 16,
   margin: '0 4px',
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -187,7 +184,7 @@ const ModernTab = styled(Tab)(({ theme }) => ({
 }))
 
 // Enhanced upload button
-const ModernUploadButton = styled(Button)(({ theme }) => ({
+const ModernUploadButton = styled(Button)(() => ({
   borderRadius: 20,
   padding: '16px 32px',
   background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -391,10 +388,9 @@ export function AppMain(props: LayoutProps) {
                   sx={{
                     display: 'flex',
                     gap: 2,
-                    alignItems: 'center',
+                    alignItems: { xs: 'start', sm: 'center' },
                     mb: 3,
                     flexDirection: { xs: 'column', sm: 'row' },
-                    alignItems: { xs: 'start', sm: 'center' },
                   }}
                 >
                   <Typography 
@@ -607,7 +603,7 @@ export function AppMain(props: LayoutProps) {
           }}
         >
           <History
-            onItemClick={(item) => {
+            onItemClick={(item: any) => {
               updateDrawerOpened(false)
               setCode(item.code)
             }}
