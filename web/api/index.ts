@@ -197,5 +197,29 @@ export function createAdminApi(token: string) {
         throw error
       }
     },
+
+    getTextContent: async (
+      fileId: string,
+    ): Promise<string> => {
+      try {
+        const response = await fetch(`/api/admin/files/${fileId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        
+        if (!response.ok) {
+          const errorText = await response.text()
+          throw new Error(`Failed to fetch text: ${response.status} - ${errorText}`)
+        }
+
+        const text = await response.text()
+        return text
+        
+      } catch (error) {
+        console.error('Text fetch error:', error)
+        throw error
+      }
+    },
   }
 }

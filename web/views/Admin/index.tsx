@@ -18,6 +18,12 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DownloadIcon from '@mui/icons-material/FileDownload'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Button from '@mui/material/Button'
 import { visuallyHidden } from '@mui/utils'
 import { useRoute } from 'preact-iso'
 import Info from '@mui/icons-material/InfoOutlined'
@@ -232,6 +238,17 @@ function AdminMain(props: AdminProps) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Array<FileType>>([])
+  
+  // Text preview state
+  const [textPreview, setTextPreview] = useState<{
+    open: boolean
+    content: string
+    filename: string
+  }>({
+    open: false,
+    content: '',
+    filename: ''
+  })
 
   const fetchList = async (pageSize = page) => {
     setBackdropOpen(true)
@@ -330,8 +347,23 @@ function AdminMain(props: AdminProps) {
   const createDownloadHandler = (file: FileType) => async (event: Event) => {
     event.stopPropagation()
     event.preventDefault()
+    
+    setBackdropOpen(true)
+    
     try {
-      setBackdropOpen(true)
+      // Check if this is a text file
+      if (file.filename?.includes('[文本]')) {
+        const content = await adminApi.getTextContent(file.id)
+        setTextPreview({
+          open: true,
+          content,
+          filename: file.filename
+        })
+        setBackdropOpen(false)
+        return
+      }
+      
+      // For non-text files, proceed with download
       await adminApi.downloadFile(file.id, file.filename)
       message.success('文件下载完成')
     } catch (error) {
@@ -493,6 +525,40 @@ function AdminMain(props: AdminProps) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      
+      {/* Text Preview Dialog */}
+      <Dialog
+        open={textPreview.open}
+        onClose={() => setTextPreview(prev => ({ ...prev, open: false }))}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <VisibilityIcon />
+            {textPreview.filename}
+          </div>
+        </DialogTitle>
+        <DialogContent>
+          <pre style={{ 
+            whiteSpace: 'pre-wrap', 
+            wordWrap: 'break-word',
+            fontSize: '14px',
+            fontFamily: 'monospace',
+            maxHeight: '60vh',
+            overflow: 'auto'
+          }}>
+            {textPreview.content}
+          </pre>
+        </DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={() => setTextPreview(prev => ({ ...prev, open: false }))}
+          >
+            关闭
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   )
 }
