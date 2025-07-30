@@ -354,10 +354,11 @@ function AdminMain(props: AdminProps) {
       // Debug logging
       console.log('File details:', file)
       console.log('Filename:', file.filename)
-      console.log('Contains [文本]:', file.filename?.includes('[文本]'))
+      console.log('Type:', file.type)
+      console.log('Is text file:', file.type === 'plain/string')
       
-      // Check if this is a text file
-      if (file.filename?.includes('[文本]')) {
+      // Check if this is a text file by type instead of filename
+      if (file.type === 'plain/string') {
         console.log('Detected text file, fetching content...')
         const content = await adminApi.getTextContent(file.id)
         console.log('Text content received:', content.substring(0, 100) + '...')
