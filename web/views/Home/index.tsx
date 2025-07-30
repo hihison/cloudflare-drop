@@ -467,7 +467,7 @@ export function AppMain(props: LayoutProps) {
                   Cloudflare Drop
                 </HeroTitle>
                 <HeroSubtitle variant="h6">
-                  {t('home.subtitle')}
+                  {t('header.subtitle')}
                 </HeroSubtitle>
               </Box>
             </Slide>
@@ -492,7 +492,7 @@ export function AppMain(props: LayoutProps) {
                       minWidth: 'fit-content'
                     }}
                   >
-                    {t('home.shareCode')}：
+                    {t('home.downloadSection.title')}：
                   </Typography>
                   <Code
                     length={6}
@@ -518,11 +518,11 @@ export function AppMain(props: LayoutProps) {
                   <Box sx={{ mb: 3 }}>
                     <ModernTabList
                       onChange={handleChangeTab}
-                      aria-label={t('home.shareTypeLabel')}
+                      aria-label="分享類型選擇"
                       centered
                     >
-                      <ModernTab label={t('home.textShare')} value="text" />
-                      <ModernTab label={t('home.fileShare')} value="file" />
+                      <ModernTab label={t('home.uploadSection.textTab')} value="text" />
+                      <ModernTab label={t('home.uploadSection.fileTab')} value="file" />
                     </ModernTabList>
                   </Box>
                   
@@ -533,7 +533,7 @@ export function AppMain(props: LayoutProps) {
                       rows={8}
                       value={text}
                       onInput={handleTextInput}
-                      placeholder={t('home.textPlaceholder')}
+                      placeholder={t('home.uploadSection.textPlaceholder')}
                       sx={{
                         '& .MuiOutlinedInput-root': {
                           borderRadius: 3,
@@ -622,7 +622,7 @@ export function AppMain(props: LayoutProps) {
                           },
                         }}
                       >
-                        {t('home.selectFile')}
+                        {t('home.uploadSection.fileUpload')}
                         <VisuallyHiddenInput
                           type="file"
                           onChange={handleFileChange}
@@ -763,7 +763,7 @@ export function AppMain(props: LayoutProps) {
                       }
                     }}
                   >
-                    {t('home.history')}
+                    {t('home.settings.history')}
                   </Button>
                   
                   <Box sx={{ 
@@ -792,7 +792,7 @@ export function AppMain(props: LayoutProps) {
                         },
                       }}
                     >
-                      {t('home.shareNow')}
+                      {t('home.uploadSection.shareButton')}
                     </ModernUploadButton>
                   </Box>
                 </Box>
