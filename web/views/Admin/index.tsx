@@ -351,9 +351,16 @@ function AdminMain(props: AdminProps) {
     setBackdropOpen(true)
     
     try {
+      // Debug logging
+      console.log('File details:', file)
+      console.log('Filename:', file.filename)
+      console.log('Contains [文本]:', file.filename?.includes('[文本]'))
+      
       // Check if this is a text file
       if (file.filename?.includes('[文本]')) {
+        console.log('Detected text file, fetching content...')
         const content = await adminApi.getTextContent(file.id)
+        console.log('Text content received:', content.substring(0, 100) + '...')
         setTextPreview({
           open: true,
           content,
@@ -363,6 +370,7 @@ function AdminMain(props: AdminProps) {
         return
       }
       
+      console.log('Not a text file, proceeding with download...')
       // For non-text files, proceed with download
       await adminApi.downloadFile(file.id, file.filename)
       message.success('文件下载完成')
