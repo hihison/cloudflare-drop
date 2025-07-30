@@ -329,6 +329,7 @@ function AdminMain(props: AdminProps) {
 
   const createDownloadHandler = (file: FileType) => async (event: Event) => {
     event.stopPropagation()
+    event.preventDefault()
     try {
       setBackdropOpen(true)
       await adminApi.downloadFile(file.id, file.filename)

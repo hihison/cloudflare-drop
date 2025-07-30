@@ -166,16 +166,32 @@ export function createAdminApi(token: string) {
           throw new Error('Downloaded file is empty')
         }
 
-        // Create download link
+        // Create download using a more reliable method
         const url = URL.createObjectURL(blob)
+        
+        // Create a temporary anchor element
         const a = document.createElement('a')
         a.href = url
         a.download = filename
+        
+        // Create a click event that won't interfere with routing
+        const clickEvent = new MouseEvent('click', {
+          view: window,
+          bubbles: false,
+          cancelable: true
+        })
+        
+        // Temporarily add to DOM (required for some browsers)
         a.style.display = 'none'
         document.body.appendChild(a)
-        a.click()
+        
+        // Trigger download
+        a.dispatchEvent(clickEvent)
+        
+        // Clean up immediately
         document.body.removeChild(a)
         URL.revokeObjectURL(url)
+        
       } catch (error) {
         console.error('Download error:', error)
         throw error
