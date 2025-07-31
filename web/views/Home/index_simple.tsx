@@ -17,7 +17,6 @@ import {
   ShareDialog,
   historyApi,
   History,
-  Progress,
   Duration,
   PasswordSwitch,
 } from './components'
@@ -32,7 +31,6 @@ export default function Home({ setBackdropOpen, message }: HomeProps) {
   
   const [tabValue, setTabValue] = useState('1')
   const [code, setCode] = useState('')
-  const [ephemeral, setEphemeral] = useState(false)
   const [text, setText] = useState('')
   const [password, setPassword] = useState('')
   const [duration, setDuration] = useState('7d')
@@ -70,17 +68,20 @@ export default function Home({ setBackdropOpen, message }: HomeProps) {
     
     try {
       const result = await uploadFile({
-        file: file || undefined,
-        text: text || undefined,
+        data: file ? file : new Blob([text], { type: 'text/plain' }),
+        isEphemeral: false,
         duration,
         password: password || undefined,
-        ephemeral,
       })
       
-      if (result) {
-        const shareDialog = await dialogs.open(ShareDialog, result)
-        if (shareDialog) {
-          historyApi.addRecord(result)
+      if (result.result && result.data) {
+        const payload = { 
+          ...result.data, 
+          message 
+        }
+        const dialogResult = await dialogs.open(ShareDialog, payload)
+        if (dialogResult !== undefined) {
+          historyApi.insertShared(result.data.code, !!file)
         }
       }
     } catch (error) {
