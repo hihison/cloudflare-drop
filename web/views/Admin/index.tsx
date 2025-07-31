@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useEffect, useState } from 'preact/hooks'
+import { useLanguage } from '../../helpers/i18n'
 import { alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
@@ -49,47 +50,6 @@ interface HeadCell {
   tooltip?: string
 }
 
-const headCells: readonly HeadCell[] = [
-  {
-    disablePadding: true,
-    label: '文件名',
-  },
-  {
-    disablePadding: false,
-    label: '分享码',
-    width: 150,
-  },
-  {
-    id: 'size',
-    disablePadding: false,
-    label: '大小',
-    tooltip: '使用二进制单位：1 MiB = 1024 × 1024 字节，与 macOS 显示略有不同',
-    width: 150,
-  },
-  {
-    id: 'due_date',
-    disablePadding: false,
-    label: '有效期至',
-    width: 150,
-  },
-  {
-    disablePadding: true,
-    label: '是否加密',
-    width: 100,
-  },
-  {
-    id: 'created_at',
-    disablePadding: false,
-    label: '创建时间',
-    width: 150,
-  },
-  {
-    disablePadding: true,
-    label: '操作',
-    width: 150,
-  },
-]
-
 interface EnhancedTableProps {
   numSelected: number
   onRequestSort: (property: keyof FileType) => void
@@ -97,6 +57,7 @@ interface EnhancedTableProps {
   order: Order
   orderBy: string
   rowCount: number
+  t: (key: string, params?: Record<string, string | number>) => string
 }
 
 function EnhancedTableHead(props: EnhancedTableProps) {
@@ -107,12 +68,54 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     numSelected,
     rowCount,
     onRequestSort,
+    t,
   } = props
   const createSortHandler = (property?: keyof FileType) => () => {
     if (property) {
       onRequestSort(property)
     }
   }
+
+  const headCells: readonly HeadCell[] = [
+    {
+      disablePadding: true,
+      label: t('admin.table.filename'),
+    },
+    {
+      disablePadding: false,
+      label: t('admin.table.shareCode'),
+      width: 150,
+    },
+    {
+      id: 'size',
+      disablePadding: false,
+      label: t('admin.table.size'),
+      tooltip: t('admin.table.sizeTooltip'),
+      width: 150,
+    },
+    {
+      id: 'due_date',
+      disablePadding: false,
+      label: t('admin.table.dueDate'),
+      width: 150,
+    },
+    {
+      disablePadding: true,
+      label: t('admin.table.encrypted'),
+      width: 100,
+    },
+    {
+      id: 'created_at',
+      disablePadding: false,
+      label: t('admin.table.createdAt'),
+      width: 150,
+    },
+    {
+      disablePadding: true,
+      label: t('admin.table.actions'),
+      width: 150,
+    },
+  ]
 
   return (
     <TableHead>
@@ -177,10 +180,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 interface EnhancedTableToolbarProps {
   numSelected: number
   onDelete: (event: Event) => void
+  t: (key: string, params?: Record<string, string | number>) => string
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props
+  const { numSelected, t } = props
 
   return (
     <Toolbar
@@ -206,7 +210,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           variant="subtitle1"
           component="div"
         >
-          选中 {numSelected}
+          {t('admin.actions.selected', { count: numSelected })}
         </Typography>
       ) : (
         <Typography
@@ -215,11 +219,11 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           id="tableTitle"
           component="div"
         >
-          分享列表
+          {t('admin.title')}
         </Typography>
       )}
       {numSelected > 0 && (
-        <Tooltip title="批量删除">
+        <Tooltip title={t('admin.actions.deleteSelected')}>
           <IconButton onClick={props.onDelete}>
             <DeleteIcon />
           </IconButton>
@@ -239,6 +243,7 @@ function AdminMain(props: AdminProps) {
   const setBackdropOpen = props.setBackdropOpen!
   const message = props.message!
   const token = props.token
+  const { t } = useLanguage()
   const adminApi = createAdminApi(token)
   const dialogs = useDialogs()
 
@@ -335,11 +340,11 @@ function AdminMain(props: AdminProps) {
   const createRemoveHandler = (id?: string) => async (event: Event) => {
     event.stopPropagation()
     const confirmed = await dialogs.confirm(
-      '删除后无法恢复，请确认是否删除？',
+      t('admin.confirmDelete'),
       {
-        okText: '确认',
-        cancelText: '取消',
-        title: !id ? '批量删除' : '删除分享',
+        okText: t('common.confirm'),
+        cancelText: t('common.cancel'),
+        title: !id ? t('admin.actions.deleteSelected') : t('admin.actions.delete'),
       },
     )
     if (confirmed) {
@@ -376,10 +381,10 @@ function AdminMain(props: AdminProps) {
       
       // For non-text files, proceed with download
       await adminApi.downloadFile(file.id, file.filename)
-      message.success('文件下载完成')
+      message.success(t('messages.uploadSuccess'))
     } catch (error) {
       console.error('Download failed:', error)
-      message.error('下载失败：' + (error as Error).message)
+      message.error(t('messages.downloadFailed'))
     } finally {
       setBackdropOpen(false)
     }
@@ -400,6 +405,7 @@ function AdminMain(props: AdminProps) {
         <EnhancedTableToolbar
           numSelected={selected.length}
           onDelete={createRemoveHandler()}
+          t={t}
         />
         <TableContainer>
           <Table
@@ -414,6 +420,7 @@ function AdminMain(props: AdminProps) {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              t={t}
             />
             <TableBody>
               {rows.map((row: any, index: number) => {
@@ -452,7 +459,7 @@ function AdminMain(props: AdminProps) {
                         title={row.filename}
                         className="text-ellipsis text-nowrap overflow-hidden"
                       >
-                        {row.type === 'plain/string' ? '[文本]' : row.filename}
+                        {row.type === 'plain/string' ? t('admin.status.text') : row.filename}
                       </Typography>
                     </TableCell>
                     <TableCell>{row.code}</TableCell>
@@ -462,13 +469,13 @@ function AdminMain(props: AdminProps) {
                         title={
                           row.due_date
                             ? dayjs(row.due_date).format(DATE_FORMAT)
-                            : '永久有效'
+                            : t('admin.status.permanent')
                         }
                       >
                         <Box component="span">
                           {row.due_date
                             ? dayjs(row.due_date).fromNow()
-                            : '永久有效'}
+                            : t('admin.status.permanent')}
                         </Box>
                       </Tooltip>
                     </TableCell>
@@ -489,7 +496,7 @@ function AdminMain(props: AdminProps) {
                       </Tooltip>
                     </TableCell>
                     <TableCell padding="none">
-                      <Tooltip title="下载文件">
+                      <Tooltip title={t('admin.actions.download')}>
                         <IconButton
                           aria-label="download"
                           onClick={createDownloadHandler(row)}
@@ -497,7 +504,7 @@ function AdminMain(props: AdminProps) {
                           <DownloadIcon color="action" />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="删除分享">
+                      <Tooltip title={t('admin.actions.delete')}>
                         <IconButton
                           aria-label="delete"
                           onClick={createRemoveHandler(row.id)}
@@ -525,9 +532,9 @@ function AdminMain(props: AdminProps) {
         <TablePagination
           className="flex-shrink-0"
           labelDisplayedRows={({ from, to, count }: {from: number, to: number, count: number}) =>
-            `${from} - ${to} 共 ${count} 条`
+            t('admin.pagination.displayedRows', { from, to, count })
           }
-          labelRowsPerPage="分页大小"
+          labelRowsPerPage={t('admin.pagination.rowsPerPage')}
           rowsPerPageOptions={[10]}
           component="div"
           count={total}
@@ -570,7 +577,7 @@ function AdminMain(props: AdminProps) {
           <Button 
             onClick={() => setTextPreview((prev: any) => ({ ...prev, open: false }))}
           >
-            关闭
+            {t('common.close')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -52,10 +52,12 @@
   },
   "admin": {
     "title": "管理面板",
+    "confirmDelete": "刪除後無法復原，請確認是否刪除？",
     "table": {
       "filename": "檔案名稱",
       "shareCode": "分享碼",
       "size": "大小",
+      "sizeTooltip": "使用二進位單位：1 MiB = 1024 × 1024 位元組，與 macOS 顯示略有不同",
       "dueDate": "有效期至",
       "encrypted": "是否加密",
       "createdAt": "建立時間",
@@ -65,7 +67,8 @@
       "download": "下載檔案",
       "preview": "預覽文字",
       "delete": "刪除檔案",
-      "deleteSelected": "刪除所選"
+      "deleteSelected": "刪除所選",
+      "selected": "已選取 {count}"
     },
     "status": {
       "permanent": "永久",

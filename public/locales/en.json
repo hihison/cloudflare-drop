@@ -52,10 +52,12 @@
   },
   "admin": {
     "title": "Admin Panel",
+    "confirmDelete": "Files cannot be recovered after deletion. Are you sure you want to delete?",
     "table": {
       "filename": "Filename",
       "shareCode": "Share Code",
       "size": "Size",
+      "sizeTooltip": "Using binary units: 1 MiB = 1024 × 1024 bytes, slightly different from macOS display",
       "dueDate": "Expires At",
       "encrypted": "Encrypted",
       "createdAt": "Created At",
@@ -65,7 +67,8 @@
       "download": "Download File",
       "preview": "Preview Text",
       "delete": "Delete File",
-      "deleteSelected": "Delete Selected"
+      "deleteSelected": "Delete Selected",
+      "selected": "Selected {count}"
     },
     "status": {
       "permanent": "Permanent",
