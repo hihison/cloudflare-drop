@@ -47,7 +47,6 @@ export function Layout({ children }: LayoutProps) {
     >
       <div
         class="flex flex-col mr-auto ml-auto"
-        style="max-height: calc(100vh - 32px)"
       >
         <Box 
           className="flex justify-between items-center" 
