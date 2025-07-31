@@ -74,7 +74,7 @@ export default function Home({ setBackdropOpen, message }: HomeProps) {
         password: password || undefined,
       })
       
-      if (result.result && result.data) {
+      if (result.result && result.data && message) {
         const payload = { 
           ...result.data, 
           message 
