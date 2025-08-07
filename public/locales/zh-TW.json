@@ -123,7 +123,10 @@
       "originalShare": "原始分享 SHA256 Hash 值",
       "verificationTool": "校驗工具",
       "expectedExpiry": "預計過期於",
-      "permanent": "永久有效"
+      "permanent": "永久有效",
+      "linkLabel": "連結",
+      "extractCode": "提取碼",
+      "sha256Hash": "SHA256 Hash 值"
     }
   },
   "pwa": {

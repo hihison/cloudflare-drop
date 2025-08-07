@@ -33,7 +33,7 @@ export function ShareDialog({
 >) {
   const { t } = useLanguage()
   const url = `${window.location.protocol}//${window.location.host}?code=${payload.code}`
-  const desc = `链接: ${url} 提取码: ${payload.code} ${payload.is_encrypted ? '' : ` SHA256 Hash 值: ${payload.hash}`} `
+  const desc = `${t('dialogs.fileShare.linkLabel')}: ${url} ${t('dialogs.fileShare.extractCode')}: ${payload.code} ${payload.is_encrypted ? '' : ` ${t('dialogs.fileShare.sha256Hash')}: ${payload.hash}`} `
   const qr = useRef(
     new QrCode({
       content: url,

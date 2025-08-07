@@ -123,7 +123,10 @@
       "originalShare": "Original Share SHA256 Hash Value",
       "verificationTool": "Verification Tool",
       "expectedExpiry": "Expected to expire",
-      "permanent": "Permanent"
+      "permanent": "Permanent",
+      "linkLabel": "Link",
+      "extractCode": "Extract Code",
+      "sha256Hash": "SHA256 Hash Value"
     }
   },
   "pwa": {
