@@ -113,6 +113,8 @@
     "updateAvailable": "New version available",
     "updateNow": "Update Now",
     "offline": "You are offline",
-    "installPrompt": "Install Cloudflare Drop for quick access!"
+    "installPrompt": "Install Cloudflare Drop for quick access!",
+    "howToInstall": "How to Install",
+    "iosInstallInstructions": "1. Tap the Share button in Safari\n2. Scroll down and tap \"Add to Home Screen\"\n3. Tap \"Add\" to install the app"
   }
 }

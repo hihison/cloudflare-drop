@@ -39,12 +39,17 @@ function Main() {
 
 render(<Main />, document.getElementById('app')!)
 
-// Register Service Worker for PWA functionality
+// Enhanced Service Worker registration with iOS support
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('/sw.js', {
+      scope: '/'
+    })
       .then((registration) => {
         console.log('Service Worker registered successfully:', registration.scope)
+        
+        // iOS-specific: Force update check
+        registration.update()
         
         // Listen for updates
         registration.addEventListener('updatefound', () => {
@@ -54,10 +59,19 @@ if ('serviceWorker' in navigator) {
               if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                 // New content is available, show update notification
                 if (confirm('New version available. Refresh to update?')) {
+                  // Send message to skip waiting
+                  newWorker.postMessage({ type: 'SKIP_WAITING' })
                   window.location.reload()
                 }
               }
             })
+          }
+        })
+
+        // Handle service worker messages
+        navigator.serviceWorker.addEventListener('message', event => {
+          if (event.data && event.data.type === 'SW_UPDATED') {
+            window.location.reload()
           }
         })
       })
@@ -67,17 +81,57 @@ if ('serviceWorker' in navigator) {
   })
 }
 
-// Handle app install prompt
+// iOS-specific PWA detection and handling
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+const isStandalone = ('standalone' in navigator) && (navigator as any).standalone
+const isInWebAppiOS = isIOS && isStandalone
+
+// Enhanced app install prompt handling
 let deferredPrompt: any
+let installPromptShown = false
+
 window.addEventListener('beforeinstallprompt', (e) => {
   // Prevent Chrome 67 and earlier from automatically showing the prompt
   e.preventDefault()
   // Stash the event so it can be triggered later
   deferredPrompt = e
-  
-  // Show install button or banner (you can customize this)
-  console.log('App can be installed')
+  installPromptShown = false
+  console.log('App can be installed (Android/Chrome)')
 })
+
+// iOS-specific install guidance
+if (isIOS && !isInWebAppiOS && !installPromptShown) {
+  // Show iOS install instructions after a delay
+  setTimeout(() => {
+    const showIOSInstallTip = localStorage.getItem('iosInstallTipShown') !== 'true'
+    if (showIOSInstallTip) {
+      console.log('iOS detected - PWA can be installed via Safari Share menu')
+      // You can show a custom iOS install banner here
+      localStorage.setItem('iosInstallTipShown', 'true')
+    }
+  }, 3000)
+}
+
+// Handle app installed event
+window.addEventListener('appinstalled', () => {
+  console.log('PWA was installed successfully')
+  deferredPrompt = null
+  installPromptShown = true
+})
+
+// iOS-specific viewport handling for PWA
+if (isInWebAppiOS) {
+  // Handle iOS PWA viewport issues
+  const viewport = document.querySelector('meta[name=viewport]')
+  if (viewport) {
+    viewport.setAttribute('content', 
+      'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover, user-scalable=no'
+    )
+  }
+  
+  // Add iOS PWA class for specific styling
+  document.body.classList.add('ios-pwa')
+}
 
 // Optional: Add install button functionality
 export function showInstallPrompt() {

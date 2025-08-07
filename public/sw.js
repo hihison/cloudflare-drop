@@ -1,30 +1,45 @@
-// Basic Service Worker for Cloudflare Drop PWA
-const CACHE_NAME = 'cloudflare-drop-v1'
+// Enhanced Service Worker for Cloudflare Drop PWA with iOS Support
+const CACHE_NAME = 'cloudflare-drop-v2'
 const STATIC_CACHE_URLS = [
   '/',
   '/index.html',
   '/web/main.tsx',
   '/logo.png',
   '/logo.svg',
-  '/manifest.json'
+  '/manifest.json',
+  '/apple-touch-icon.png'
+]
+
+// iOS-specific cache strategies
+const IOS_CACHE_FIRST_URLS = [
+  '/manifest.json',
+  '/apple-touch-icon.png',
+  '/logo.png',
+  '/logo.svg'
 ]
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
+  console.log('Service Worker installing...')
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Caching static assets')
+        console.log('Caching static assets for iOS PWA')
         return cache.addAll(STATIC_CACHE_URLS)
       })
       .then(() => {
+        console.log('Service Worker installed successfully')
         return self.skipWaiting()
+      })
+      .catch(error => {
+        console.error('Service Worker installation failed:', error)
       })
   )
 })
 
 // Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
+  console.log('Service Worker activating...')
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
@@ -38,12 +53,13 @@ self.addEventListener('activate', (event) => {
         )
       })
       .then(() => {
+        console.log('Service Worker activated')
         return self.clients.claim()
       })
   )
 })
 
-// Fetch event - serve from cache, fallback to network
+// Enhanced fetch event with iOS-specific handling
 self.addEventListener('fetch', (event) => {
   // Skip non-GET requests
   if (event.request.method !== 'GET') {
@@ -55,67 +71,105 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Return cached version or fetch from network
-        return response || fetch(event.request)
-          .then((fetchResponse) => {
-            // Don't cache API responses or large files
-            if (
-              event.request.url.includes('/api/') ||
-              event.request.url.includes('/files/')
-            ) {
+  // Skip range requests (common on iOS)
+  if (event.request.headers.get('range')) {
+    return
+  }
+
+  // iOS-specific cache-first strategy for certain resources
+  if (IOS_CACHE_FIRST_URLS.some(url => event.request.url.includes(url))) {
+    event.respondWith(
+      caches.match(event.request)
+        .then(response => {
+          if (response) {
+            return response
+          }
+          return fetch(event.request)
+            .then(fetchResponse => {
+              const responseToCache = fetchResponse.clone()
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseToCache)
+                })
               return fetchResponse
-            }
+            })
+        })
+        .catch(() => {
+          console.log('Network and cache failed for:', event.request.url)
+        })
+    )
+    return
+  }
 
-            // Clone the response
-            const responseToCache = fetchResponse.clone()
+  // Default network-first strategy
+  event.respondWith(
+    fetch(event.request)
+      .then((fetchResponse) => {
+        // Don't cache API responses or large files
+        if (
+          event.request.url.includes('/api/') ||
+          event.request.url.includes('/files/') ||
+          fetchResponse.status !== 200 ||
+          !fetchResponse.headers.get('content-type')
+        ) {
+          return fetchResponse
+        }
 
-            // Cache the response
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache)
-              })
+        // Clone the response
+        const responseToCache = fetchResponse.clone()
 
-            return fetchResponse
+        // Cache the response
+        caches.open(CACHE_NAME)
+          .then((cache) => {
+            cache.put(event.request, responseToCache)
           })
-          .catch(() => {
+
+        return fetchResponse
+      })
+      .catch(() => {
+        // Fallback to cache
+        return caches.match(event.request)
+          .then(response => {
+            if (response) {
+              return response
+            }
             // Return offline page for navigation requests
             if (event.request.mode === 'navigate') {
-              return caches.match('/')
+              return caches.match('/') || new Response('Offline', { status: 503 })
             }
           })
       })
   )
 })
 
-// Background sync for file uploads (if supported)
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'file-upload-sync') {
-    event.waitUntil(
-      // Handle background file upload sync
-      console.log('Background sync triggered for file upload')
-    )
-  }
-})
+// iOS doesn't support background sync, so provide fallback
+if (self.registration.sync) {
+  self.addEventListener('sync', (event) => {
+    if (event.tag === 'file-upload-sync') {
+      event.waitUntil(
+        console.log('Background sync triggered for file upload')
+      )
+    }
+  })
+}
 
-// Push notifications (if supported)
+// Enhanced push notifications for iOS
 self.addEventListener('push', (event) => {
   if (event.data) {
     const data = event.data.json()
     
     const options = {
       body: data.body || 'File sharing update',
-      icon: '/logo.png',
-      badge: '/logo.png',
+      icon: '/apple-touch-icon.png',
+      badge: '/apple-touch-icon.png',
       tag: 'file-notification',
       requireInteraction: false,
+      vibrate: [200, 100, 200], // iOS supports basic vibration
       actions: [
         {
           action: 'view',
           title: 'View',
-          icon: '/logo.png'
+          icon: '/apple-touch-icon.png'
         }
       ]
     }
@@ -126,13 +180,35 @@ self.addEventListener('push', (event) => {
   }
 })
 
-// Notification click handler
+// Enhanced notification click handler
 self.addEventListener('notificationclick', (event) => {
   event.notification.close()
 
-  if (event.action === 'view') {
-    event.waitUntil(
-      clients.openWindow('/')
-    )
+  const urlToOpen = event.action === 'view' ? '/' : '/'
+
+  event.waitUntil(
+    clients.matchAll({
+      type: 'window',
+      includeUncontrolled: true
+    }).then(function(clientList) {
+      // Check if app is already open
+      for (let i = 0; i < clientList.length; i++) {
+        const client = clientList[i]
+        if (client.url.includes(self.location.origin) && 'focus' in client) {
+          return client.focus()
+        }
+      }
+      // If not open, open new window
+      if (clients.openWindow) {
+        return clients.openWindow(urlToOpen)
+      }
+    })
+  )
+})
+
+// iOS-specific message handling
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
   }
 })
