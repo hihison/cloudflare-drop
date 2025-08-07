@@ -36,7 +36,7 @@
       "shareButton": "Share Now"
     },
     "settings": {
-      "duration": "Expiration",
+      "duration": "Expiration Configuration",
       "ephemeral": "Burn After Reading",
       "password": "Access Password",
       "history": "History"

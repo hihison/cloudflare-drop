@@ -723,7 +723,7 @@ export function AppMain(props: LayoutProps) {
                           },
                         }}
                       >
-                        阅后即焚
+                        {t('settings.ephemeral')}
                       </Typography>
                     }
                     sx={{ 

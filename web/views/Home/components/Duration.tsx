@@ -6,6 +6,7 @@ import { useState } from 'preact/hooks'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { ManipulateType } from 'dayjs'
+import { useLanguage } from '../../../helpers'
 
 interface DurationProps {
   value?: string
@@ -62,6 +63,7 @@ function resolveDuration(str: string): [number, ManipulateType] {
 
 export function Duration(props: DurationProps) {
   const { value = '', onChange } = props
+  const { t } = useLanguage()
 
   const [count, updateCount] = useState(0)
   const [type, updateType] = useState(DEFAULT_VALUE)
@@ -168,7 +170,7 @@ export function Duration(props: DurationProps) {
           </Select>
         </Box>
       }
-      label="过期配置"
+      label={t('settings.duration')}
       labelPlacement="start"
     />
   )
