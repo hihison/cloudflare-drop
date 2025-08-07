@@ -151,3 +151,24 @@ button, [role="button"], .clickable {
   -webkit-user-select: none;
   user-select: none;
 }
+
+/* Material-UI Component Overrides */
+.css-1efw8qf {
+  color: rgb(23, 23, 23) !important;
+  background-image: none !important;
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow-y: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 90% !important;
+  max-height: none !important;
+  border-radius: 28px !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(40px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 25px 50px !important;
+}
