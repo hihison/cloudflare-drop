@@ -111,7 +111,7 @@ export function ShareDialog({
         <Box sx={{ mt: 2 }}>
           <Typography variant="body2" color="textDisabled">
             {t('dialogs.fileShare.originalShare')}{' '}
-            <a target="_blank" href="https://www.lzltool.com/data-hash">
+            <a target="_blank" href="https://emn178.github.io/online-tools/sha256.html">
               ({t('dialogs.fileShare.verificationTool')})
             </a>
             {'：'}
