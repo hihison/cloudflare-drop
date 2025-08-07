@@ -48,6 +48,16 @@
       "7d": "7天",
       "30d": "30天",
       "permanent": "永久"
+    },
+    "timeUnits": {
+      "default": "默认",
+      "minute": "分钟",
+      "hour": "小时",
+      "day": "天",
+      "week": "周",
+      "month": "月",
+      "year": "年",
+      "permanent": "永久有效"
     }
   },
   "admin": {

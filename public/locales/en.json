@@ -48,6 +48,16 @@
       "7d": "7 days",
       "30d": "30 days",
       "permanent": "Permanent"
+    },
+    "timeUnits": {
+      "default": "Default",
+      "minute": "Minutes",
+      "hour": "Hours", 
+      "day": "Days",
+      "week": "Weeks",
+      "month": "Months",
+      "year": "Years",
+      "permanent": "Permanent"
     }
   },
   "admin": {
