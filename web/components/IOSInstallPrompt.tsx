@@ -33,9 +33,7 @@ export function IOSInstallPrompt() {
 
   const handleInstallGuide = () => {
     // Show install instructions
-    alert(t('pwa.iosInstallInstructions', 
-      '1. Tap the Share button in Safari\n2. Scroll down and tap "Add to Home Screen"\n3. Tap "Add" to install the app'
-    ))
+    alert(t('pwa.iosInstallInstructions'))
     handleDismiss()
   }
 
@@ -46,7 +44,7 @@ export function IOSInstallPrompt() {
   return (
     <div className="ios-install-banner">
       <div style={{ marginBottom: '8px' }}>
-        📱 {t('pwa.installPrompt', 'Install Cloudflare Drop for quick access!')}
+        📱 {t('pwa.installPrompt')}
       </div>
       <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
         <button 
@@ -60,7 +58,7 @@ export function IOSInstallPrompt() {
             fontSize: '12px'
           }}
         >
-          {t('pwa.howToInstall', 'How to Install')}
+          {t('pwa.howToInstall')}
         </button>
         <button 
           onClick={handleDismiss}
@@ -73,7 +71,7 @@ export function IOSInstallPrompt() {
             fontSize: '12px'
           }}
         >
-          {t('common.close', 'Close')}
+          {t('common.close')}
         </button>
       </div>
     </div>
