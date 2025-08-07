@@ -8,7 +8,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 
-import { Message, useMessage, Github, LanguageSelector } from './'
+import { Message, useMessage, Github, LanguageSelector, InstallPrompt } from './'
 
 export interface LayoutProps {
   children?: ComponentChildren
@@ -128,6 +128,7 @@ export function Layout({ children }: LayoutProps) {
         {injectedChildren}
       </div>
       <Message {...messageProps} />
+      <InstallPrompt />
       <Backdrop
         sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
         open={backdropOpen}
