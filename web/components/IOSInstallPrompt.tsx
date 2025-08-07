@@ -32,9 +32,8 @@ export function IOSInstallPrompt() {
   }
 
   const handleInstallGuide = () => {
-    // Show install instructions
+    // Open a simple alert with install instructions for now
     alert(t('pwa.iosInstallInstructions'))
-    handleDismiss()
   }
 
   if (!isIOS || !showBanner) {
@@ -42,20 +41,49 @@ export function IOSInstallPrompt() {
   }
 
   return (
-    <div className="ios-install-banner">
-      <div style={{ marginBottom: '8px' }}>
-        📱 {t('pwa.installPrompt')}
+    <div 
+      className="ios-install-banner"
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        left: '20px',
+        right: '20px',
+        background: 'linear-gradient(135deg, #1976d2, #1565c0)',
+        color: 'white',
+        padding: '16px',
+        borderRadius: '12px',
+        boxShadow: '0 8px 32px rgba(25, 118, 210, 0.3)',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        zIndex: 1000,
+        maxWidth: '400px',
+        margin: '0 auto'
+      }}
+    >
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        marginBottom: '12px',
+        fontSize: '14px',
+        fontWeight: '500'
+      }}>
+        <span className="emoji" style={{ fontSize: '20px', marginRight: '8px' }}>📱</span>
+        {t('pwa.installPrompt')}
       </div>
-      <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
         <button 
           onClick={handleInstallGuide}
           style={{
-            background: '#1976d2',
-            color: 'white',
+            background: 'rgba(255, 255, 255, 0.9)',
+            color: '#1976d2',
             border: 'none',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '12px'
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontSize: '13px',
+            fontWeight: '600',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
           }}
         >
           {t('pwa.howToInstall')}
@@ -65,10 +93,13 @@ export function IOSInstallPrompt() {
           style={{
             background: 'transparent',
             color: 'white',
-            border: '1px solid white',
-            padding: '6px 12px',
-            borderRadius: '4px',
-            fontSize: '12px'
+            border: '1.5px solid rgba(255, 255, 255, 0.6)',
+            padding: '8px 16px',
+            borderRadius: '8px',
+            fontSize: '13px',
+            fontWeight: '500',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
           }}
         >
           {t('common.close')}

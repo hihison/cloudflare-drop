@@ -82,23 +82,66 @@ input, textarea, select {
 }
 
 /* iOS PWA Install Banner (Custom) */
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .ios-install-banner {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.9);
+  background: linear-gradient(135deg, #1976d2, #1565c0);
   color: white;
-  padding: 12px 20px;
-  border-radius: 8px;
+  padding: 16px 20px;
+  border-radius: 12px;
   font-size: 14px;
   z-index: 10000;
   max-width: 90vw;
+  min-width: 300px;
   text-align: center;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideUpFade 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ios-install-banner .emoji {
+  animation: pulse 2s infinite;
+  display: inline-block;
 }
 
 .ios-install-banner.hidden {
   display: none;
+}
+
+.ios-install-banner button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ios-install-banner button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ios-install-banner button:active {
+  transform: translateY(0);
 }
 
 /* Touch feedback for iOS */
