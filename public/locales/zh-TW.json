@@ -116,6 +116,14 @@
       "title": "檔案預覽",
       "download": "下載檔案",
       "share": "分享檔案"
+    },
+    "fileShare": {
+      "textShare": "文字分享",
+      "fileShare": "檔案分享",
+      "originalShare": "原始分享 SHA256 Hash 值",
+      "verificationTool": "校驗工具",
+      "expectedExpiry": "預計過期於",
+      "permanent": "永久有效"
     }
   },
   "pwa": {

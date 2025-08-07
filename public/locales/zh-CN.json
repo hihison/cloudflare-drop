@@ -116,6 +116,14 @@
       "title": "文件预览",
       "download": "下载文件",
       "share": "分享文件"
+    },
+    "fileShare": {
+      "textShare": "文本分享",
+      "fileShare": "文件分享",
+      "originalShare": "原始分享 SHA256 Hash 值",
+      "verificationTool": "校验工具",
+      "expectedExpiry": "预计过期于",
+      "permanent": "永久有效"
     }
   }
 }

@@ -18,6 +18,7 @@ import { BasicDialog } from './BasicDialog.tsx'
 import { PasswordSwitch } from './PasswordSwitch.tsx'
 import LockClose from '@mui/icons-material/Lock'
 import LockOpen from '@mui/icons-material/LockOpen'
+import { useLanguage } from '../../../helpers'
 
 dayjs.extend(relativeTime)
 dayjs.locale(zh)
@@ -35,6 +36,7 @@ export function FileDialog({
     token?: string
   }
 >) {
+  const { t } = useLanguage()
   const dialogs = useDialogs()
   const isText = payload.type === 'plain/string'
   const [text, updateText] = useState(
@@ -135,7 +137,7 @@ export function FileDialog({
     <BasicDialog
       open={open}
       onClose={handleClose}
-      title={isText ? '文本分享' : '文件分享'}
+      title={isText ? t('dialogs.fileShare.textShare') : t('dialogs.fileShare.fileShare')}
     >
       <Box>
         {isText && (

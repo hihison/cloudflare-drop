@@ -116,6 +116,14 @@
       "title": "File Preview",
       "download": "Download File",
       "share": "Share File"
+    },
+    "fileShare": {
+      "textShare": "Text Sharing",
+      "fileShare": "File Sharing",
+      "originalShare": "Original Share SHA256 Hash Value",
+      "verificationTool": "Verification Tool",
+      "expectedExpiry": "Expected to expire",
+      "permanent": "Permanent"
     }
   },
   "pwa": {
