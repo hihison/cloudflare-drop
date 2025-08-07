@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import Button from '@mui/material/Button'
 import InstallMobileIcon from '@mui/icons-material/InstallMobile'
-import { useLanguage } from '../helpers/i18n'
+import { useLanguage } from '../helpers'
 
 interface InstallPromptProps {
   className?: string
@@ -77,7 +77,7 @@ export function InstallPrompt({ className }: InstallPromptProps) {
         },
       }}
     >
-      {t('pwa.install', 'Install App')}
+      {t('pwa.install')}
     </Button>
   )
 }

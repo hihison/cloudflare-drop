@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useLanguage } from '../helpers/i18n'
+import { useLanguage } from '../helpers'
 
 export function IOSInstallPrompt() {
   const { t } = useLanguage()

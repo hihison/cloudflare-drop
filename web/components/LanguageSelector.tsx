@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
-import { useLanguage, type Language } from '../helpers/i18n'
+import { useLanguage, type Language } from '../helpers'
 
 const LANGUAGE_FLAGS = {
   'zh-CN': '🇨🇳',
