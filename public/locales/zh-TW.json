@@ -36,7 +36,7 @@
       "shareButton": "立即分享"
     },
     "settings": {
-      "duration": "有效期",
+      "duration": "過期配置",
       "ephemeral": "閱後即焚",
       "password": "存取密碼",
       "history": "歷史記錄"
@@ -107,5 +107,14 @@
       "download": "下載檔案",
       "share": "分享檔案"
     }
+  },
+  "pwa": {
+    "install": "安裝應用程式",
+    "updateAvailable": "有新版本可用",
+    "updateNow": "立即更新",
+    "offline": "您目前離線",
+    "installPrompt": "安裝 Cloudflare Drop 以便快速存取！",
+    "howToInstall": "如何安裝",
+    "iosInstallInstructions": "1. 在 Safari 中點擊分享按鈕\n2. 向下滾動並點擊「加入主畫面」\n3. 點擊「加入」以安裝應用程式"
   }
 }
