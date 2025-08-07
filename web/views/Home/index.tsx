@@ -723,7 +723,7 @@ export function AppMain(props: LayoutProps) {
                           },
                         }}
                       >
-                        {t('settings.ephemeral')}
+                        {t('home.settings.ephemeral')}
                       </Typography>
                     }
                     sx={{ 

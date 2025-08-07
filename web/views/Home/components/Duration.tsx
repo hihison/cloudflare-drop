@@ -170,7 +170,7 @@ export function Duration(props: DurationProps) {
           </Select>
         </Box>
       }
-      label={t('settings.duration')}
+      label={t('home.settings.duration')}
       labelPlacement="start"
     />
   )
