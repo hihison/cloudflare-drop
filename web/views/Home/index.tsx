@@ -110,7 +110,7 @@ const ModernCard = styled(Card)(() => ({
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   overflow: 'hidden',
   position: 'relative',
-  maxWidth: 800,
+  maxWidth: 1000,
   width: '100%',
   margin: '0 auto',
   animation: `${floatAnimation} 6s ease-in-out infinite`,
@@ -405,7 +405,7 @@ export function AppMain(props: LayoutProps) {
 
   return (
     <Fade in timeout={800}>
-      <GlassContainer maxWidth="md">
+      <GlassContainer maxWidth="xl">
         <ModernCard>
           <CardContent 
             sx={{ 
