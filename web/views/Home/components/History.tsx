@@ -244,6 +244,10 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
         width: 320,
         background: 'transparent',
         color: alpha('#ffffff', 0.9),
+        '&:hover': {
+          background: 'transparent',
+          color: alpha('#ffffff', 0.9),
+        },
       }}
     >
       <Typography
@@ -265,6 +269,9 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
             borderColor: alpha('#ffffff', 0.2),
             background: alpha('#ffffff', 0.05),
             borderRadius: '16px 16px 0 0',
+            '&:hover': {
+              background: alpha('#ffffff', 0.05),
+            },
           }}
         >
           <TabList

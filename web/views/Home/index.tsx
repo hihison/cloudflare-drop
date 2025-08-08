@@ -856,6 +856,11 @@ export function AppMain(props: LayoutProps) {
               background: alpha('#ffffff', 0.1),
               backdropFilter: 'blur(20px)',
               border: `1px solid ${alpha('#ffffff', 0.1)}`,
+              '&:hover': {
+                background: alpha('#ffffff', 0.1),
+                transform: 'none',
+                boxShadow: 'inherit',
+              },
               '@media (max-width: 768px)': {
                 width: '85vw',
                 maxWidth: '400px',
