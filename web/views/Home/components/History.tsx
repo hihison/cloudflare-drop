@@ -165,10 +165,6 @@ function RecordList(props: RecordListProps) {
               sx={{
                 p: 0.5,
                 color: alpha('#ffffff', 0.6),
-                '&:hover': {
-                  color: alpha('#ffffff', 0.9),
-                  backgroundColor: alpha('#ffffff', 0.1),
-                },
               }}
               onClick={(e) => onDelete(e, item.id)}
             >
@@ -179,9 +175,6 @@ function RecordList(props: RecordListProps) {
             cursor: 'pointer',
             pr: '32px',
             color: alpha('#ffffff', 0.9),
-            '&:hover': {
-              backgroundColor: alpha('#ffffff', 0.1),
-            },
             borderRadius: 2,
             margin: '4px 8px',
           }}
