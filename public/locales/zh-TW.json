@@ -41,6 +41,13 @@
       "password": "存取密碼",
       "history": "歷史記錄"
     },
+    "history": {
+      "title": "歷史記錄",
+      "sharedTab": "已分享",
+      "receivedTab": "已接收",
+      "empty": "記錄為空",
+      "shareCodeLabel": "分享碼 {code}，點擊查看"
+    },
     "durations": {
       "5m": "5分鐘",
       "1h": "1小時",

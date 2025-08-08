@@ -41,6 +41,13 @@
       "password": "Access Password",
       "history": "History"
     },
+    "history": {
+      "title": "History",
+      "sharedTab": "Shared",
+      "receivedTab": "Received",
+      "empty": "No records",
+      "shareCodeLabel": "Share code {code}, click to view"
+    },
     "durations": {
       "5m": "5 minutes",
       "1h": "1 hour",

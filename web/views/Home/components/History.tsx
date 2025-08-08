@@ -18,6 +18,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import { useState } from 'preact/hooks'
+import { useLanguage } from '../../../helpers/i18n'
 
 export interface ShareType {
   type: 'received' | 'shared'
@@ -133,11 +134,12 @@ interface RecordListProps {
 
 function RecordList(props: RecordListProps) {
   const { list, onView, onDelete } = props
+  const { t } = useLanguage()
   if (!list.length)
     return (
       <Box className="flex items-center justify-center" sx={{ p: 4 }}>
-        <Typography variant="caption" color="textDisabled">
-          记录为空
+        <Typography variant="caption" color="text.secondary" sx={{ opacity: 0.8 }}>
+          {t('home.history.empty')}
         </Typography>
       </Box>
     )
@@ -168,9 +170,9 @@ function RecordList(props: RecordListProps) {
             {!item.file && <TextFieldsIcon fontSize="medium" />}
           </ListItemIcon>
           <ListItemText
-            primary={<Typography>分享码 {item.code}，点击查看</Typography>}
+            primary={<Typography>{t('home.history.shareCodeLabel', { code: item.code })}</Typography>}
             secondary={
-              <Typography color="textDisabled" variant="caption">
+              <Typography color="text.secondary" variant="caption" sx={{ opacity: 0.9 }}>
                 {dayjs(item.date).fromNow()}
               </Typography>
             }
@@ -186,6 +188,7 @@ function RecordList(props: RecordListProps) {
 
 export const History = observer(({ onItemClick }: HistoryProps) => {
   const [tab, updateTab] = useState<'shared' | 'received'>('shared')
+  const { t } = useLanguage()
 
   const handleDelete = (e: MouseEvent, id: string) => {
     e.preventDefault()
@@ -201,8 +204,8 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
 
   return (
     <Box className="flex flex-col h-full" sx={{ width: 320 }}>
-      <Typography variant="h4" color="textDisabled" sx={{ p: 2 }}>
-        历史记录
+      <Typography variant="h4" color="primary" sx={{ p: 2, fontWeight: 600 }}>
+        {t('home.history.title')}
       </Typography>
       <TabContext value={tab}>
         <Box
@@ -210,8 +213,8 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
           <TabList onChange={(_e, tab) => updateTab(tab)}>
-            <Tab label="已分享" value="shared" />
-            <Tab label="已接收" value="received" />
+            <Tab label={t('home.history.sharedTab')} value="shared" />
+            <Tab label={t('home.history.receivedTab')} value="received" />
           </TabList>
         </Box>
         <Box className="min-h-0 overflow-auto">

@@ -41,6 +41,13 @@
       "password": "访问密码",
       "history": "历史记录"
     },
+    "history": {
+      "title": "历史记录",
+      "sharedTab": "已分享",
+      "receivedTab": "已接收",
+      "empty": "记录为空",
+      "shareCodeLabel": "分享码 {code}，点击查看"
+    },
     "durations": {
       "5m": "5分钟",
       "1h": "1小时",
