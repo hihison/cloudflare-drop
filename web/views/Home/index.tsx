@@ -82,7 +82,7 @@ const GlassContainer = styled(Container)(() => ({
 
 // Modern card with enhanced glassmorphism
 const ModernCard = styled(Card)(() => ({
-  background: alpha('#ffffff', 0.1),
+  background: alpha('#183951', 0.15),
   backdropFilter: 'blur(20px) saturate(180%)',
   border: `1px solid ${alpha('#ffffff', 0.2)}`,
   borderRadius: 32,
@@ -115,7 +115,7 @@ const ModernCard = styled(Card)(() => ({
 
 // Modern tab styling
 const ModernTabList = styled(TabList)(() => ({
-  background: alpha('#ffffff', 0.1),
+  background: alpha('#183951', 0.3),
   borderRadius: 20,
   padding: 4,
   marginBottom: 24,
@@ -489,7 +489,7 @@ export function AppMain(props: LayoutProps) {
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 3,
-                      background: alpha('#ffffff', 0.1),
+                      background: alpha('#183951', 0.2),
                       backdropFilter: 'blur(10px)',
                       border: `1px solid ${alpha('#ffffff', 0.2)}`,
                       '@media (max-width: 768px)': {
@@ -506,7 +506,7 @@ export function AppMain(props: LayoutProps) {
                         '@media (max-width: 768px)': {},
                       },
                       '&.Mui-focused': {
-                        background: alpha('#ffffff', 0.2),
+                        background: alpha('#183951', 0.4),
                         boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
                         '@media (max-width: 768px)': {
                           boxShadow: '0 4px 15px rgba(24, 33, 57, 0.15)',
@@ -545,7 +545,7 @@ export function AppMain(props: LayoutProps) {
                     minHeight: 200,
                     border: `2px dashed ${alpha('#ffffff', isDragOver ? 0.6 : 0.2)}`,
                     borderRadius: 3,
-                    background: alpha('#ffffff', isDragOver ? 0.15 : 0.05),
+                    background: alpha('#183951', isDragOver ? 0.3 : 0.1),
                     transition: 'all 0.3s ease',
                     '@media (max-width: 768px)': {
                       minHeight: 180,
@@ -608,7 +608,7 @@ export function AppMain(props: LayoutProps) {
                         mt: 3,
                         display: 'flex',
                         alignItems: 'center',
-                        background: alpha('#ffffff', 0.1),
+                        background: alpha('#183951', 0.2),
                         padding: 2,
                         borderRadius: 2,
                         backdropFilter: 'blur(10px)',
