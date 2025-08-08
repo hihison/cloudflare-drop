@@ -48,6 +48,20 @@
       "empty": "No records",
       "shareCodeLabel": "Share code {code}, click to view"
     },
+    "password": {
+      "title": "Share Password",
+      "placeholder": "Enter share password",
+      "helpText": "End-to-end encryption using AES-GCM. Server does not store passwords. Data cannot be recovered if password is lost.",
+      "clearPassword": "Clear Password"
+    },
+    "fileDialog": {
+      "encryptedMessage": "Share is encrypted, please use password to decrypt",
+      "copySuccess": "Copy successful",
+      "copyFailed": "Copy failed",
+      "closeConfirm": "Cannot view again after closing, confirm close?",
+      "downloading": "Downloading ({progress}%)...",
+      "originalShareHash": "Original share SHA256 Hash value"
+    },
     "durations": {
       "5m": "5 minutes",
       "1h": "1 hour",

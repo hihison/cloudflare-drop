@@ -15,6 +15,7 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import FormHelperText from '@mui/material/FormHelperText'
+import { useLanguage } from '../../../helpers/i18n'
 
 interface PasswordSwitchProps {
   value?: string
@@ -28,6 +29,7 @@ function PasswordDialog({
   onClose,
   payload,
 }: DialogProps<{ password: string; showClear: boolean }, string | null>) {
+  const { t } = useLanguage()
   const { password, showClear = true } = payload
   const [result, setResult] = useState(password)
   const [show, setShow] = useState(false)
@@ -57,11 +59,11 @@ function PasswordDialog({
 
   return (
     <Dialog open={open} onClose={() => onClose(null)}>
-      <DialogTitle>分享密码</DialogTitle>
+      <DialogTitle>{t('home.password.title')}</DialogTitle>
       <DialogContent>
         <OutlinedInput
           ref={el}
-          placeholder="请输入分享密码"
+          placeholder={t('home.password.placeholder')}
           type={show ? 'text' : 'password'}
           endAdornment={
             <InputAdornment position="end">
@@ -90,7 +92,7 @@ function PasswordDialog({
           onChange={(event) => setResult(event.currentTarget.value)}
         />
         <FormHelperText sx={{ mt: 2 }}>
-          采用 AES-GCM 端对端加密，服务器不保存密码，密码丢失数据将无法恢复
+          {t('home.password.helpText')}
         </FormHelperText>
       </DialogContent>
       <DialogActions
@@ -106,7 +108,7 @@ function PasswordDialog({
             color="error"
             onClick={() => onClose('')}
           >
-            清空密码
+            {t('home.password.clearPassword')}
           </Button>
         )}
         <Button
@@ -114,7 +116,7 @@ function PasswordDialog({
           variant="contained"
           onClick={() => onClose(result)}
         >
-          确认
+          {t('common.confirm')}
         </Button>
       </DialogActions>
     </Dialog>

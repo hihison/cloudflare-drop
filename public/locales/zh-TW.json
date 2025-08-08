@@ -48,6 +48,20 @@
       "empty": "記錄為空",
       "shareCodeLabel": "分享碼 {code}，點擊查看"
     },
+    "password": {
+      "title": "分享密碼",
+      "placeholder": "請輸入分享密碼",
+      "helpText": "採用 AES-GCM 端對端加密，伺服器不保存密碼，密碼遺失資料將無法恢復",
+      "clearPassword": "清空密碼"
+    },
+    "fileDialog": {
+      "encryptedMessage": "分享已加密，請使用密碼解密",
+      "copySuccess": "複製成功",
+      "copyFailed": "複製失敗",
+      "closeConfirm": "關閉後無法再次查看，確認關閉？",
+      "downloading": "下載中({progress}%)...",
+      "originalShareHash": "原始分享 SHA256 Hash 值"
+    },
     "durations": {
       "5m": "5分鐘",
       "1h": "1小時",

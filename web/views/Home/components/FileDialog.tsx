@@ -18,6 +18,7 @@ import { BasicDialog } from './BasicDialog.tsx'
 import { PasswordSwitch } from './PasswordSwitch.tsx'
 import LockClose from '@mui/icons-material/Lock'
 import LockOpen from '@mui/icons-material/LockOpen'
+import { useLanguage } from '../../../helpers/i18n'
 import { useLanguage } from '../../../helpers'
 
 dayjs.extend(relativeTime)
@@ -40,7 +41,7 @@ export function FileDialog({
   const dialogs = useDialogs()
   const isText = payload.type === 'plain/string'
   const [text, updateText] = useState(
-    payload.is_encrypted ? '分享已加密，请使用密码解密' : '',
+    payload.is_encrypted ? t('home.fileDialog.encryptedMessage') : '',
   )
   const [password, updatePassword] = useState('')
   const [backdrop] = useState(payload.is_encrypted ?? false)
@@ -54,10 +55,10 @@ export function FileDialog({
   const handleCopy = (str: string) => {
     copyToClipboard(str)
       .then(() => {
-        payload.message.success('复制成功')
+        payload.message.success(t('home.fileDialog.copySuccess'))
       })
       .catch(() => {
-        payload.message.success('复制失败')
+        payload.message.success(t('home.fileDialog.copyFailed'))
       })
   }
 
@@ -75,10 +76,10 @@ export function FileDialog({
     if (!payload.is_ephemeral) {
       return onClose()
     }
-    const confirmed = await dialogs.confirm('关闭后无法再次查看，确认关闭？', {
-      okText: '确认',
-      cancelText: '取消',
-      title: '阅后即焚',
+    const confirmed = await dialogs.confirm(t('home.fileDialog.closeConfirm'), {
+      okText: t('common.confirm'),
+      cancelText: t('common.cancel'),
+      title: t('home.settings.ephemeral'),
     })
     if (confirmed) {
       return onClose()
@@ -188,7 +189,7 @@ export function FileDialog({
                 },
               })}
             >
-              复制
+              {t('common.copy')}
             </Button>
           </Box>
         )}
@@ -218,7 +219,7 @@ export function FileDialog({
                   },
                 })}
               >
-                下载
+                {t('common.download')}
               </Button>
             )}
             {payload.is_encrypted && (
@@ -230,7 +231,9 @@ export function FileDialog({
                 {(openPassword) => (
                   <Button
                     loading={downloading}
-                    loadingIndicator={`下载中(${((progress / payload.size) * 100).toFixed(1)}%)...`}
+                    loadingIndicator={t('home.fileDialog.downloading', { 
+                      progress: ((progress / payload.size) * 100).toFixed(1) 
+                    })}
                     startIcon={!password ? <LockClose /> : <LockOpen />}
                     variant="contained"
                     color={!password ? 'warning' : 'primary'}
@@ -251,7 +254,7 @@ export function FileDialog({
                       handlePasswordDownload(password)
                     }}
                   >
-                    下载
+                    {t('common.download')}
                   </Button>
                 )}
               </PasswordSwitch>
@@ -262,9 +265,9 @@ export function FileDialog({
           {!payload.is_encrypted && (
             <>
               <Typography variant="body2" color="textDisabled">
-                原始分享 SHA256 Hash 值{' '}
+                {t('home.fileDialog.originalShareHash')}{' '}
                 <a target="_blank" href="https://www.lzltool.com/data-hash">
-                  (校验工具)
+                  ({t('dialogs.fileShare.verificationTool')})
                 </a>
                 {'：'}
               </Typography>
