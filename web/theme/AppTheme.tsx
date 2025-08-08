@@ -198,7 +198,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               transform: 'translateY(-2px)',
               boxShadow:
                 mode === 'light'
-                  ? '0 25px 50px rgba(30, 64, 175, 0.15), 0 15px 35px rgba(30, 64, 175, 0.1)'
+                  ? '0 25px 50px rgba(24, 33, 57, 0.15), 0 15px 35px rgba(24, 33, 57, 0.1)'
                   : '0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.3)',
             },
           },
@@ -247,12 +247,14 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             },
           },
           contained: {
-            background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
-            boxShadow: '0 8px 32px rgba(30, 64, 175, 0.25)',
+            background:
+              'linear-gradient(135deg, rgb(24, 33, 57) 0%, rgb(18, 25, 43) 100%)',
+            boxShadow: '0 8px 32px rgba(24, 33, 57, 0.25)',
             border: 'none',
             '&:hover': {
-              background: 'linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%)',
-              boxShadow: '0 12px 40px rgba(30, 64, 175, 0.35)',
+              background:
+                'linear-gradient(135deg, rgb(36, 50, 86) 0%, rgb(18, 25, 43) 100%)',
+              boxShadow: '0 12px 40px rgba(24, 33, 57, 0.35)',
             },
             '&:active': {
               transform: 'translateY(0px)',
@@ -305,7 +307,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               },
               boxShadow:
                 mode === 'light'
-                  ? '0 30px 60px rgba(30, 64, 175, 0.15)'
+                  ? '0 30px 60px rgba(24, 33, 57, 0.15)'
                   : '0 30px 60px rgba(0, 0, 0, 0.4)',
             },
           },
@@ -369,10 +371,10 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
                   mode === 'light' ? 0.95 : 0.2,
                 ),
                 transform: 'translateY(-2px)',
-                boxShadow: '0 8px 25px rgba(30, 64, 175, 0.15)',
+                boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
                 '@media (max-width: 768px)': {
                   transform: 'translateY(0px)',
-                  boxShadow: '0 4px 15px rgba(30, 64, 175, 0.15)',
+                  boxShadow: '0 4px 15px rgba(24, 33, 57, 0.15)',
                 },
               },
             },
@@ -398,7 +400,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             borderRadius: 16,
             backgroundColor: alpha('#ffffff', 0.2),
             backdropFilter: 'blur(10px)',
-            boxShadow: '0 4px 20px rgba(30, 64, 175, 0.2)',
+            boxShadow: '0 4px 20px rgba(24, 33, 57, 0.2)',
           },
         },
       },

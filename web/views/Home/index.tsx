@@ -96,7 +96,7 @@ const GlassContainer = styled(Container)(() => ({
     right: 0,
     bottom: 0,
     backgroundImage:
-      'radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(30, 64, 175, 0.15) 0%, transparent 50%)',
+      'radial-gradient(circle at 20% 80%, rgba(24, 33, 57, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(24, 33, 57, 0.15) 0%, transparent 50%)',
     pointerEvents: 'none',
   },
 }))
@@ -139,7 +139,7 @@ const ModernCard = styled(Card)(() => ({
     transform: 'translateY(-8px) scale(1.02)',
     background: alpha('#ffffff', 0.15),
     boxShadow:
-      '0 35px 60px rgba(30, 64, 175, 0.15), 0 25px 45px rgba(30, 64, 175, 0.1)',
+      '0 35px 60px rgba(24, 33, 57, 0.15), 0 25px 45px rgba(24, 33, 57, 0.1)',
     '@media (max-width: 768px)': {
       transform: 'translateY(-4px) scale(1.01)',
     },
@@ -170,7 +170,7 @@ const ModernTabList = styled(TabList)(() => ({
     background:
       'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
     backdropFilter: 'blur(10px)',
-    boxShadow: '0 4px 20px rgba(30, 64, 175, 0.2)',
+    boxShadow: '0 4px 20px rgba(24, 33, 57, 0.2)',
     '@media (max-width: 768px)': {
       borderRadius: 12,
     },
@@ -214,10 +214,11 @@ const ModernTab = styled(Tab)(() => ({
 const ModernUploadButton = styled(Button)(() => ({
   borderRadius: 20,
   padding: '16px 32px',
-  background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+  background:
+    'linear-gradient(135deg, rgb(24, 33, 57) 0%, rgb(18, 25, 43) 100%)',
   backgroundSize: '200% 200%',
   animation: `${gradientShift} 4s ease infinite`,
-  boxShadow: '0 8px 32px rgba(30, 64, 175, 0.25)',
+  boxShadow: '0 8px 32px rgba(24, 33, 57, 0.25)',
   border: 'none',
   fontWeight: 600,
   fontSize: '1rem',
@@ -250,7 +251,7 @@ const ModernUploadButton = styled(Button)(() => ({
   },
   '&:hover': {
     transform: 'translateY(-3px)',
-    boxShadow: '0 12px 40px rgba(30, 64, 175, 0.35)',
+    boxShadow: '0 12px 40px rgba(24, 33, 57, 0.35)',
     '@media (max-width: 768px)': {
       transform: 'translateY(-2px)',
     },
@@ -519,10 +520,10 @@ export function AppMain(props: LayoutProps) {
                           '&.Mui-focused': {
                             background: alpha('#ffffff', 0.2),
                             transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 25px rgba(30, 64, 175, 0.15)',
+                            boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
                             '@media (max-width: 768px)': {
                               transform: 'translateY(0px)',
-                              boxShadow: '0 4px 15px rgba(30, 64, 175, 0.15)',
+                              boxShadow: '0 4px 15px rgba(24, 33, 57, 0.15)',
                             },
                           },
                         },

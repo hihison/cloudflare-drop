@@ -105,9 +105,9 @@ export function LanguageSelector() {
                 border: 'none',
                 background:
                   language === lang.code
-                    ? 'rgba(30, 64, 175, 0.1)'
+                    ? 'rgba(24, 33, 57, 0.1)'
                     : 'transparent',
-                color: language === lang.code ? '#1e40af' : '#333',
+                color: language === lang.code ? 'rgb(24, 33, 57)' : '#333',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -118,7 +118,7 @@ export function LanguageSelector() {
               }}
               onMouseEnter={(e) => {
                 if (language !== lang.code) {
-                  e.currentTarget.style.background = 'rgba(30, 64, 175, 0.05)'
+                  e.currentTarget.style.background = 'rgba(24, 33, 57, 0.05)'
                 }
               }}
               onMouseLeave={(e) => {
