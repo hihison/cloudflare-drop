@@ -143,48 +143,6 @@ const ModernCard = styled(Card)(() => ({
   },
 }))
 
-// Hero section with gradient text
-const HeroTitle = styled(Typography)(() => ({
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  WebkitBackgroundClip: 'text',
-  WebkitTextFillColor: 'transparent',
-  backgroundClip: 'text',
-  fontWeight: 900,
-  fontSize: '3.5rem',
-  textAlign: 'center',
-  marginBottom: 16,
-  letterSpacing: '-0.02em',
-  '@media (max-width: 960px)': {
-    fontSize: '2.5rem',
-  },
-  '@media (max-width: 600px)': {
-    fontSize: '2rem',
-    marginBottom: 12,
-  },
-  '@media (max-width: 480px)': {
-    fontSize: '1.75rem',
-    marginBottom: 8,
-  },
-}))
-
-const HeroSubtitle = styled(Typography)(() => ({
-  color: alpha('#ffffff', 0.8),
-  textAlign: 'center',
-  fontSize: '1.25rem',
-  fontWeight: 400,
-  marginBottom: 32,
-  lineHeight: 1.6,
-  '@media (max-width: 600px)': {
-    fontSize: '1.1rem',
-    marginBottom: 24,
-  },
-  '@media (max-width: 480px)': {
-    fontSize: '1rem',
-    marginBottom: 20,
-    lineHeight: 1.5,
-  },
-}))
-
 // Modern tab styling
 const ModernTabList = styled(TabList)(() => ({
   background: alpha('#ffffff', 0.1),
