@@ -4,13 +4,13 @@ import { useLanguage, type Language } from '../helpers'
 const LANGUAGE_FLAGS = {
   'zh-CN': '🇨🇳',
   'zh-TW': '🇹🇼',
-  'en': '🇺🇸',
+  en: '🇺🇸',
 } as const
 
 const LANGUAGE_LABELS = {
   'zh-CN': '简体中文',
   'zh-TW': '繁體中文',
-  'en': 'English',
+  en: 'English',
 } as const
 
 export function LanguageSelector() {
@@ -38,7 +38,10 @@ export function LanguageSelector() {
   }
 
   return (
-    <div className="language-selector" style={{ position: 'relative', display: 'inline-block' }}>
+    <div
+      className="language-selector"
+      style={{ position: 'relative', display: 'inline-block' }}
+    >
       <button
         onClick={() => setIsOpen(!isOpen)}
         style={{
@@ -64,11 +67,13 @@ export function LanguageSelector() {
       >
         <span style={{ fontSize: '16px' }}>{LANGUAGE_FLAGS[language]}</span>
         <span>{LANGUAGE_LABELS[language]}</span>
-        <span style={{ 
-          fontSize: '12px', 
-          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-          transition: 'transform 0.2s ease'
-        }}>
+        <span
+          style={{
+            fontSize: '12px',
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+            transition: 'transform 0.2s ease',
+          }}
+        >
           ▼
         </span>
       </button>
@@ -98,10 +103,11 @@ export function LanguageSelector() {
                 width: '100%',
                 padding: '12px 16px',
                 border: 'none',
-                background: language === lang.code 
-                  ? 'rgba(102, 126, 234, 0.1)' 
-                  : 'transparent',
-                color: language === lang.code ? '#667eea' : '#333',
+                background:
+                  language === lang.code
+                    ? 'rgba(30, 64, 175, 0.1)'
+                    : 'transparent',
+                color: language === lang.code ? '#1e40af' : '#333',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
@@ -112,7 +118,7 @@ export function LanguageSelector() {
               }}
               onMouseEnter={(e) => {
                 if (language !== lang.code) {
-                  e.currentTarget.style.background = 'rgba(102, 126, 234, 0.05)'
+                  e.currentTarget.style.background = 'rgba(30, 64, 175, 0.05)'
                 }
               }}
               onMouseLeave={(e) => {
@@ -121,10 +127,20 @@ export function LanguageSelector() {
                 }
               }}
             >
-              <span style={{ fontSize: '16px' }}>{LANGUAGE_FLAGS[lang.code]}</span>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <span style={{ fontSize: '16px' }}>
+                {LANGUAGE_FLAGS[lang.code]}
+              </span>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                }}
+              >
                 <span>{lang.nativeName}</span>
-                <span style={{ fontSize: '12px', opacity: 0.7 }}>{lang.name}</span>
+                <span style={{ fontSize: '12px', opacity: 0.7 }}>
+                  {lang.name}
+                </span>
               </div>
             </button>
           ))}
