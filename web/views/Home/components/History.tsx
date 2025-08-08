@@ -275,6 +275,14 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
                 '&.Mui-selected': {
                   color: alpha('#ffffff', 0.95),
                 },
+                '&:hover': {
+                  color: alpha('#ffffff', 0.7),
+                  backgroundColor: 'transparent',
+                },
+                '&.Mui-selected:hover': {
+                  color: alpha('#ffffff', 0.95),
+                  backgroundColor: 'transparent',
+                },
               },
               '& .MuiTabs-indicator': {
                 backgroundColor: alpha('#ffffff', 0.6),
