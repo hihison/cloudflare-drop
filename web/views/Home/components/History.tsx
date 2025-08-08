@@ -19,6 +19,7 @@ import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import { useState } from 'preact/hooks'
 import { useLanguage } from '../../../helpers'
+import { alpha } from '@mui/material/styles'
 
 export interface ShareType {
   type: 'received' | 'shared'
@@ -138,7 +139,14 @@ function RecordList(props: RecordListProps) {
   if (!list.length)
     return (
       <Box className="flex items-center justify-center" sx={{ p: 4 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ opacity: 0.8 }}>
+        <Typography
+          variant="caption"
+          sx={{
+            opacity: 0.8,
+            color: alpha('#ffffff', 0.6),
+            fontSize: '0.9rem',
+          }}
+        >
           {t('home.history.empty')}
         </Typography>
       </Box>
@@ -154,7 +162,14 @@ function RecordList(props: RecordListProps) {
             <IconButton
               edge="end"
               aria-label="delete"
-              sx={{ p: 0.5 }}
+              sx={{
+                p: 0.5,
+                color: alpha('#ffffff', 0.6),
+                '&:hover': {
+                  color: alpha('#ffffff', 0.9),
+                  backgroundColor: alpha('#ffffff', 0.1),
+                },
+              }}
               onClick={(e) => onDelete(e, item.id)}
             >
               <DeleteIcon />
@@ -163,16 +178,43 @@ function RecordList(props: RecordListProps) {
           sx={{
             cursor: 'pointer',
             pr: '32px',
+            color: alpha('#ffffff', 0.9),
+            '&:hover': {
+              backgroundColor: alpha('#ffffff', 0.1),
+            },
+            borderRadius: 2,
+            margin: '4px 8px',
           }}
         >
-          <ListItemIcon sx={{ minWidth: 24, mr: 2 }}>
+          <ListItemIcon
+            sx={{
+              minWidth: 24,
+              mr: 2,
+              color: alpha('#ffffff', 0.7),
+            }}
+          >
             {item.file && <FileCopyIcon fontSize="small" />}
             {!item.file && <TextFieldsIcon fontSize="medium" />}
           </ListItemIcon>
           <ListItemText
-            primary={<Typography>{t('home.history.shareCodeLabel', { code: item.code })}</Typography>}
+            primary={
+              <Typography
+                sx={{
+                  color: alpha('#ffffff', 0.9),
+                  fontWeight: 500,
+                }}
+              >
+                {t('home.history.shareCodeLabel', { code: item.code })}
+              </Typography>
+            }
             secondary={
-              <Typography color="text.secondary" variant="caption" sx={{ opacity: 0.9 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  opacity: 0.9,
+                  color: alpha('#ffffff', 0.6),
+                }}
+              >
                 {dayjs(item.date).fromNow()}
               </Typography>
             }
@@ -203,16 +245,49 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
   }
 
   return (
-    <Box className="flex flex-col h-full" sx={{ width: 320 }}>
-      <Typography variant="h4" color="primary" sx={{ p: 2, fontWeight: 600 }}>
+    <Box
+      className="flex flex-col h-full"
+      sx={{
+        width: 320,
+        background: 'transparent',
+        color: alpha('#ffffff', 0.9),
+      }}
+    >
+      <Typography
+        variant="h4"
+        sx={{
+          p: 2,
+          fontWeight: 600,
+          color: alpha('#ffffff', 0.9),
+          fontSize: '1.5rem',
+        }}
+      >
         {t('home.history.title')}
       </Typography>
       <TabContext value={tab}>
         <Box
           className="shrink-0"
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
+          sx={{
+            borderBottom: 1,
+            borderColor: alpha('#ffffff', 0.2),
+            background: alpha('#ffffff', 0.05),
+            borderRadius: '16px 16px 0 0',
+          }}
         >
-          <TabList onChange={(_e, tab) => updateTab(tab)}>
+          <TabList
+            onChange={(_e, tab) => updateTab(tab)}
+            sx={{
+              '& .MuiTab-root': {
+                color: alpha('#ffffff', 0.7),
+                '&.Mui-selected': {
+                  color: alpha('#ffffff', 0.95),
+                },
+              },
+              '& .MuiTabs-indicator': {
+                backgroundColor: alpha('#ffffff', 0.6),
+              },
+            }}
+          >
             <Tab label={t('home.history.sharedTab')} value="shared" />
             <Tab label={t('home.history.receivedTab')} value="received" />
           </TabList>
