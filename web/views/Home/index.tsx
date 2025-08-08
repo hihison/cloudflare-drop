@@ -21,8 +21,6 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import Drawer from '@mui/material/Drawer'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import Fade from '@mui/material/Fade'
-import Slide from '@mui/material/Slide'
 
 import {
   Code,
@@ -89,7 +87,6 @@ const ModernCard = styled(Card)(() => ({
   border: `1px solid ${alpha('#ffffff', 0.2)}`,
   borderRadius: 32,
   boxShadow: '0 25px 45px rgba(0, 0, 0, 0.1), 0 15px 35px rgba(0, 0, 0, 0.05)',
-  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   overflow: 'hidden',
   position: 'relative',
   maxWidth: 1000,
@@ -113,15 +110,6 @@ const ModernCard = styled(Card)(() => ({
     height: '2px',
     background:
       'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
-  },
-  '&:hover': {
-    transform: 'translateY(-8px) scale(1.02)',
-    background: alpha('#ffffff', 0.15),
-    boxShadow:
-      '0 35px 60px rgba(24, 33, 57, 0.15), 0 25px 45px rgba(24, 33, 57, 0.1)',
-    '@media (max-width: 768px)': {
-      transform: 'translateY(-4px) scale(1.01)',
-    },
   },
 }))
 
@@ -162,7 +150,6 @@ const ModernTabList = styled(TabList)(() => ({
 const ModernTab = styled(Tab)(() => ({
   borderRadius: 16,
   margin: '0 4px',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   fontWeight: 500,
   textTransform: 'none',
   fontSize: '0.95rem',
@@ -201,7 +188,6 @@ const ModernUploadButton = styled(Button)(() => ({
   fontWeight: 600,
   fontSize: '1rem',
   textTransform: 'none',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
   width: '100%',
@@ -225,20 +211,6 @@ const ModernUploadButton = styled(Button)(() => ({
     height: '100%',
     background:
       'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-    transition: 'left 0.5s',
-  },
-  '&:hover': {
-    transform: 'translateY(-3px)',
-    boxShadow: '0 12px 40px rgba(24, 33, 57, 0.35)',
-    '@media (max-width: 768px)': {
-      transform: 'translateY(-2px)',
-    },
-    '&::before': {
-      left: '100%',
-    },
-  },
-  '&:active': {
-    transform: 'translateY(-1px)',
   },
 }))
 
@@ -314,7 +286,7 @@ export function AppMain(props: LayoutProps) {
         message.error(data.message)
         return
       }
-      // 打开弹窗
+      // ?��?弹�?
       historyApi.insertReceived(
         data.data.code,
         data.data.type !== 'plain/string',
@@ -339,7 +311,7 @@ export function AppMain(props: LayoutProps) {
     const target: HTMLInputElement = e.target as HTMLInputElement
     const file = target?.files?.[0] ?? null
     if (file && file.size > MAX_SIZE * 1000 * 1000) {
-      message.error(`文件大于 ${MAX_SIZE}M`)
+      message.error(`?�件大�? ${MAX_SIZE}M`)
       ;(e.target as HTMLInputElement).value = ''
       return
     }
@@ -381,7 +353,7 @@ export function AppMain(props: LayoutProps) {
     if (files && files.length > 0) {
       const droppedFile = files[0]
       if (droppedFile.size > MAX_SIZE * 1000 * 1000) {
-        message.error(`文件大于 ${MAX_SIZE}M`)
+        message.error(`?�件大�? ${MAX_SIZE}M`)
         return
       }
       setFile(droppedFile)
@@ -432,435 +404,419 @@ export function AppMain(props: LayoutProps) {
   }
 
   return (
-    <Fade in timeout={800}>
-      <GlassContainer maxWidth="xl">
-        <ModernCard>
-          <CardContent
-            sx={{
-              p: 4,
-              '@media (max-width: 768px)': {
-                p: 3,
-              },
-              '@media (max-width: 480px)': {
-                p: 2,
-              },
-            }}
-          >
-            {/* Download Section */}
-            <Slide in timeout={1200} direction="up">
-              <Box sx={{ mb: 4 }}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    gap: 2,
-                    alignItems: { xs: 'start', sm: 'center' },
-                    mb: 3,
-                    flexDirection: { xs: 'column', sm: 'row' },
-                  }}
-                >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      color: alpha('#ffffff', 0.9),
-                      fontWeight: 600,
-                      minWidth: 'fit-content',
-                    }}
-                  >
-                    {t('home.downloadSection.title')}：
-                  </Typography>
-                  <Code
-                    length={6}
-                    onChange={handleResolveFile.current}
-                    value={code}
-                  />
-                </Box>
-
-                <Divider
-                  sx={{
-                    my: 3,
-                    borderColor: alpha('#ffffff', 0.1),
-                    '&::before, &::after': {
-                      borderColor: alpha('#ffffff', 0.1),
-                    },
-                  }}
-                />
-              </Box>
-            </Slide>
-
-            {/* Upload Section */}
-            <Slide in timeout={1400} direction="up">
-              <Box>
-                <TabContext value={tab}>
-                  <Box sx={{ mb: 3 }}>
-                    <ModernTabList
-                      onChange={handleChangeTab}
-                      aria-label="分享類型選擇"
-                      centered
-                    >
-                      <ModernTab
-                        label={t('home.uploadSection.textTab')}
-                        value="text"
-                      />
-                      <ModernTab
-                        label={t('home.uploadSection.fileTab')}
-                        value="file"
-                      />
-                    </ModernTabList>
-                  </Box>
-
-                  <TabPanel value="text" sx={{ p: 0, minHeight: 240 }}>
-                    <TextField
-                      multiline
-                      fullWidth
-                      rows={8}
-                      value={text}
-                      onInput={handleTextInput}
-                      placeholder={t('home.uploadSection.textPlaceholder')}
-                      sx={{
-                        '& .MuiOutlinedInput-root': {
-                          borderRadius: 3,
-                          background: alpha('#ffffff', 0.1),
-                          backdropFilter: 'blur(10px)',
-                          border: `1px solid ${alpha('#ffffff', 0.2)}`,
-                          transition: 'all 0.3s ease',
-                          '@media (max-width: 768px)': {
-                            borderRadius: 2,
-                          },
-                          '@media (max-width: 480px)': {
-                            borderRadius: 1.5,
-                          },
-                          '& fieldset': {
-                            border: 'none',
-                          },
-                          '&:hover': {
-                            background: alpha('#ffffff', 0.15),
-                            transform: 'translateY(-1px)',
-                            '@media (max-width: 768px)': {
-                              transform: 'translateY(0px)',
-                            },
-                          },
-                          '&.Mui-focused': {
-                            background: alpha('#ffffff', 0.2),
-                            transform: 'translateY(-2px)',
-                            boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
-                            '@media (max-width: 768px)': {
-                              transform: 'translateY(0px)',
-                              boxShadow: '0 4px 15px rgba(24, 33, 57, 0.15)',
-                            },
-                          },
-                        },
-                        '& .MuiInputBase-input': {
-                          color: alpha('#ffffff', 0.9),
-                          fontSize: '1rem',
-                          '@media (max-width: 768px)': {
-                            fontSize: '16px', // Prevents zoom on iOS
-                          },
-                          '@media (max-width: 480px)': {
-                            fontSize: '16px',
-                            lineHeight: 1.4,
-                          },
-                          '&::placeholder': {
-                            color: alpha('#ffffff', 0.5),
-                          },
-                        },
-                      }}
-                    />
-                  </TabPanel>
-
-                  <TabPanel value="file" sx={{ p: 0, minHeight: 240 }}>
-                    <Box
-                      onDragEnter={handleDragEnter}
-                      onDragOver={handleDragOver}
-                      onDragLeave={handleDragLeave}
-                      onDrop={handleDrop}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        minHeight: 200,
-                        border: `2px dashed ${alpha('#ffffff', isDragOver ? 0.6 : 0.2)}`,
-                        borderRadius: 3,
-                        background: alpha('#ffffff', isDragOver ? 0.15 : 0.05),
-                        transition: 'all 0.3s ease',
-                        transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
-                        '@media (max-width: 768px)': {
-                          minHeight: 180,
-                          borderRadius: 2,
-                        },
-                        '@media (max-width: 480px)': {
-                          minHeight: 160,
-                          borderRadius: 1.5,
-                          padding: 2,
-                        },
-                        '&:hover': {
-                          borderColor: alpha('#ffffff', 0.4),
-                          background: alpha('#ffffff', 0.1),
-                        },
-                      }}
-                    >
-                      <ModernUploadButton
-                        component="label"
-                        variant="contained"
-                        startIcon={<CloudUploadIcon />}
-                        size="large"
-                        sx={{
-                          '@media (max-width: 480px)': {
-                            size: 'medium',
-                            fontSize: '0.85rem',
-                          },
-                        }}
-                      >
-                        {isDragOver
-                          ? 'Drop file here'
-                          : t('home.uploadSection.fileUpload')}
-                        <VisuallyHiddenInput
-                          type="file"
-                          onChange={handleFileChange}
-                        />
-                      </ModernUploadButton>
-
-                      {!isDragOver && (
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            mt: 2,
-                            color: alpha('#ffffff', 0.6),
-                            textAlign: 'center',
-                            fontSize: '0.9rem',
-                            '@media (max-width: 480px)': {
-                              fontSize: '0.8rem',
-                              mt: 1.5,
-                            },
-                          }}
-                        >
-                          or drag and drop a file here
-                        </Typography>
-                      )}
-
-                      {file && (
-                        <Box
-                          sx={{
-                            mt: 3,
-                            display: 'flex',
-                            alignItems: 'center',
-                            background: alpha('#ffffff', 0.1),
-                            padding: 2,
-                            borderRadius: 2,
-                            backdropFilter: 'blur(10px)',
-                            maxWidth: '100%',
-                            '@media (max-width: 480px)': {
-                              mt: 2,
-                              padding: 1.5,
-                              borderRadius: 1.5,
-                              flexDirection: 'column',
-                              textAlign: 'center',
-                            },
-                          }}
-                        >
-                          <FileIcon
-                            sx={{
-                              mr: 1,
-                              color: alpha('#ffffff', 0.7),
-                              '@media (max-width: 480px)': {
-                                mr: 0,
-                                mb: 1,
-                              },
-                            }}
-                          />
-                          <Box
-                            sx={{
-                              minWidth: 0,
-                              '@media (max-width: 480px)': {
-                                width: '100%',
-                              },
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                color: alpha('#ffffff', 0.9),
-                                wordBreak: 'break-word',
-                                '@media (max-width: 480px)': {
-                                  fontSize: '0.9rem',
-                                },
-                              }}
-                            >
-                              {file.name}
-                            </Typography>
-                            <Typography
-                              variant="body2"
-                              sx={{
-                                color: alpha('#ffffff', 0.6),
-                                '@media (max-width: 480px)': {
-                                  fontSize: '0.8rem',
-                                },
-                              }}
-                            >
-                              {humanFileSize(file.size)}
-                            </Typography>
-                          </Box>
-                        </Box>
-                      )}
-                    </Box>
-                  </TabPanel>
-                </TabContext>
-
-                {/* Settings */}
-                <Box
-                  sx={{
-                    mt: 3,
-                    mb: 3,
-                    '@media (max-width: 480px)': {
-                      mt: 2,
-                      mb: 2,
-                    },
-                  }}
-                >
-                  <Duration value={duration} onChange={updateDuration} />
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={isEphemeral}
-                        onChange={handleChangeEphemeral}
-                        sx={{
-                          color: alpha('#ffffff', 0.6),
-                          '&.Mui-checked': {
-                            color: '#ffffff',
-                          },
-                        }}
-                      />
-                    }
-                    label={
-                      <Typography
-                        sx={{
-                          color: alpha('#ffffff', 0.8),
-                          '@media (max-width: 480px)': {
-                            fontSize: '0.9rem',
-                          },
-                        }}
-                      >
-                        {t('home.settings.ephemeral')}
-                      </Typography>
-                    }
-                    sx={{
-                      mt: 2,
-                      '@media (max-width: 480px)': {
-                        mt: 1.5,
-                      },
-                    }}
-                  />
-                </Box>
-
-                {/* Action Buttons */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    gap: 2,
-                    '@media (max-width: 480px)': {
-                      gap: 1.5,
-                    },
-                  }}
-                >
-                  <Button
-                    variant="text"
-                    onClick={toggleDrawer(true)}
-                    startIcon={<ReceiptLongIcon />}
-                    sx={{
-                      color: alpha('#ffffff', 0.7),
-                      '@media (max-width: 480px)': {
-                        fontSize: '0.85rem',
-                        minWidth: 'auto',
-                        padding: '8px 16px',
-                      },
-                      '&:hover': {
-                        color: '#ffffff',
-                        background: alpha('#ffffff', 0.1),
-                      },
-                    }}
-                  >
-                    {t('home.settings.history')}
-                  </Button>
-
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      gap: 2,
-                      alignItems: 'center',
-                      flexDirection: { xs: 'column', sm: 'row' },
-                      width: { xs: '100%', sm: 'auto' },
-                      '@media (max-width: 480px)': {
-                        gap: 1.5,
-                      },
-                    }}
-                  >
-                    <PasswordSwitch
-                      value={password}
-                      onChange={updatePassword}
-                    />
-                    <ModernUploadButton
-                      variant="contained"
-                      disabled={
-                        (tab === 'text' && !text) || (tab === 'file' && !file)
-                      }
-                      endIcon={<SendIcon />}
-                      onClick={handleShare}
-                      sx={{
-                        width: { xs: '100%', sm: 'auto' },
-                        minWidth: { sm: 'auto' },
-                        '@media (max-width: 480px)': {
-                          fontSize: '0.9rem',
-                        },
-                      }}
-                    >
-                      {t('home.uploadSection.shareButton')}
-                    </ModernUploadButton>
-                  </Box>
-                </Box>
-              </Box>
-            </Slide>
-          </CardContent>
-        </ModernCard>
-
-        <Drawer
-          open={drawerOpened}
-          onClose={toggleDrawer(false)}
-          anchor="right"
-          PaperProps={{
-            sx: {
-              background: alpha('#ffffff', 0.1),
-              backdropFilter: 'blur(20px)',
-              border: `1px solid ${alpha('#ffffff', 0.1)}`,
-              '&:hover': {
-                background: alpha('#ffffff', 0.1),
-                transform: 'none',
-                boxShadow: 'inherit',
-              },
-              '@media (max-width: 768px)': {
-                width: '85vw',
-                maxWidth: '400px',
-              },
-              '@media (max-width: 480px)': {
-                width: '90vw',
-                maxWidth: 'none',
-              },
+    <GlassContainer maxWidth="xl">
+      <ModernCard>
+        <CardContent
+          sx={{
+            p: 4,
+            '@media (max-width: 768px)': {
+              p: 3,
+            },
+            '@media (max-width: 480px)': {
+              p: 2,
             },
           }}
         >
-          <History
-            onItemClick={(item: { code: string }) => {
-              updateDrawerOpened(false)
-              setCode(item.code)
-            }}
-          />
-        </Drawer>
+          {/* Download Section */}
+          <Box sx={{ mb: 4 }}>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                alignItems: { xs: 'start', sm: 'center' },
+                mb: 3,
+                flexDirection: { xs: 'column', sm: 'row' },
+              }}
+            >
+              <Typography
+                variant="h5"
+                sx={{
+                  color: alpha('#ffffff', 0.9),
+                  fontWeight: 600,
+                  minWidth: 'fit-content',
+                }}
+              >
+                {t('home.downloadSection.title')}�?
+              </Typography>
+              <Code
+                length={6}
+                onChange={handleResolveFile.current}
+                value={code}
+              />
+            </Box>
 
-        <Progress open={progress !== null} value={progress ?? 0} />
-      </GlassContainer>
-    </Fade>
+            <Divider
+              sx={{
+                my: 3,
+                borderColor: alpha('#ffffff', 0.1),
+                '&::before, &::after': {
+                  borderColor: alpha('#ffffff', 0.1),
+                },
+              }}
+            />
+          </Box>
+
+          {/* Upload Section */}
+          <Box>
+            <TabContext value={tab}>
+              <Box sx={{ mb: 3 }}>
+                <ModernTabList
+                  onChange={handleChangeTab}
+                  aria-label="?�享類�??��?"
+                  centered
+                >
+                  <ModernTab
+                    label={t('home.uploadSection.textTab')}
+                    value="text"
+                  />
+                  <ModernTab
+                    label={t('home.uploadSection.fileTab')}
+                    value="file"
+                  />
+                </ModernTabList>
+              </Box>
+
+              <TabPanel value="text" sx={{ p: 0, minHeight: 240 }}>
+                <TextField
+                  multiline
+                  fullWidth
+                  rows={8}
+                  value={text}
+                  onInput={handleTextInput}
+                  placeholder={t('home.uploadSection.textPlaceholder')}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 3,
+                      background: alpha('#ffffff', 0.1),
+                      backdropFilter: 'blur(10px)',
+                      border: `1px solid ${alpha('#ffffff', 0.2)}`,
+                      '@media (max-width: 768px)': {
+                        borderRadius: 2,
+                      },
+                      '@media (max-width: 480px)': {
+                        borderRadius: 1.5,
+                      },
+                      '& fieldset': {
+                        border: 'none',
+                      },
+                      '&:hover': {
+                        background: alpha('#ffffff', 0.15),
+                        '@media (max-width: 768px)': {},
+                      },
+                      '&.Mui-focused': {
+                        background: alpha('#ffffff', 0.2),
+                        boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
+                        '@media (max-width: 768px)': {
+                          boxShadow: '0 4px 15px rgba(24, 33, 57, 0.15)',
+                        },
+                      },
+                    },
+                    '& .MuiInputBase-input': {
+                      color: alpha('#ffffff', 0.9),
+                      fontSize: '1rem',
+                      '@media (max-width: 768px)': {
+                        fontSize: '16px', // Prevents zoom on iOS
+                      },
+                      '@media (max-width: 480px)': {
+                        fontSize: '16px',
+                        lineHeight: 1.4,
+                      },
+                      '&::placeholder': {
+                        color: alpha('#ffffff', 0.5),
+                      },
+                    },
+                  }}
+                />
+              </TabPanel>
+
+              <TabPanel value="file" sx={{ p: 0, minHeight: 240 }}>
+                <Box
+                  onDragEnter={handleDragEnter}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: 200,
+                    border: `2px dashed ${alpha('#ffffff', isDragOver ? 0.6 : 0.2)}`,
+                    borderRadius: 3,
+                    background: alpha('#ffffff', isDragOver ? 0.15 : 0.05),
+                    transition: 'all 0.3s ease',
+                    '@media (max-width: 768px)': {
+                      minHeight: 180,
+                      borderRadius: 2,
+                    },
+                    '@media (max-width: 480px)': {
+                      minHeight: 160,
+                      borderRadius: 1.5,
+                      padding: 2,
+                    },
+                    '&:hover': {
+                      borderColor: alpha('#ffffff', 0.4),
+                      background: alpha('#ffffff', 0.1),
+                    },
+                  }}
+                >
+                  <ModernUploadButton
+                    component="label"
+                    variant="contained"
+                    startIcon={<CloudUploadIcon />}
+                    size="large"
+                    sx={{
+                      '@media (max-width: 480px)': {
+                        size: 'medium',
+                        fontSize: '0.85rem',
+                      },
+                    }}
+                  >
+                    {isDragOver
+                      ? 'Drop file here'
+                      : t('home.uploadSection.fileUpload')}
+                    <VisuallyHiddenInput
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                  </ModernUploadButton>
+
+                  {!isDragOver && (
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        mt: 2,
+                        color: alpha('#ffffff', 0.6),
+                        textAlign: 'center',
+                        fontSize: '0.9rem',
+                        '@media (max-width: 480px)': {
+                          fontSize: '0.8rem',
+                          mt: 1.5,
+                        },
+                      }}
+                    >
+                      or drag and drop a file here
+                    </Typography>
+                  )}
+
+                  {file && (
+                    <Box
+                      sx={{
+                        mt: 3,
+                        display: 'flex',
+                        alignItems: 'center',
+                        background: alpha('#ffffff', 0.1),
+                        padding: 2,
+                        borderRadius: 2,
+                        backdropFilter: 'blur(10px)',
+                        maxWidth: '100%',
+                        '@media (max-width: 480px)': {
+                          mt: 2,
+                          padding: 1.5,
+                          borderRadius: 1.5,
+                          flexDirection: 'column',
+                          textAlign: 'center',
+                        },
+                      }}
+                    >
+                      <FileIcon
+                        sx={{
+                          mr: 1,
+                          color: alpha('#ffffff', 0.7),
+                          '@media (max-width: 480px)': {
+                            mr: 0,
+                            mb: 1,
+                          },
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          minWidth: 0,
+                          '@media (max-width: 480px)': {
+                            width: '100%',
+                          },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: alpha('#ffffff', 0.9),
+                            wordBreak: 'break-word',
+                            '@media (max-width: 480px)': {
+                              fontSize: '0.9rem',
+                            },
+                          }}
+                        >
+                          {file.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: alpha('#ffffff', 0.6),
+                            '@media (max-width: 480px)': {
+                              fontSize: '0.8rem',
+                            },
+                          }}
+                        >
+                          {humanFileSize(file.size)}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+              </TabPanel>
+            </TabContext>
+
+            {/* Settings */}
+            <Box
+              sx={{
+                mt: 3,
+                mb: 3,
+                '@media (max-width: 480px)': {
+                  mt: 2,
+                  mb: 2,
+                },
+              }}
+            >
+              <Duration value={duration} onChange={updateDuration} />
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isEphemeral}
+                    onChange={handleChangeEphemeral}
+                    sx={{
+                      color: alpha('#ffffff', 0.6),
+                      '&.Mui-checked': {
+                        color: '#ffffff',
+                      },
+                    }}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      color: alpha('#ffffff', 0.8),
+                      '@media (max-width: 480px)': {
+                        fontSize: '0.9rem',
+                      },
+                    }}
+                  >
+                    {t('home.settings.ephemeral')}
+                  </Typography>
+                }
+                sx={{
+                  mt: 2,
+                  '@media (max-width: 480px)': {
+                    mt: 1.5,
+                  },
+                }}
+              />
+            </Box>
+
+            {/* Action Buttons */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: 2,
+                '@media (max-width: 480px)': {
+                  gap: 1.5,
+                },
+              }}
+            >
+              <Button
+                variant="text"
+                onClick={toggleDrawer(true)}
+                startIcon={<ReceiptLongIcon />}
+                sx={{
+                  color: alpha('#ffffff', 0.7),
+                  '@media (max-width: 480px)': {
+                    fontSize: '0.85rem',
+                    minWidth: 'auto',
+                    padding: '8px 16px',
+                  },
+                  '&:hover': {
+                    color: '#ffffff',
+                    background: alpha('#ffffff', 0.1),
+                  },
+                }}
+              >
+                {t('home.settings.history')}
+              </Button>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  alignItems: 'center',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  width: { xs: '100%', sm: 'auto' },
+                  '@media (max-width: 480px)': {
+                    gap: 1.5,
+                  },
+                }}
+              >
+                <PasswordSwitch value={password} onChange={updatePassword} />
+                <ModernUploadButton
+                  variant="contained"
+                  disabled={
+                    (tab === 'text' && !text) || (tab === 'file' && !file)
+                  }
+                  endIcon={<SendIcon />}
+                  onClick={handleShare}
+                  sx={{
+                    width: { xs: '100%', sm: 'auto' },
+                    minWidth: { sm: 'auto' },
+                    '@media (max-width: 480px)': {
+                      fontSize: '0.9rem',
+                    },
+                  }}
+                >
+                  {t('home.uploadSection.shareButton')}
+                </ModernUploadButton>
+              </Box>
+            </Box>
+          </Box>
+        </CardContent>
+      </ModernCard>
+
+      <Drawer
+        open={drawerOpened}
+        onClose={toggleDrawer(false)}
+        anchor="right"
+        PaperProps={{
+          sx: {
+            background: alpha('#ffffff', 0.1),
+            backdropFilter: 'blur(20px)',
+            border: `1px solid ${alpha('#ffffff', 0.1)}`,
+            '&:hover': {
+              background: alpha('#ffffff', 0.1),
+              transform: 'none',
+              boxShadow: 'inherit',
+            },
+            '@media (max-width: 768px)': {
+              width: '85vw',
+              maxWidth: '400px',
+            },
+            '@media (max-width: 480px)': {
+              width: '90vw',
+              maxWidth: 'none',
+            },
+          },
+        }}
+      >
+        <History
+          onItemClick={(item: { code: string }) => {
+            updateDrawerOpened(false)
+            setCode(item.code)
+          }}
+        />
+      </Drawer>
+
+      <Progress open={progress !== null} value={progress ?? 0} />
+    </GlassContainer>
   )
 }
 export function Home() {
