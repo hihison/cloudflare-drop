@@ -171,8 +171,8 @@ const ModernTab = styled(Tab)(() => ({
     fontWeight: 600,
   },
   '&:hover': {
-    backgroundColor: alpha('#ffffff', 0.1),
-    color: '#ffffff',
+    backgroundColor: 'transparent',
+    color: alpha('#ffffff', 0.9),
   },
 }))
 
@@ -468,10 +468,12 @@ export function AppMain(props: LayoutProps) {
                   <ModernTab
                     label={t('home.uploadSection.textTab')}
                     value="text"
+                    disableRipple
                   />
                   <ModernTab
                     label={t('home.uploadSection.fileTab')}
                     value="file"
+                    disableRipple
                   />
                 </ModernTabList>
               </Box>
@@ -500,7 +502,7 @@ export function AppMain(props: LayoutProps) {
                         border: 'none',
                       },
                       '&:hover': {
-                        background: alpha('#ffffff', 0.15),
+                        background: 'transparent',
                         '@media (max-width: 768px)': {},
                       },
                       '&.Mui-focused': {
@@ -555,8 +557,8 @@ export function AppMain(props: LayoutProps) {
                       padding: 2,
                     },
                     '&:hover': {
-                      borderColor: alpha('#ffffff', 0.4),
-                      background: alpha('#ffffff', 0.1),
+                      borderColor: alpha('#ffffff', 0.3),
+                      background: 'transparent',
                     },
                   }}
                 >
@@ -565,6 +567,7 @@ export function AppMain(props: LayoutProps) {
                     variant="contained"
                     startIcon={<CloudUploadIcon />}
                     size="large"
+                    disableRipple
                     sx={{
                       '@media (max-width: 480px)': {
                         size: 'medium',
@@ -730,6 +733,7 @@ export function AppMain(props: LayoutProps) {
                 variant="text"
                 onClick={toggleDrawer(true)}
                 startIcon={<ReceiptLongIcon />}
+                disableRipple
                 sx={{
                   color: alpha('#ffffff', 0.7),
                   '@media (max-width: 480px)': {
@@ -738,8 +742,8 @@ export function AppMain(props: LayoutProps) {
                     padding: '8px 16px',
                   },
                   '&:hover': {
-                    color: '#ffffff',
-                    background: alpha('#ffffff', 0.1),
+                    color: alpha('#ffffff', 0.9),
+                    background: 'transparent',
                   },
                 }}
               >
@@ -766,6 +770,7 @@ export function AppMain(props: LayoutProps) {
                   }
                   endIcon={<SendIcon />}
                   onClick={handleShare}
+                  disableRipple
                   sx={{
                     width: { xs: '100%', sm: 'auto' },
                     minWidth: { sm: 'auto' },
@@ -792,7 +797,7 @@ export function AppMain(props: LayoutProps) {
             backdropFilter: 'blur(20px)',
             border: `1px solid ${alpha('#ffffff', 0.1)}`,
             '&:hover': {
-              background: alpha('#ffffff', 0.1),
+              background: 'transparent',
               transform: 'none',
               boxShadow: 'inherit',
             },
