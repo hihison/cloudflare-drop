@@ -8,6 +8,7 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import { Message, useMessage, LanguageSelector, InstallPrompt } from './'
+import { useLanguage } from '../helpers'
 
 export interface LayoutProps {
   children?: ComponentChildren
@@ -17,6 +18,7 @@ export interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [messageProps, message] = useMessage()
+  const { t } = useLanguage()
 
   const [backdropOpen, setBackdropOpen] = useState(false)
 
@@ -85,29 +87,48 @@ export function Layout({ children }: LayoutProps) {
                 height: '48px',
               }}
             />
-            <Typography
-              variant="h5"
-              color="primary"
-              sx={{
-                fontFamily: 'DingDing',
-                '@media (max-width: 768px)': {
-                  fontSize: '1.5rem',
-                },
-                '@media (max-width: 480px)': {
-                  fontSize: '1.25rem',
-                  marginTop: 0.5,
-                },
-              }}
-            >
-              <span 
-                class="relative" 
-                style={{
-                  top: '8px',
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <Typography
+                variant="h5"
+                color="primary"
+                sx={{
+                  fontFamily: 'DingDing',
+                  '@media (max-width: 768px)': {
+                    fontSize: '1.5rem',
+                  },
+                  '@media (max-width: 480px)': {
+                    fontSize: '1.25rem',
+                    marginTop: 0.5,
+                  },
                 }}
               >
-                Cloudflare Drop
-              </span>
-            </Typography>
+                <span 
+                  class="relative" 
+                  style={{
+                    top: '8px',
+                  }}
+                >
+                  Cloudflare Drop
+                </span>
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontSize: '0.75rem',
+                  fontWeight: 400,
+                  '@media (max-width: 768px)': {
+                    fontSize: '0.7rem',
+                  },
+                  '@media (max-width: 480px)': {
+                    fontSize: '0.65rem',
+                    display: 'none', // Hide on very small screens
+                  },
+                }}
+              >
+                {t('header.subtitle')}
+              </Typography>
+            </Box>
           </Link>
           <Box
             sx={{
