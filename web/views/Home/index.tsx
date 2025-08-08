@@ -313,6 +313,7 @@ export function AppMain(props: LayoutProps) {
   const [text, setText] = useState('')
   const [file, setFile] = useState<File | null>(null)
   const [code, setCode] = useState('')
+  const [isDragOver, setIsDragOver] = useState(false)
 
   const reset = useRef(() => {
     setText('')
@@ -365,6 +366,49 @@ export function AppMain(props: LayoutProps) {
       return
     }
     setFile(file)
+  }
+
+  // Drag and drop handlers
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // Only set dragOver to false if we're leaving the drop zone completely
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
+    const x = e.clientX
+    const y = e.clientY
+
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      setIsDragOver(false)
+    }
+  }
+
+  const handleDragEnter = (e: DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(true)
+  }
+
+  const handleDrop = (e: DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+
+    const files = e.dataTransfer?.files
+    if (files && files.length > 0) {
+      const droppedFile = files[0]
+      if (droppedFile.size > MAX_SIZE * 1000 * 1000) {
+        message.error(`文件大于 ${MAX_SIZE}M`)
+        return
+      }
+      setFile(droppedFile)
+      setTab('file') // Switch to file tab when dropping a file
+    }
   }
 
   const handleShare = async () => {
@@ -547,16 +591,21 @@ export function AppMain(props: LayoutProps) {
 
                   <TabPanel value="file" sx={{ p: 0, minHeight: 240 }}>
                     <Box
+                      onDragEnter={handleDragEnter}
+                      onDragOver={handleDragOver}
+                      onDragLeave={handleDragLeave}
+                      onDrop={handleDrop}
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
                         minHeight: 200,
-                        border: `2px dashed ${alpha('#ffffff', 0.2)}`,
+                        border: `2px dashed ${alpha('#ffffff', isDragOver ? 0.6 : 0.2)}`,
                         borderRadius: 3,
-                        background: alpha('#ffffff', 0.05),
+                        background: alpha('#ffffff', isDragOver ? 0.15 : 0.05),
                         transition: 'all 0.3s ease',
+                        transform: isDragOver ? 'scale(1.02)' : 'scale(1)',
                         '@media (max-width: 768px)': {
                           minHeight: 180,
                           borderRadius: 2,
@@ -584,12 +633,32 @@ export function AppMain(props: LayoutProps) {
                           },
                         }}
                       >
-                        {t('home.uploadSection.fileUpload')}
+                        {isDragOver
+                          ? 'Drop file here'
+                          : t('home.uploadSection.fileUpload')}
                         <VisuallyHiddenInput
                           type="file"
                           onChange={handleFileChange}
                         />
                       </ModernUploadButton>
+
+                      {!isDragOver && (
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            mt: 2,
+                            color: alpha('#ffffff', 0.6),
+                            textAlign: 'center',
+                            fontSize: '0.9rem',
+                            '@media (max-width: 480px)': {
+                              fontSize: '0.8rem',
+                              mt: 1.5,
+                            },
+                          }}
+                        >
+                          or drag and drop a file here
+                        </Typography>
+                      )}
 
                       {file && (
                         <Box
