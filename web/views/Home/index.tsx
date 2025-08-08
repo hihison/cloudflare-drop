@@ -9,7 +9,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import TextField from '@mui/material/TextField'
-import { styled, alpha, keyframes } from '@mui/material/styles'
+import { styled, alpha } from '@mui/material/styles'
 import Button from '@mui/material/Button'
 import CloudUploadIcon from '@mui/icons-material/CloudUpload'
 import SendIcon from '@mui/icons-material/Send'
@@ -37,25 +37,6 @@ import {
 import { resolveFileByCode, uploadFile } from '../../api'
 import { Layout, LayoutProps } from '../../components'
 import { humanFileSize } from '../../helpers'
-
-// Modern animations
-const floatAnimation = keyframes`
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-`
-
-const gradientShift = keyframes`
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-`
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -114,7 +95,6 @@ const ModernCard = styled(Card)(() => ({
   maxWidth: 1000,
   width: '100%',
   margin: '0 auto',
-  animation: `${floatAnimation} 6s ease-in-out infinite`,
   '@media (max-width: 768px)': {
     borderRadius: 24,
     maxWidth: '100%',
@@ -133,7 +113,6 @@ const ModernCard = styled(Card)(() => ({
     height: '2px',
     background:
       'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
-    animation: `${gradientShift} 3s ease-in-out infinite`,
   },
   '&:hover': {
     transform: 'translateY(-8px) scale(1.02)',
@@ -217,7 +196,6 @@ const ModernUploadButton = styled(Button)(() => ({
   background:
     'linear-gradient(135deg, rgb(24, 33, 57) 0%, rgb(18, 25, 43) 100%)',
   backgroundSize: '200% 200%',
-  animation: `${gradientShift} 4s ease infinite`,
   boxShadow: '0 8px 32px rgba(24, 33, 57, 0.25)',
   border: 'none',
   fontWeight: 600,
