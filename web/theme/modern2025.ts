@@ -29,16 +29,16 @@ declare module '@mui/material/styles' {
 // Modern 2025 color palette
 const modernColors = {
   primary: {
-    50: '#eff6ff',
-    100: '#dbeafe',
-    200: '#bfdbfe',
-    300: '#93c5fd',
-    400: '#60a5fa',
-    500: '#3b82f6',
-    600: '#2563eb',
-    700: '#1d4ed8',
-    800: '#1e40af',
-    900: '#1e3a8a',
+    50: '#f8f9fb', // very light version of your color
+    100: '#f1f3f7', // light
+    200: '#e4e7ef', // lighter
+    300: '#cdd2df', // medium-light
+    400: '#a8b1c7', // medium
+    500: '#6b7591', // medium-dark
+    600: '#4a5573', // darker
+    700: '#36435e', // very dark
+    800: '#182139', // your main color rgb(24, 33, 57)
+    900: '#0f1724', // darkest
   },
   secondary: {
     50: '#fdf2f8',
