@@ -110,9 +110,22 @@
     "actions": {
       "download": "Download File",
       "preview": "Preview Text",
+      "edit": "Edit File",
       "delete": "Delete File",
       "deleteSelected": "Delete Selected",
       "selected": "Selected {count}"
+    },
+    "edit": {
+      "title": "Edit File",
+      "expiryDate": "Expiry Date",
+      "permanent": "Never expires",
+      "customDate": "Custom expiry date",
+      "selectDate": "Select date and time",
+      "save": "Save Changes",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "success": "File updated successfully",
+      "error": "Failed to update file"
     },
     "status": {
       "permanent": "Permanent",

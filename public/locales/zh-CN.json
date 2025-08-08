@@ -110,9 +110,22 @@
     "actions": {
       "download": "下载文件",
       "preview": "预览文本",
+      "edit": "编辑文件",
       "delete": "删除文件",
       "deleteSelected": "删除选中",
       "selected": "选中 {count}"
+    },
+    "edit": {
+      "title": "编辑文件",
+      "expiryDate": "过期时间",
+      "permanent": "永不过期",
+      "customDate": "自定义过期时间",
+      "selectDate": "选择日期和时间",
+      "save": "保存更改",
+      "cancel": "取消",
+      "saving": "保存中...",
+      "success": "文件更新成功",
+      "error": "文件更新失败"
     },
     "status": {
       "permanent": "永久",

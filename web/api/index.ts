@@ -139,17 +139,14 @@ export function createAdminApi(token: string) {
       return processResponse(response)
     },
 
-    downloadFile: async (
-      fileId: string,
-      filename: string,
-    ): Promise<void> => {
+    downloadFile: async (fileId: string, filename: string): Promise<void> => {
       try {
         const response = await fetch(`/api/admin/files/${fileId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        
+
         if (!response.ok) {
           const errorText = await response.text()
           throw new Error(`Download failed: ${response.status} - ${errorText}`)
@@ -168,58 +165,68 @@ export function createAdminApi(token: string) {
 
         // Create download using a more reliable method
         const url = URL.createObjectURL(blob)
-        
+
         // Create a temporary anchor element
         const a = document.createElement('a')
         a.href = url
         a.download = filename
-        
+
         // Create a click event that won't interfere with routing
         const clickEvent = new MouseEvent('click', {
           view: window,
           bubbles: false,
-          cancelable: true
+          cancelable: true,
         })
-        
+
         // Temporarily add to DOM (required for some browsers)
         a.style.display = 'none'
         document.body.appendChild(a)
-        
+
         // Trigger download
         a.dispatchEvent(clickEvent)
-        
+
         // Clean up immediately
         document.body.removeChild(a)
         URL.revokeObjectURL(url)
-        
       } catch (error) {
         console.error('Download error:', error)
         throw error
       }
     },
 
-    getTextContent: async (
-      fileId: string,
-    ): Promise<string> => {
+    getTextContent: async (fileId: string): Promise<string> => {
       try {
         const response = await fetch(`/api/admin/files/${fileId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
-        
+
         if (!response.ok) {
           const errorText = await response.text()
-          throw new Error(`Failed to fetch text: ${response.status} - ${errorText}`)
+          throw new Error(
+            `Failed to fetch text: ${response.status} - ${errorText}`,
+          )
         }
 
         const text = await response.text()
         return text
-        
       } catch (error) {
         console.error('Text fetch error:', error)
         throw error
       }
+    },
+
+    updateFile: async (
+      fileId: string,
+      updates: { due_date?: number | null },
+    ): Promise<ApiResponseType<unknown>> => {
+      const response = await fetch(`/api/admin/files/${fileId}`, {
+        method: 'PUT',
+        headers,
+        body: JSON.stringify(updates),
+      })
+      return processResponse(response)
     },
   }
 }

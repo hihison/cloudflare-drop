@@ -14,7 +14,13 @@ import {
   GetFileChunkInfo,
   MergeFileChunk,
 } from './files'
-import { DeleteShare, GetInfo, ListShares, AdminDownloadFile } from './admin'
+import {
+  DeleteShare,
+  GetInfo,
+  ListShares,
+  AdminDownloadFile,
+  UpdateFile,
+} from './admin'
 
 import { scheduled } from './scheduled'
 
@@ -46,6 +52,7 @@ openapi.get('/api/admin/info', GetInfo)
 openapi.get('/api/admin/shares', ListShares)
 openapi.delete('/api/admin/shares', DeleteShare)
 openapi.get('/api/admin/files/:id', AdminDownloadFile)
+openapi.put('/api/admin/files/:id', UpdateFile)
 
 app.all(
   '/api/*',

@@ -110,9 +110,22 @@
     "actions": {
       "download": "下載檔案",
       "preview": "預覽文字",
+      "edit": "編輯檔案",
       "delete": "刪除檔案",
       "deleteSelected": "刪除所選",
       "selected": "已選取 {count}"
+    },
+    "edit": {
+      "title": "編輯檔案",
+      "expiryDate": "過期時間",
+      "permanent": "永不過期",
+      "customDate": "自訂過期時間",
+      "selectDate": "選擇日期和時間",
+      "save": "儲存變更",
+      "cancel": "取消",
+      "saving": "儲存中...",
+      "success": "檔案更新成功",
+      "error": "檔案更新失敗"
     },
     "status": {
       "permanent": "永久",

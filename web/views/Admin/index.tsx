@@ -20,12 +20,18 @@ import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DownloadIcon from '@mui/icons-material/FileDownload'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import EditIcon from '@mui/icons-material/Edit'
 import LogoutIcon from '@mui/icons-material/Logout'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import TextField from '@mui/material/TextField'
 import Info from '@mui/icons-material/InfoOutlined'
 import LockClose from '@mui/icons-material/Lock'
 
@@ -275,6 +281,21 @@ function AdminMain(props: AdminProps) {
     filename: '',
   })
 
+  // Edit dialog state
+  const [editDialog, setEditDialog] = useState<{
+    open: boolean
+    file: FileType | null
+    expiryType: 'permanent' | 'custom'
+    customDate: string
+    isLoading: boolean
+  }>({
+    open: false,
+    file: null,
+    expiryType: 'permanent',
+    customDate: '',
+    isLoading: false,
+  })
+
   const fetchList = async (pageSize = page) => {
     setBackdropOpen(true)
 
@@ -398,6 +419,60 @@ function AdminMain(props: AdminProps) {
     }
   }
 
+  const handleEditFile = (file: FileType) => {
+    setEditDialog({
+      open: true,
+      file,
+      expiryType: file.due_date ? 'custom' : 'permanent',
+      customDate: file.due_date
+        ? dayjs(file.due_date).format('YYYY-MM-DDTHH:mm')
+        : dayjs().add(1, 'day').format('YYYY-MM-DDTHH:mm'),
+      isLoading: false,
+    })
+  }
+
+  const handleEditDialogClose = () => {
+    setEditDialog((prev) => ({ ...prev, open: false }))
+  }
+
+  const handleExpiryTypeChange = (type: 'permanent' | 'custom') => {
+    setEditDialog((prev) => ({ ...prev, expiryType: type }))
+  }
+
+  const handleCustomDateChange = (date: string) => {
+    setEditDialog((prev) => ({ ...prev, customDate: date }))
+  }
+
+  const handleSaveEdit = async () => {
+    if (!editDialog.file) return
+
+    setEditDialog((prev) => ({ ...prev, isLoading: true }))
+
+    try {
+      const due_date =
+        editDialog.expiryType === 'permanent'
+          ? null
+          : new Date(editDialog.customDate).getTime()
+
+      const response = await adminApi.updateFile(editDialog.file.id, {
+        due_date,
+      })
+
+      if (response.result) {
+        message.success(t('admin.edit.success'))
+        setEditDialog((prev) => ({ ...prev, open: false }))
+        await fetchList() // Refresh the list
+      } else {
+        message.error(response.message || t('admin.edit.error'))
+      }
+    } catch (error) {
+      console.error('Edit failed:', error)
+      message.error(t('admin.edit.error'))
+    } finally {
+      setEditDialog((prev) => ({ ...prev, isLoading: false }))
+    }
+  }
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = rowsPerPage - rows.length
 
@@ -515,6 +590,14 @@ function AdminMain(props: AdminProps) {
                           <DownloadIcon color="action" />
                         </IconButton>
                       </Tooltip>
+                      <Tooltip title={t('admin.actions.edit')}>
+                        <IconButton
+                          aria-label="edit"
+                          onClick={() => handleEditFile(row)}
+                        >
+                          <EditIcon color="action" />
+                        </IconButton>
+                      </Tooltip>
                       <Tooltip title={t('admin.actions.delete')}>
                         <IconButton
                           aria-label="delete"
@@ -595,6 +678,78 @@ function AdminMain(props: AdminProps) {
             onClick={() => setTextPreview((prev) => ({ ...prev, open: false }))}
           >
             {t('common.close')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit Dialog */}
+      <Dialog
+        open={editDialog.open}
+        onClose={handleEditDialogClose}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <EditIcon />
+            {t('admin.edit.title')}: {editDialog.file?.filename}
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box sx={{ mt: 2 }}>
+            <FormControl component="fieldset">
+              <RadioGroup
+                value={editDialog.expiryType}
+                onChange={(e) =>
+                  handleExpiryTypeChange(
+                    (e.target as HTMLInputElement).value as
+                      | 'permanent'
+                      | 'custom',
+                  )
+                }
+              >
+                <FormControlLabel
+                  value="permanent"
+                  control={<Radio />}
+                  label={t('admin.edit.permanent')}
+                />
+                <FormControlLabel
+                  value="custom"
+                  control={<Radio />}
+                  label={t('admin.edit.customDate')}
+                />
+              </RadioGroup>
+            </FormControl>
+
+            {editDialog.expiryType === 'custom' && (
+              <TextField
+                fullWidth
+                type="datetime-local"
+                label={t('admin.edit.selectDate')}
+                value={editDialog.customDate}
+                onChange={(e) =>
+                  handleCustomDateChange((e.target as HTMLInputElement).value)
+                }
+                sx={{ mt: 2 }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            )}
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditDialogClose}>
+            {t('admin.edit.cancel')}
+          </Button>
+          <Button
+            onClick={handleSaveEdit}
+            variant="contained"
+            disabled={editDialog.isLoading}
+          >
+            {editDialog.isLoading
+              ? t('admin.edit.saving')
+              : t('admin.edit.save')}
           </Button>
         </DialogActions>
       </Dialog>
