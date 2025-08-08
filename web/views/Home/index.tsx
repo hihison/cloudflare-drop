@@ -95,7 +95,8 @@ const GlassContainer = styled(Container)(() => ({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundImage: 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.15) 0%, transparent 50%)',
+    backgroundImage:
+      'radial-gradient(circle at 20% 80%, rgba(30, 64, 175, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(30, 64, 175, 0.15) 0%, transparent 50%)',
     pointerEvents: 'none',
   },
 }))
@@ -130,13 +131,15 @@ const ModernCard = styled(Card)(() => ({
     left: 0,
     right: 0,
     height: '2px',
-    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
+    background:
+      'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
     animation: `${gradientShift} 3s ease-in-out infinite`,
   },
   '&:hover': {
     transform: 'translateY(-8px) scale(1.02)',
     background: alpha('#ffffff', 0.15),
-    boxShadow: '0 35px 60px rgba(102, 126, 234, 0.15), 0 25px 45px rgba(102, 126, 234, 0.1)',
+    boxShadow:
+      '0 35px 60px rgba(30, 64, 175, 0.15), 0 25px 45px rgba(30, 64, 175, 0.1)',
     '@media (max-width: 768px)': {
       transform: 'translateY(-4px) scale(1.01)',
     },
@@ -164,9 +167,10 @@ const ModernTabList = styled(TabList)(() => ({
   '& .MuiTabs-indicator': {
     height: '100%',
     borderRadius: 16,
-    background: 'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
+    background:
+      'linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%)',
     backdropFilter: 'blur(10px)',
-    boxShadow: '0 4px 20px rgba(102, 126, 234, 0.2)',
+    boxShadow: '0 4px 20px rgba(30, 64, 175, 0.2)',
     '@media (max-width: 768px)': {
       borderRadius: 12,
     },
@@ -210,7 +214,7 @@ const ModernTab = styled(Tab)(() => ({
 const ModernUploadButton = styled(Button)(() => ({
   borderRadius: 20,
   padding: '16px 32px',
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
   backgroundSize: '200% 200%',
   animation: `${gradientShift} 4s ease infinite`,
   boxShadow: '0 8px 32px rgba(102, 126, 234, 0.25)',
@@ -240,7 +244,8 @@ const ModernUploadButton = styled(Button)(() => ({
     left: '-100%',
     width: '100%',
     height: '100%',
-    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+    background:
+      'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
     transition: 'left 0.5s',
   },
   '&:hover': {
@@ -407,8 +412,8 @@ export function AppMain(props: LayoutProps) {
     <Fade in timeout={800}>
       <GlassContainer maxWidth="xl">
         <ModernCard>
-          <CardContent 
-            sx={{ 
+          <CardContent
+            sx={{
               p: 4,
               '@media (max-width: 768px)': {
                 p: 3,
@@ -430,12 +435,12 @@ export function AppMain(props: LayoutProps) {
                     flexDirection: { xs: 'column', sm: 'row' },
                   }}
                 >
-                  <Typography 
-                    variant="h5" 
-                    sx={{ 
+                  <Typography
+                    variant="h5"
+                    sx={{
                       color: alpha('#ffffff', 0.9),
                       fontWeight: 600,
-                      minWidth: 'fit-content'
+                      minWidth: 'fit-content',
                     }}
                   >
                     {t('home.downloadSection.title')}：
@@ -447,13 +452,15 @@ export function AppMain(props: LayoutProps) {
                   />
                 </Box>
 
-                <Divider sx={{ 
-                  my: 3, 
-                  borderColor: alpha('#ffffff', 0.1),
-                  '&::before, &::after': {
+                <Divider
+                  sx={{
+                    my: 3,
                     borderColor: alpha('#ffffff', 0.1),
-                  }
-                }} />
+                    '&::before, &::after': {
+                      borderColor: alpha('#ffffff', 0.1),
+                    },
+                  }}
+                />
               </Box>
             </Slide>
 
@@ -467,11 +474,17 @@ export function AppMain(props: LayoutProps) {
                       aria-label="分享類型選擇"
                       centered
                     >
-                      <ModernTab label={t('home.uploadSection.textTab')} value="text" />
-                      <ModernTab label={t('home.uploadSection.fileTab')} value="file" />
+                      <ModernTab
+                        label={t('home.uploadSection.textTab')}
+                        value="text"
+                      />
+                      <ModernTab
+                        label={t('home.uploadSection.fileTab')}
+                        value="file"
+                      />
                     </ModernTabList>
                   </Box>
-                  
+
                   <TabPanel value="text" sx={{ p: 0, minHeight: 240 }}>
                     <TextField
                       multiline
@@ -530,32 +543,34 @@ export function AppMain(props: LayoutProps) {
                       }}
                     />
                   </TabPanel>
-                  
+
                   <TabPanel value="file" sx={{ p: 0, minHeight: 240 }}>
-                    <Box sx={{ 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      minHeight: 200,
-                      border: `2px dashed ${alpha('#ffffff', 0.2)}`,
-                      borderRadius: 3,
-                      background: alpha('#ffffff', 0.05),
-                      transition: 'all 0.3s ease',
-                      '@media (max-width: 768px)': {
-                        minHeight: 180,
-                        borderRadius: 2,
-                      },
-                      '@media (max-width: 480px)': {
-                        minHeight: 160,
-                        borderRadius: 1.5,
-                        padding: 2,
-                      },
-                      '&:hover': {
-                        borderColor: alpha('#ffffff', 0.4),
-                        background: alpha('#ffffff', 0.1),
-                      }
-                    }}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        minHeight: 200,
+                        border: `2px dashed ${alpha('#ffffff', 0.2)}`,
+                        borderRadius: 3,
+                        background: alpha('#ffffff', 0.05),
+                        transition: 'all 0.3s ease',
+                        '@media (max-width: 768px)': {
+                          minHeight: 180,
+                          borderRadius: 2,
+                        },
+                        '@media (max-width: 480px)': {
+                          minHeight: 160,
+                          borderRadius: 1.5,
+                          padding: 2,
+                        },
+                        '&:hover': {
+                          borderColor: alpha('#ffffff', 0.4),
+                          background: alpha('#ffffff', 0.1),
+                        },
+                      }}
+                    >
                       <ModernUploadButton
                         component="label"
                         variant="contained"
@@ -574,41 +589,47 @@ export function AppMain(props: LayoutProps) {
                           onChange={handleFileChange}
                         />
                       </ModernUploadButton>
-                      
+
                       {file && (
-                        <Box sx={{ 
-                          mt: 3, 
-                          display: 'flex', 
-                          alignItems: 'center',
-                          background: alpha('#ffffff', 0.1),
-                          padding: 2,
-                          borderRadius: 2,
-                          backdropFilter: 'blur(10px)',
-                          maxWidth: '100%',
-                          '@media (max-width: 480px)': {
-                            mt: 2,
-                            padding: 1.5,
-                            borderRadius: 1.5,
-                            flexDirection: 'column',
-                            textAlign: 'center',
-                          },
-                        }}>
-                          <FileIcon sx={{ 
-                            mr: 1, 
-                            color: alpha('#ffffff', 0.7),
+                        <Box
+                          sx={{
+                            mt: 3,
+                            display: 'flex',
+                            alignItems: 'center',
+                            background: alpha('#ffffff', 0.1),
+                            padding: 2,
+                            borderRadius: 2,
+                            backdropFilter: 'blur(10px)',
+                            maxWidth: '100%',
                             '@media (max-width: 480px)': {
-                              mr: 0,
-                              mb: 1,
+                              mt: 2,
+                              padding: 1.5,
+                              borderRadius: 1.5,
+                              flexDirection: 'column',
+                              textAlign: 'center',
                             },
-                          }} />
-                          <Box sx={{ 
-                            minWidth: 0,
-                            '@media (max-width: 480px)': {
-                              width: '100%',
-                            },
-                          }}>
-                            <Typography 
-                              sx={{ 
+                          }}
+                        >
+                          <FileIcon
+                            sx={{
+                              mr: 1,
+                              color: alpha('#ffffff', 0.7),
+                              '@media (max-width: 480px)': {
+                                mr: 0,
+                                mb: 1,
+                              },
+                            }}
+                          />
+                          <Box
+                            sx={{
+                              minWidth: 0,
+                              '@media (max-width: 480px)': {
+                                width: '100%',
+                              },
+                            }}
+                          >
+                            <Typography
+                              sx={{
                                 color: alpha('#ffffff', 0.9),
                                 wordBreak: 'break-word',
                                 '@media (max-width: 480px)': {
@@ -618,9 +639,9 @@ export function AppMain(props: LayoutProps) {
                             >
                               {file.name}
                             </Typography>
-                            <Typography 
-                              variant="body2" 
-                              sx={{ 
+                            <Typography
+                              variant="body2"
+                              sx={{
                                 color: alpha('#ffffff', 0.6),
                                 '@media (max-width: 480px)': {
                                   fontSize: '0.8rem',
@@ -637,16 +658,18 @@ export function AppMain(props: LayoutProps) {
                 </TabContext>
 
                 {/* Settings */}
-                <Box sx={{ 
-                  mt: 3, 
-                  mb: 3,
-                  '@media (max-width: 480px)': {
-                    mt: 2,
-                    mb: 2,
-                  },
-                }}>
+                <Box
+                  sx={{
+                    mt: 3,
+                    mb: 3,
+                    '@media (max-width: 480px)': {
+                      mt: 2,
+                      mb: 2,
+                    },
+                  }}
+                >
                   <Duration value={duration} onChange={updateDuration} />
-                  
+
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -661,8 +684,8 @@ export function AppMain(props: LayoutProps) {
                       />
                     }
                     label={
-                      <Typography 
-                        sx={{ 
+                      <Typography
+                        sx={{
                           color: alpha('#ffffff', 0.8),
                           '@media (max-width: 480px)': {
                             fontSize: '0.9rem',
@@ -672,7 +695,7 @@ export function AppMain(props: LayoutProps) {
                         {t('home.settings.ephemeral')}
                       </Typography>
                     }
-                    sx={{ 
+                    sx={{
                       mt: 2,
                       '@media (max-width: 480px)': {
                         mt: 1.5,
@@ -682,18 +705,20 @@ export function AppMain(props: LayoutProps) {
                 </Box>
 
                 {/* Action Buttons */}
-                <Box sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  flexDirection: { xs: 'column', sm: 'row' },
-                  gap: 2,
-                  '@media (max-width: 480px)': {
-                    gap: 1.5,
-                  },
-                }}>
-                  <Button 
-                    variant="text" 
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    gap: 2,
+                    '@media (max-width: 480px)': {
+                      gap: 1.5,
+                    },
+                  }}
+                >
+                  <Button
+                    variant="text"
                     onClick={toggleDrawer(true)}
                     startIcon={<ReceiptLongIcon />}
                     sx={{
@@ -706,23 +731,28 @@ export function AppMain(props: LayoutProps) {
                       '&:hover': {
                         color: '#ffffff',
                         background: alpha('#ffffff', 0.1),
-                      }
+                      },
                     }}
                   >
                     {t('home.settings.history')}
                   </Button>
-                  
-                  <Box sx={{ 
-                    display: 'flex', 
-                    gap: 2, 
-                    alignItems: 'center',
-                    flexDirection: { xs: 'column', sm: 'row' },
-                    width: { xs: '100%', sm: 'auto' },
-                    '@media (max-width: 480px)': {
-                      gap: 1.5,
-                    },
-                  }}>
-                    <PasswordSwitch value={password} onChange={updatePassword} />
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      gap: 2,
+                      alignItems: 'center',
+                      flexDirection: { xs: 'column', sm: 'row' },
+                      width: { xs: '100%', sm: 'auto' },
+                      '@media (max-width: 480px)': {
+                        gap: 1.5,
+                      },
+                    }}
+                  >
+                    <PasswordSwitch
+                      value={password}
+                      onChange={updatePassword}
+                    />
                     <ModernUploadButton
                       variant="contained"
                       disabled={
@@ -747,9 +777,9 @@ export function AppMain(props: LayoutProps) {
           </CardContent>
         </ModernCard>
 
-        <Drawer 
-          open={drawerOpened} 
-          onClose={toggleDrawer(false)} 
+        <Drawer
+          open={drawerOpened}
+          onClose={toggleDrawer(false)}
           anchor="right"
           PaperProps={{
             sx: {
@@ -764,17 +794,17 @@ export function AppMain(props: LayoutProps) {
                 width: '90vw',
                 maxWidth: 'none',
               },
-            }
+            },
           }}
         >
           <History
-            onItemClick={(item: any) => {
+            onItemClick={(item: { code: string }) => {
               updateDrawerOpened(false)
               setCode(item.code)
             }}
           />
         </Drawer>
-        
+
         <Progress open={progress !== null} value={progress ?? 0} />
       </GlassContainer>
     </Fade>

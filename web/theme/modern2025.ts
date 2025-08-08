@@ -29,16 +29,16 @@ declare module '@mui/material/styles' {
 // Modern 2025 color palette
 const modernColors = {
   primary: {
-    50: '#f0f9ff',
-    100: '#e0f2fe',
-    200: '#bae6fd',
-    300: '#7dd3fc',
-    400: '#38bdf8',
-    500: '#0ea5e9',
-    600: '#0284c7',
-    700: '#0369a1',
-    800: '#075985',
-    900: '#0c4a6e',
+    50: '#eff6ff',
+    100: '#dbeafe',
+    200: '#bfdbfe',
+    300: '#93c5fd',
+    400: '#60a5fa',
+    500: '#3b82f6',
+    600: '#2563eb',
+    700: '#1d4ed8',
+    800: '#1e40af',
+    900: '#1e3a8a',
   },
   secondary: {
     50: '#fdf2f8',
@@ -63,7 +63,7 @@ const modernColors = {
     700: '#404040',
     800: '#262626',
     900: '#171717',
-  }
+  },
 }
 
 export const getModern2025Theme = (mode: 'light' | 'dark') => {
@@ -98,36 +98,39 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
         dark: '#059669',
       },
       background: {
-        default: mode === 'light' 
-          ? '#f8fafc'
-          : '#0f172a',
-        paper: mode === 'light'
-          ? alpha('#ffffff', 0.9)
-          : alpha('#1e293b', 0.9),
+        default: mode === 'light' ? '#f8fafc' : '#0f172a',
+        paper: mode === 'light' ? alpha('#ffffff', 0.9) : alpha('#1e293b', 0.9),
       },
       surface: {
-        main: mode === 'light' 
-          ? alpha('#ffffff', 0.7)
-          : alpha('#374151', 0.7),
+        main: mode === 'light' ? alpha('#ffffff', 0.7) : alpha('#374151', 0.7),
       },
       text: {
-        primary: mode === 'light' ? modernColors.neutral[900] : modernColors.neutral[50],
-        secondary: mode === 'light' ? modernColors.neutral[600] : modernColors.neutral[300],
+        primary:
+          mode === 'light'
+            ? modernColors.neutral[900]
+            : modernColors.neutral[50],
+        secondary:
+          mode === 'light'
+            ? modernColors.neutral[600]
+            : modernColors.neutral[300],
       },
-      divider: mode === 'light' 
-        ? alpha(modernColors.neutral[200], 0.5)
-        : alpha(modernColors.neutral[700], 0.5),
+      divider:
+        mode === 'light'
+          ? alpha(modernColors.neutral[200], 0.5)
+          : alpha(modernColors.neutral[700], 0.5),
     },
     typography: {
-      fontFamily: '"Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      fontFamily:
+        '"Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       h1: {
         fontSize: '3.5rem',
         fontWeight: 800,
         lineHeight: 1.1,
         letterSpacing: '-0.025em',
-        background: mode === 'light' 
-          ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-          : 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
+        background:
+          mode === 'light'
+            ? 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)'
+            : 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
@@ -186,9 +189,10 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
             scrollBehavior: 'smooth',
           },
           body: {
-            background: mode === 'light' 
-              ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              : 'linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e40af 100%)',
+            background:
+              mode === 'light'
+                ? 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)'
+                : 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f1729 100%)',
             minHeight: '100vh',
             backgroundAttachment: 'fixed',
             fontSmooth: 'always',
@@ -226,9 +230,10 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
             '&:hover': {
               backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.15),
               transform: 'translateY(-4px) scale(1.02)',
-              boxShadow: mode === 'light' 
-                ? '0 25px 50px rgba(102, 126, 234, 0.15), 0 15px 35px rgba(102, 126, 234, 0.1)' 
-                : '0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.3)',
+              boxShadow:
+                mode === 'light'
+                  ? '0 25px 50px rgba(30, 64, 175, 0.15), 0 15px 35px rgba(30, 64, 175, 0.1)'
+                  : '0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.3)',
             },
           },
         },
@@ -251,7 +256,8 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
               left: '-100%',
               width: '100%',
               height: '100%',
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+              background:
+                'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
               transition: 'left 0.5s',
             },
             '&:hover': {
@@ -262,12 +268,12 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
             },
           },
           contained: {
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            boxShadow: '0 8px 32px rgba(102, 126, 234, 0.25)',
+            background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+            boxShadow: '0 8px 32px rgba(30, 64, 175, 0.25)',
             border: 'none',
             '&:hover': {
-              background: 'linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)',
-              boxShadow: '0 12px 40px rgba(102, 126, 234, 0.35)',
+              background: 'linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%)',
+              boxShadow: '0 12px 40px rgba(30, 64, 175, 0.35)',
             },
             '&:active': {
               transform: 'translateY(0px)',
@@ -308,13 +314,15 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
               left: 0,
               right: 0,
               height: '1px',
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
+              background:
+                'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
             },
             '&:hover': {
               transform: 'translateY(-6px) rotate(1deg)',
-              boxShadow: mode === 'light' 
-                ? '0 30px 60px rgba(102, 126, 234, 0.15)' 
-                : '0 30px 60px rgba(0, 0, 0, 0.4)',
+              boxShadow:
+                mode === 'light'
+                  ? '0 30px 60px rgba(30, 64, 175, 0.15)'
+                  : '0 30px 60px rgba(0, 0, 0, 0.4)',
             },
           },
         },
@@ -326,9 +334,10 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
             backgroundColor: alpha('#ffffff', mode === 'light' ? 0.95 : 0.15),
             backdropFilter: 'blur(40px) saturate(200%)',
             border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.3 : 0.1)}`,
-            boxShadow: mode === 'light' 
-              ? '0 25px 50px rgba(0, 0, 0, 0.1)' 
-              : '0 25px 50px rgba(0, 0, 0, 0.5)',
+            boxShadow:
+              mode === 'light'
+                ? '0 25px 50px rgba(0, 0, 0, 0.1)'
+                : '0 25px 50px rgba(0, 0, 0, 0.5)',
           },
         },
       },
@@ -341,13 +350,19 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
               backdropFilter: 'blur(10px)',
               transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               '&:hover': {
-                backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.15),
+                backgroundColor: alpha(
+                  '#ffffff',
+                  mode === 'light' ? 0.9 : 0.15,
+                ),
                 transform: 'translateY(-1px)',
               },
               '&.Mui-focused': {
-                backgroundColor: alpha('#ffffff', mode === 'light' ? 0.95 : 0.2),
+                backgroundColor: alpha(
+                  '#ffffff',
+                  mode === 'light' ? 0.95 : 0.2,
+                ),
                 transform: 'translateY(-2px)',
-                boxShadow: '0 8px 25px rgba(102, 126, 234, 0.15)',
+                boxShadow: '0 8px 25px rgba(30, 64, 175, 0.15)',
               },
             },
           },
@@ -367,7 +382,7 @@ export const getModern2025Theme = (mode: 'light' | 'dark') => {
             borderRadius: 16,
             backgroundColor: alpha('#ffffff', 0.2),
             backdropFilter: 'blur(10px)',
-            boxShadow: '0 4px 20px rgba(102, 126, 234, 0.2)',
+            boxShadow: '0 4px 20px rgba(30, 64, 175, 0.2)',
           },
         },
       },
