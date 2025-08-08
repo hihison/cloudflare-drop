@@ -6,9 +6,8 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
-import IconButton from '@mui/material/IconButton'
 
-import { Message, useMessage, Github, LanguageSelector, InstallPrompt } from './'
+import { Message, useMessage, LanguageSelector, InstallPrompt } from './'
 
 export interface LayoutProps {
   children?: ComponentChildren
@@ -36,12 +35,12 @@ export function Layout({ children }: LayoutProps) {
       className="ml-auto mr-auto"
       sx={{
         maxWidth: `1200px !important`,
-        p: 2,
+        p: 1,
         '@media (max-width: 768px)': {
-          p: 1,
+          p: 0.5,
         },
         '@media (max-width: 480px)': {
-          p: 0.5,
+          p: 0.25,
         },
       }}
     >
@@ -70,29 +69,29 @@ export function Layout({ children }: LayoutProps) {
             <img 
               src="/logo.png" 
               alt="brand" 
-              height="80"
+              height="48"
               style={{
-                height: '80px',
+                height: '48px',
               }}
             />
             <Typography
-              variant="h4"
+              variant="h5"
               color="primary"
               sx={{
                 fontFamily: 'DingDing',
                 '@media (max-width: 768px)': {
-                  fontSize: '1.75rem',
+                  fontSize: '1.5rem',
                 },
                 '@media (max-width: 480px)': {
-                  fontSize: '1.5rem',
-                  marginTop: 1,
+                  fontSize: '1.25rem',
+                  marginTop: 0.5,
                 },
               }}
             >
               <span 
                 class="relative" 
                 style={{
-                  top: '14px',
+                  top: '8px',
                 }}
               >
                 Cloudflare Drop
@@ -110,19 +109,6 @@ export function Layout({ children }: LayoutProps) {
             }}
           >
             <LanguageSelector />
-            <IconButton
-              sx={{
-                position: 'relative',
-                top: -10,
-                '@media (max-width: 480px)': {
-                  top: 0,
-                },
-              }}
-              href="https://github.com/oustn/cloudflare-drop"
-              target="_blank"
-            >
-              <Github />
-            </IconButton>
           </Box>
         </Box>
         {injectedChildren}
