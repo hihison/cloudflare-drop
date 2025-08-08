@@ -83,6 +83,19 @@
   },
   "admin": {
     "title": "管理面板",
+    "login": {
+      "title": "管理员登录",
+      "subtitle": "请输入管理员令牌以访问管理面板",
+      "tokenPlaceholder": "输入管理员令牌",
+      "tokenRequired": "管理员令牌是必需的",
+      "invalidToken": "无效的管理员令牌",
+      "connectionError": "连接错误，请重试。",
+      "signIn": "登录",
+      "signingIn": "登录中..."
+    },
+    "logout": {
+      "title": "退出登录"
+    },
     "confirmDelete": "删除后无法恢复，请确认是否删除？",
     "table": {
       "filename": "文件名",

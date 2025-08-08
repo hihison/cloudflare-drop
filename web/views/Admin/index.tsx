@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useEffect, useState } from 'preact/hooks'
 import { useLanguage } from '../../helpers/i18n'
-import { alpha } from '@mui/material/styles'
+import { alpha, Theme } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -20,12 +20,12 @@ import Tooltip from '@mui/material/Tooltip'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DownloadIcon from '@mui/icons-material/FileDownload'
 import VisibilityIcon from '@mui/icons-material/Visibility'
+import LogoutIcon from '@mui/icons-material/Logout'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
-import { useRoute } from 'preact-iso'
 import Info from '@mui/icons-material/InfoOutlined'
 import LockClose from '@mui/icons-material/Lock'
 
@@ -35,6 +35,7 @@ import { humanFileSize } from '../../helpers'
 import dayjs from 'dayjs'
 import { ComponentChildren } from 'preact'
 import { useDialogs } from '@toolpad/core/useDialogs'
+import { AdminLogin } from './AdminLogin'
 
 function Div(props: { children?: ComponentChildren }) {
   return <div>{props.children}</div>
@@ -149,8 +150,8 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                   </Tooltip>
                 )}
                 {orderBy === headCell.id ? (
-                  <Box 
-                    component="span" 
+                  <Box
+                    component="span"
                     sx={{
                       position: 'absolute',
                       width: 1,
@@ -180,6 +181,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
 interface EnhancedTableToolbarProps {
   numSelected: number
   onDelete: (event: Event) => void
+  onLogout?: () => void
   t: (key: string, params?: Record<string, string | number>) => string
 }
 
@@ -195,7 +197,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           pr: { xs: 1, sm: 1 },
         },
         numSelected > 0 && {
-          bgcolor: (theme: any) =>
+          bgcolor: (theme: Theme) =>
             alpha(
               theme.palette.primary.main,
               theme.palette.action.activatedOpacity,
@@ -222,10 +224,16 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           {t('admin.title')}
         </Typography>
       )}
-      {numSelected > 0 && (
+      {numSelected > 0 ? (
         <Tooltip title={t('admin.actions.deleteSelected')}>
           <IconButton onClick={props.onDelete}>
             <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        <Tooltip title={t('admin.logout.title')}>
+          <IconButton onClick={props.onLogout}>
+            <LogoutIcon />
           </IconButton>
         </Tooltip>
       )}
@@ -235,6 +243,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 interface AdminProps extends LayoutProps {
   token: string
+  onLogout?: () => void
 }
 
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
@@ -254,7 +263,7 @@ function AdminMain(props: AdminProps) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10)
   const [total, setTotal] = useState(0)
   const [rows, setRows] = useState<Array<FileType>>([])
-  
+
   // Text preview state
   const [textPreview, setTextPreview] = useState<{
     open: boolean
@@ -263,7 +272,7 @@ function AdminMain(props: AdminProps) {
   }>({
     open: false,
     content: '',
-    filename: ''
+    filename: '',
   })
 
   const fetchList = async (pageSize = page) => {
@@ -300,7 +309,7 @@ function AdminMain(props: AdminProps) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if ((event?.target as HTMLInputElement)?.checked) {
-      const newSelected = rows.map((n: any) => n.id)
+      const newSelected = rows.map((n: FileType) => n.id)
       setSelected(newSelected)
       return
     }
@@ -339,14 +348,13 @@ function AdminMain(props: AdminProps) {
 
   const createRemoveHandler = (id?: string) => async (event: Event) => {
     event.stopPropagation()
-    const confirmed = await dialogs.confirm(
-      t('admin.confirmDelete'),
-      {
-        okText: t('common.confirm'),
-        cancelText: t('common.cancel'),
-        title: !id ? t('admin.actions.deleteSelected') : t('admin.actions.delete'),
-      },
-    )
+    const confirmed = await dialogs.confirm(t('admin.confirmDelete'), {
+      okText: t('common.confirm'),
+      cancelText: t('common.cancel'),
+      title: !id
+        ? t('admin.actions.deleteSelected')
+        : t('admin.actions.delete'),
+    })
     if (confirmed) {
       setBackdropOpen(true)
       const data = await adminApi.delete(id ?? selected)
@@ -363,9 +371,9 @@ function AdminMain(props: AdminProps) {
   const createDownloadHandler = (file: FileType) => async (event: Event) => {
     event.stopPropagation()
     event.preventDefault()
-    
+
     setBackdropOpen(true)
-    
+
     try {
       // Check if this is a text file by type
       if (file.type === 'plain/string') {
@@ -373,12 +381,12 @@ function AdminMain(props: AdminProps) {
         setTextPreview({
           open: true,
           content,
-          filename: file.filename
+          filename: file.filename,
         })
         setBackdropOpen(false)
         return
       }
-      
+
       // For non-text files, proceed with download
       await adminApi.downloadFile(file.id, file.filename)
       message.success(t('messages.uploadSuccess'))
@@ -405,6 +413,7 @@ function AdminMain(props: AdminProps) {
         <EnhancedTableToolbar
           numSelected={selected.length}
           onDelete={createRemoveHandler()}
+          onLogout={props.onLogout}
           t={t}
         />
         <TableContainer>
@@ -423,14 +432,14 @@ function AdminMain(props: AdminProps) {
               t={t}
             />
             <TableBody>
-              {rows.map((row: any, index: number) => {
+              {rows.map((row: FileType, index: number) => {
                 const isItemSelected = selected.includes(row.id)
                 const labelId = `enhanced-table-checkbox-${index}`
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event: any) => handleClick(event, row.id)}
+                    onClick={(event: unknown) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -459,7 +468,9 @@ function AdminMain(props: AdminProps) {
                         title={row.filename}
                         className="text-ellipsis text-nowrap overflow-hidden"
                       >
-                        {row.type === 'plain/string' ? t('admin.status.text') : row.filename}
+                        {row.type === 'plain/string'
+                          ? t('admin.status.text')
+                          : row.filename}
                       </Typography>
                     </TableCell>
                     <TableCell>{row.code}</TableCell>
@@ -528,12 +539,18 @@ function AdminMain(props: AdminProps) {
             </TableBody>
           </Table>
         </TableContainer>
-        
+
         <TablePagination
           className="flex-shrink-0"
-          labelDisplayedRows={({ from, to, count }: {from: number, to: number, count: number}) =>
-            t('admin.pagination.displayedRows', { from, to, count })
-          }
+          labelDisplayedRows={({
+            from,
+            to,
+            count,
+          }: {
+            from: number
+            to: number
+            count: number
+          }) => t('admin.pagination.displayedRows', { from, to, count })}
           labelRowsPerPage={t('admin.pagination.rowsPerPage')}
           rowsPerPageOptions={[10]}
           component="div"
@@ -544,11 +561,11 @@ function AdminMain(props: AdminProps) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      
+
       {/* Text Preview Dialog */}
       <Dialog
         open={textPreview.open}
-        onClose={() => setTextPreview((prev: any) => ({ ...prev, open: false }))}
+        onClose={() => setTextPreview((prev) => ({ ...prev, open: false }))}
         maxWidth="md"
         fullWidth
       >
@@ -559,23 +576,23 @@ function AdminMain(props: AdminProps) {
           </Box>
         </DialogTitle>
         <DialogContent>
-          <Box 
+          <Box
             component="pre"
-            sx={{ 
-              whiteSpace: 'pre-wrap', 
+            sx={{
+              whiteSpace: 'pre-wrap',
               wordWrap: 'break-word',
               fontSize: '14px',
               fontFamily: 'monospace',
               maxHeight: '60vh',
-              overflow: 'auto'
+              overflow: 'auto',
             }}
           >
             {textPreview.content}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button 
-            onClick={() => setTextPreview((prev: any) => ({ ...prev, open: false }))}
+          <Button
+            onClick={() => setTextPreview((prev) => ({ ...prev, open: false }))}
           >
             {t('common.close')}
           </Button>
@@ -586,10 +603,37 @@ function AdminMain(props: AdminProps) {
 }
 
 export function Admin() {
-  const { params } = useRoute()
+  const [token, setToken] = useState<string | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  // Check if there's a saved token in session storage
+  useEffect(() => {
+    const savedToken = sessionStorage.getItem('admin_token')
+    if (savedToken) {
+      setToken(savedToken)
+      setIsAuthenticated(true)
+    }
+  }, [])
+
+  const handleLogin = (adminToken: string) => {
+    setToken(adminToken)
+    setIsAuthenticated(true)
+    sessionStorage.setItem('admin_token', adminToken)
+  }
+
+  const handleLogout = () => {
+    setToken(null)
+    setIsAuthenticated(false)
+    sessionStorage.removeItem('admin_token')
+  }
+
+  if (!isAuthenticated || !token) {
+    return <AdminLogin onLogin={handleLogin} />
+  }
+
   return (
     <Layout>
-      <AdminMain token={params.token} />
+      <AdminMain token={token} onLogout={handleLogout} />
     </Layout>
   )
 }

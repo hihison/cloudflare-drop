@@ -83,6 +83,19 @@
   },
   "admin": {
     "title": "Admin Panel",
+    "login": {
+      "title": "Admin Login",
+      "subtitle": "Enter your admin token to access the admin panel",
+      "tokenPlaceholder": "Enter admin token",
+      "tokenRequired": "Admin token is required",
+      "invalidToken": "Invalid admin token",
+      "connectionError": "Connection error. Please try again.",
+      "signIn": "Sign In",
+      "signingIn": "Signing In..."
+    },
+    "logout": {
+      "title": "Logout"
+    },
     "confirmDelete": "Files cannot be recovered after deletion. Are you sure you want to delete?",
     "table": {
       "filename": "Filename",
