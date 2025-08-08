@@ -15,7 +15,7 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import FormHelperText from '@mui/material/FormHelperText'
-import { useLanguage } from '../../../helpers/i18n'
+import { useLanguage } from '../../../helpers'
 
 interface PasswordSwitchProps {
   value?: string

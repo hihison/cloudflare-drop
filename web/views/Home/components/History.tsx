@@ -18,7 +18,7 @@ import TabList from '@mui/lab/TabList'
 import TabPanel from '@mui/lab/TabPanel'
 import Tab from '@mui/material/Tab'
 import { useState } from 'preact/hooks'
-import { useLanguage } from '../../../helpers/i18n'
+import { useLanguage } from '../../../helpers'
 
 export interface ShareType {
   type: 'received' | 'shared'

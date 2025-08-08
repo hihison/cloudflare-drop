@@ -18,7 +18,6 @@ import { BasicDialog } from './BasicDialog.tsx'
 import { PasswordSwitch } from './PasswordSwitch.tsx'
 import LockClose from '@mui/icons-material/Lock'
 import LockOpen from '@mui/icons-material/LockOpen'
-import { useLanguage } from '../../../helpers/i18n'
 import { useLanguage } from '../../../helpers'
 
 dayjs.extend(relativeTime)
