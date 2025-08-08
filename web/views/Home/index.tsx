@@ -110,7 +110,7 @@ const ModernCard = styled(Card)(() => ({
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   overflow: 'hidden',
   position: 'relative',
-  maxWidth: 600,
+  maxWidth: 800,
   width: '100%',
   margin: '0 auto',
   animation: `${floatAnimation} 6s ease-in-out infinite`,
@@ -460,18 +460,6 @@ export function AppMain(props: LayoutProps) {
               },
             }}
           >
-            {/* Hero Section */}
-            <Slide in timeout={1000} direction="down">
-              <Box sx={{ mb: 4, textAlign: 'center' }}>
-                <HeroTitle variant="h1">
-                  Cloudflare Drop
-                </HeroTitle>
-                <HeroSubtitle variant="h6">
-                  {t('header.subtitle')}
-                </HeroSubtitle>
-              </Box>
-            </Slide>
-
             {/* Download Section */}
             <Slide in timeout={1200} direction="up">
               <Box sx={{ mb: 4 }}>
