@@ -44,13 +44,24 @@ export function Layout({ children }: LayoutProps) {
         },
       }}
     >
-      <div
-        class="flex flex-col mr-auto ml-auto"
+      <Box
+        className="flex flex-col mr-auto ml-auto"
+        sx={{
+          paddingTop: { xs: '100px', sm: '80px' }, // Add space for fixed header
+        }}
       >
         <Box 
           className="flex justify-between items-center" 
           sx={{ 
-            p: 0,
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backdropFilter: 'blur(10px)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+            p: 1,
             flexDirection: { xs: 'column', sm: 'row' },
             gap: { xs: 1, sm: 0 },
           }}
@@ -112,7 +123,7 @@ export function Layout({ children }: LayoutProps) {
           </Box>
         </Box>
         {injectedChildren}
-      </div>
+      </Box>
       <Message {...messageProps} />
       <InstallPrompt />
       <Backdrop
