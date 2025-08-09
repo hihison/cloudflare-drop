@@ -305,14 +305,19 @@ function AdminMain(props: AdminProps) {
   })
 
   const fetchList = async (pageNumber = page) => {
+    console.log('fetchList called with pageNumber:', pageNumber)
     setBackdropOpen(true)
 
     const response = await adminApi.list<{
       items: FileType[]
       total: number
     }>(pageNumber, rowsPerPage, orderBy, order)
+
+    console.log('fetchList response:', response)
+
     if (response.result) {
       const { items, total } = response.data!
+      console.log('Setting new items:', items)
       setTotal(total)
       setRows(items)
       setSelected([])
@@ -472,28 +477,42 @@ function AdminMain(props: AdminProps) {
         is_ephemeral: editDialog.burnAfterReading,
       })
 
+      console.log('Update response:', response)
+
       if (response.result) {
+        console.log('Update successful, updating local state...')
         message.success(t('admin.edit.success'))
 
         // Update the local row data immediately for better UX
-        setRows((prevRows) =>
-          prevRows.map((row) =>
+        const updatedDueDate =
+          editDialog.expiryType === 'permanent'
+            ? null
+            : new Date(editDialog.customDate).getTime()
+
+        console.log('Updating row with:', {
+          fileId: editDialog.file.id,
+          due_date: updatedDueDate,
+          is_ephemeral: editDialog.burnAfterReading,
+        })
+
+        setRows((prevRows) => {
+          const updated = prevRows.map((row) =>
             row.id === editDialog.file!.id
               ? {
                   ...row,
-                  due_date:
-                    editDialog.expiryType === 'permanent'
-                      ? null
-                      : new Date(editDialog.customDate).getTime(),
+                  due_date: updatedDueDate,
                   is_ephemeral: editDialog.burnAfterReading,
                 }
               : row,
-          ),
-        )
+          )
+          console.log('Updated rows:', updated)
+          return updated
+        })
 
         setEditDialog((prev) => ({ ...prev, open: false }))
 
         // Also refresh from server to ensure consistency
+        console.log('Refreshing from server...')
         await fetchList(page) // Refresh the current page
       } else {
         message.error(response.message || t('admin.edit.error'))
