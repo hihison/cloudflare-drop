@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useState, useRef } from 'preact/hooks'
 import { AxiosProgressEvent } from 'axios'
 import { DialogProps } from '@toolpad/core/useDialogs'
 import Button from '@mui/material/Button'
@@ -11,6 +11,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import zh from 'dayjs/locale/zh-cn'
 import { useDialogs } from '@toolpad/core/useDialogs'
 import Backdrop from '@mui/material/Backdrop'
+import QrCode from 'qrcode-svg'
 
 import { fetchFile, fetchPlainText } from '../../../api'
 import { copyToClipboard } from '../../../common.ts'
@@ -48,6 +49,16 @@ export function FileDialog({
   const [downloading, updateDownloading] = useState(false)
   const [progress, updateProgress] = useState(0)
   const [file, setFile] = useState<Blob | null>(null)
+
+  // Generate QR code for the current share URL
+  const currentUrl = `${window.location.protocol}//${window.location.host}?code=${payload.code}`
+  const qr = useRef(
+    new QrCode({
+      content: currentUrl,
+      width: 200,
+      height: 200,
+    }).svg(),
+  )
 
   const showPassword = !password && payload.is_encrypted
 
@@ -137,7 +148,11 @@ export function FileDialog({
     <BasicDialog
       open={open}
       onClose={handleClose}
-      title={isText ? t('dialogs.fileShare.textShare') : t('dialogs.fileShare.fileShare')}
+      title={
+        isText
+          ? t('dialogs.fileShare.textShare')
+          : t('dialogs.fileShare.fileShare')
+      }
     >
       <Box>
         {isText && (
@@ -190,6 +205,13 @@ export function FileDialog({
             >
               {t('common.copy')}
             </Button>
+
+            {/* QR Code for sharing */}
+            <Box
+              sx={{ mt: 2 }}
+              className="flex justify-center"
+              dangerouslySetInnerHTML={{ __html: qr.current }}
+            />
           </Box>
         )}
         {!isText && (
@@ -203,6 +225,13 @@ export function FileDialog({
                 ? ` (${(payload.size / (1000 * 1000)).toFixed(1)}M)`
                 : ''}
             </Typography>
+
+            {/* QR Code for sharing */}
+            <Box
+              sx={{ mt: 2, mb: 2 }}
+              className="flex justify-center"
+              dangerouslySetInnerHTML={{ __html: qr.current }}
+            />
             {!payload.is_encrypted && (
               <Button
                 target="_blank"
@@ -230,8 +259,8 @@ export function FileDialog({
                 {(openPassword) => (
                   <Button
                     loading={downloading}
-                    loadingIndicator={t('home.fileDialog.downloading', { 
-                      progress: ((progress / payload.size) * 100).toFixed(1) 
+                    loadingIndicator={t('home.fileDialog.downloading', {
+                      progress: ((progress / payload.size) * 100).toFixed(1),
                     })}
                     startIcon={!password ? <LockClose /> : <LockOpen />}
                     variant="contained"
