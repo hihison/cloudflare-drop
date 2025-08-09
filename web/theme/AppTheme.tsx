@@ -188,9 +188,9 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            backgroundColor: alpha('#ffffff', mode === 'light' ? 0.85 : 0.1),
+            backgroundColor: alpha('#183951', 0.15),
             backdropFilter: 'blur(20px) saturate(180%)',
-            border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.2 : 0.1)}`,
+            border: `1px solid ${alpha('#ffffff', 0.1)}`,
             borderRadius: 20,
           },
         },
@@ -268,9 +268,9 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             borderRadius: 24,
-            backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.1),
+            backgroundColor: alpha('#183951', 0.15),
             backdropFilter: 'blur(20px) saturate(180%)',
-            border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.3 : 0.1)}`,
+            border: `1px solid ${alpha('#ffffff', 0.1)}`,
             overflow: 'hidden',
             position: 'relative',
             '@media (max-width: 768px)': {
@@ -288,7 +288,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               right: 0,
               height: '1px',
               background:
-                'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
+                'linear-gradient(90deg, transparent, rgba(24,57,81,0.6), transparent)',
             },
           },
         },
@@ -297,13 +297,10 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           paper: {
             borderRadius: 28,
-            backgroundColor: alpha('#ffffff', mode === 'light' ? 0.95 : 0.15),
+            backgroundColor: alpha('#183951', 0.15),
             backdropFilter: 'blur(40px) saturate(200%)',
-            border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.3 : 0.1)}`,
-            boxShadow:
-              mode === 'light'
-                ? '0 25px 50px rgba(0, 0, 0, 0.1)'
-                : '0 25px 50px rgba(0, 0, 0, 0.5)',
+            border: `1px solid ${alpha('#ffffff', 0.1)}`,
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)',
             '@media (max-width: 768px)': {
               borderRadius: 20,
               margin: 16,
@@ -324,7 +321,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
           root: {
             '& .MuiOutlinedInput-root': {
               borderRadius: 16,
-              backgroundColor: alpha('#ffffff', mode === 'light' ? 0.8 : 0.1),
+              backgroundColor: alpha('#183951', 0.1),
               backdropFilter: 'blur(10px)',
               '@media (max-width: 768px)': {
                 borderRadius: 14,
@@ -335,10 +332,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
                 padding: '4px 8px',
               },
               '&.Mui-focused': {
-                backgroundColor: alpha(
-                  '#ffffff',
-                  mode === 'light' ? 0.95 : 0.2,
-                ),
+                backgroundColor: alpha('#183951', 0.2),
                 transform: 'translateY(-2px)',
                 boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
                 '@media (max-width: 768px)': {
