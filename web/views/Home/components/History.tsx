@@ -244,10 +244,6 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
         width: 320,
         background: 'transparent',
         color: alpha('#ffffff', 0.9),
-        '&:hover': {
-          background: 'transparent',
-          color: alpha('#ffffff', 0.9),
-        },
       }}
     >
       <Typography
@@ -269,9 +265,6 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
             borderColor: alpha('#ffffff', 0.2),
             background: alpha('#ffffff', 0.05),
             borderRadius: '16px 16px 0 0',
-            '&:hover': {
-              background: alpha('#ffffff', 0.05),
-            },
           }}
         >
           <TabList
@@ -281,14 +274,6 @@ export const History = observer(({ onItemClick }: HistoryProps) => {
                 color: alpha('#ffffff', 0.7),
                 '&.Mui-selected': {
                   color: alpha('#ffffff', 0.95),
-                },
-                '&:hover': {
-                  color: alpha('#ffffff', 0.7),
-                  backgroundColor: 'transparent',
-                },
-                '&.Mui-selected:hover': {
-                  color: alpha('#ffffff', 0.95),
-                  backgroundColor: 'transparent',
                 },
               },
               '& .MuiTabs-indicator': {

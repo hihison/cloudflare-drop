@@ -192,15 +192,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             backdropFilter: 'blur(20px) saturate(180%)',
             border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.2 : 0.1)}`,
             borderRadius: 20,
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-            '&:hover': {
-              backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.15),
-              transform: 'translateY(-2px)',
-              boxShadow:
-                mode === 'light'
-                  ? '0 25px 50px rgba(24, 33, 57, 0.15), 0 15px 35px rgba(24, 33, 57, 0.1)'
-                  : '0 25px 50px rgba(0, 0, 0, 0.4), 0 15px 35px rgba(0, 0, 0, 0.3)',
-            },
           },
         },
       },
@@ -280,7 +271,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             backgroundColor: alpha('#ffffff', mode === 'light' ? 0.9 : 0.1),
             backdropFilter: 'blur(20px) saturate(180%)',
             border: `1px solid ${alpha('#ffffff', mode === 'light' ? 0.3 : 0.1)}`,
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
             overflow: 'hidden',
             position: 'relative',
             '@media (max-width: 768px)': {
@@ -299,16 +289,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               height: '1px',
               background:
                 'linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)',
-            },
-            '&:hover': {
-              transform: 'translateY(-4px)',
-              '@media (max-width: 768px)': {
-                transform: 'translateY(-2px)',
-              },
-              boxShadow:
-                mode === 'light'
-                  ? '0 30px 60px rgba(24, 33, 57, 0.15)'
-                  : '0 30px 60px rgba(0, 0, 0, 0.4)',
             },
           },
         },
@@ -346,7 +326,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               borderRadius: 16,
               backgroundColor: alpha('#ffffff', mode === 'light' ? 0.8 : 0.1),
               backdropFilter: 'blur(10px)',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
               '@media (max-width: 768px)': {
                 borderRadius: 14,
                 fontSize: '16px', // Prevents zoom on iOS
@@ -354,16 +333,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               '@media (max-width: 480px)': {
                 borderRadius: 12,
                 padding: '4px 8px',
-              },
-              '&:hover': {
-                backgroundColor: alpha(
-                  '#ffffff',
-                  mode === 'light' ? 0.9 : 0.15,
-                ),
-                transform: 'translateY(-1px)',
-                '@media (max-width: 768px)': {
-                  transform: 'translateY(0px)',
-                },
               },
               '&.Mui-focused': {
                 backgroundColor: alpha(
@@ -417,9 +386,6 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               color: '#ffffff',
               fontWeight: 600,
             },
-            '&:hover': {
-              backgroundColor: alpha('#ffffff', 0.1),
-            },
           },
         },
       },
@@ -437,12 +403,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
       },
       MuiTableRow: {
         styleOverrides: {
-          root: {
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              backgroundColor: alpha('#ffffff', mode === 'light' ? 0.05 : 0.02),
-            },
-          },
+          root: {},
         },
       },
       MuiIconButton: {

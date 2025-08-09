@@ -226,12 +226,8 @@ export function AdminLogin(props: AdminLoginProps) {
                         background: alpha('#ffffff', 0.1),
                         backdropFilter: 'blur(10px)',
                         border: `1px solid ${alpha('#ffffff', 0.2)}`,
-                        transition: 'all 0.3s ease',
                         '& fieldset': {
                           border: 'none',
-                        },
-                        '&:hover': {
-                          background: alpha('#ffffff', 0.15),
                         },
                         '&.Mui-focused': {
                           background: alpha('#ffffff', 0.2),
