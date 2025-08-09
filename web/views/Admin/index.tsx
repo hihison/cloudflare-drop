@@ -502,10 +502,19 @@ function AdminMain(props: AdminProps) {
                   ...row,
                   due_date: updatedDueDate,
                   is_ephemeral: editDialog.burnAfterReading,
+                  // Force re-render by updating a timestamp
+                  _updated: Date.now(),
                 }
               : row,
           )
           console.log('Updated rows:', updated)
+          console.log('Previous rows:', prevRows)
+          console.log(
+            'Row with ID',
+            editDialog.file!.id,
+            'updated to:',
+            updated.find((r) => r.id === editDialog.file!.id),
+          )
           return updated
         })
 
@@ -623,6 +632,9 @@ function AdminMain(props: AdminProps) {
                       )}
                     </TableCell>
                     <TableCell sx={{ fontSize: 0 }} padding="none">
+                      {console.log(
+                        `Row ${row.id}: is_ephemeral = ${row.is_ephemeral}`,
+                      )}
                       {row.is_ephemeral && (
                         <Typography
                           variant="caption"
