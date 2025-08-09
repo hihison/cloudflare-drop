@@ -161,9 +161,6 @@ export function Duration(props: DurationProps) {
                   '& fieldset': {
                     border: 'none',
                   },
-                  '&:hover': {
-                    background: alpha('#183951', 0.3),
-                  },
                   '&.Mui-focused': {
                     background: alpha('#183951', 0.4),
                   },
@@ -190,9 +187,6 @@ export function Duration(props: DurationProps) {
                 '& fieldset': {
                   border: 'none',
                 },
-                '&:hover': {
-                  background: alpha('#183951', 0.3),
-                },
                 '&.Mui-focused': {
                   background: alpha('#183951', 0.4),
                 },
@@ -213,14 +207,8 @@ export function Duration(props: DurationProps) {
                   borderRadius: 2,
                   '& .MuiMenuItem-root': {
                     color: alpha('#ffffff', 0.9),
-                    '&:hover': {
-                      background: alpha('#ffffff', 0.1),
-                    },
                     '&.Mui-selected': {
-                      background: alpha('#ffffff', 0.2),
-                      '&:hover': {
-                        background: alpha('#ffffff', 0.25),
-                      },
+                      background: alpha('#183951', 0.5),
                     },
                   },
                 },

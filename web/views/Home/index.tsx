@@ -75,7 +75,7 @@ const GlassContainer = styled(Container)(() => ({
     right: 0,
     bottom: 0,
     backgroundImage:
-      'radial-gradient(circle at 20% 80%, rgba(24, 33, 57, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(24, 33, 57, 0.15) 0%, transparent 50%)',
+      'radial-gradient(circle at 20% 80%, rgba(24, 33, 57, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(24, 33, 57, 0.15) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(24, 33, 57, 0.15) 0%, transparent 50%)',
     pointerEvents: 'none',
   },
 }))
@@ -102,14 +102,7 @@ const ModernCard = styled(Card)(() => ({
     margin: '0 4px',
   },
   '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '2px',
-    background:
-      'linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)',
+    display: 'none',
   },
 }))
 
@@ -170,10 +163,6 @@ const ModernTab = styled(Tab)(() => ({
     color: '#ffffff',
     fontWeight: 600,
   },
-  '&:hover': {
-    backgroundColor: 'transparent',
-    color: alpha('#ffffff', 0.9),
-  },
 }))
 
 // Enhanced upload button
@@ -203,14 +192,7 @@ const ModernUploadButton = styled(Button)(() => ({
     borderRadius: 14,
   },
   '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: '-100%',
-    width: '100%',
-    height: '100%',
-    background:
-      'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+    display: 'none',
   },
 }))
 
@@ -501,10 +483,6 @@ export function AppMain(props: LayoutProps) {
                       '& fieldset': {
                         border: 'none',
                       },
-                      '&:hover': {
-                        background: 'transparent',
-                        '@media (max-width: 768px)': {},
-                      },
                       '&.Mui-focused': {
                         background: alpha('#183951', 0.4),
                         boxShadow: '0 8px 25px rgba(24, 33, 57, 0.15)',
@@ -555,10 +533,6 @@ export function AppMain(props: LayoutProps) {
                       minHeight: 160,
                       borderRadius: 1.5,
                       padding: 2,
-                    },
-                    '&:hover': {
-                      borderColor: alpha('#ffffff', 0.3),
-                      background: 'transparent',
                     },
                   }}
                 >
@@ -741,10 +715,6 @@ export function AppMain(props: LayoutProps) {
                     minWidth: 'auto',
                     padding: '8px 16px',
                   },
-                  '&:hover': {
-                    color: alpha('#ffffff', 0.9),
-                    background: 'transparent',
-                  },
                 }}
               >
                 {t('home.settings.history')}
@@ -796,11 +766,6 @@ export function AppMain(props: LayoutProps) {
             background: alpha('#183951', 0.2),
             backdropFilter: 'blur(20px)',
             border: `1px solid ${alpha('#ffffff', 0.1)}`,
-            '&:hover': {
-              background: 'transparent',
-              transform: 'none',
-              boxShadow: 'inherit',
-            },
             '@media (max-width: 768px)': {
               width: '85vw',
               maxWidth: '400px',

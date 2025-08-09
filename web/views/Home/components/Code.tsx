@@ -147,10 +147,6 @@ export function Code({ length, value, onChange, disabled }: CodeProps) {
                 '& fieldset': {
                   border: 'none',
                 },
-                '&:hover': {
-                  background: alpha('#183951', 0.3),
-                  border: `1px solid ${alpha('#ffffff', 0.3)}`,
-                },
                 '&.Mui-focused': {
                   background: alpha('#183951', 0.4),
                   border: `1px solid ${alpha('#ffffff', 0.5)}`,

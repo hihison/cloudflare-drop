@@ -113,9 +113,6 @@ function PasswordDialog({
             '& fieldset': {
               border: 'none',
             },
-            '&:hover': {
-              background: alpha('#183951', 0.3),
-            },
             '&.Mui-focused': {
               background: alpha('#183951', 0.4),
             },
@@ -146,10 +143,6 @@ function PasswordDialog({
             sx={{
               borderColor: alpha('#ffffff', 0.3),
               color: alpha('#ffffff', 0.8),
-              '&:hover': {
-                borderColor: alpha('#ffffff', 0.5),
-                background: alpha('#ff5252', 0.1),
-              },
             }}
           >
             {t('home.password.clearPassword')}
@@ -162,10 +155,6 @@ function PasswordDialog({
           sx={{
             background:
               'linear-gradient(135deg, rgb(24, 33, 57) 0%, rgb(18, 25, 43) 100%)',
-            '&:hover': {
-              background:
-                'linear-gradient(135deg, rgb(30, 40, 70) 0%, rgb(25, 32, 55) 100%)',
-            },
           }}
         >
           {t('common.confirm')}
