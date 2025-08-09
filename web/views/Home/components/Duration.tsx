@@ -7,6 +7,7 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { ManipulateType } from 'dayjs'
 import { useLanguage } from '../../../helpers'
+import { alpha } from '@mui/material/styles'
 
 interface DurationProps {
   value?: string
@@ -143,6 +144,7 @@ export function Duration(props: DurationProps) {
         '& .MuiTypography-root': {
           flexShrink: 0,
           mr: 1,
+          color: alpha('#ffffff', 0.8),
         },
       }}
       control={
@@ -150,7 +152,26 @@ export function Duration(props: DurationProps) {
           {type !== DEFAULT_VALUE && type !== MAX_VALUE && (
             <TextField
               value={count}
-              sx={{ mr: 1 }}
+              sx={{
+                mr: 1,
+                '& .MuiOutlinedInput-root': {
+                  background: alpha('#183951', 0.2),
+                  backdropFilter: 'blur(10px)',
+                  border: `1px solid ${alpha('#ffffff', 0.2)}`,
+                  '& fieldset': {
+                    border: 'none',
+                  },
+                  '&:hover': {
+                    background: alpha('#183951', 0.3),
+                  },
+                  '&.Mui-focused': {
+                    background: alpha('#183951', 0.4),
+                  },
+                },
+                '& .MuiInputBase-input': {
+                  color: alpha('#ffffff', 0.9),
+                },
+              }}
               onInput={handleInput}
               onBeforeInput={handleBeforeInput}
             />
@@ -161,6 +182,50 @@ export function Duration(props: DurationProps) {
             defaultValue={DEFAULT_VALUE}
             value={type}
             onChange={handleChange}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                background: alpha('#183951', 0.2),
+                backdropFilter: 'blur(10px)',
+                border: `1px solid ${alpha('#ffffff', 0.2)}`,
+                '& fieldset': {
+                  border: 'none',
+                },
+                '&:hover': {
+                  background: alpha('#183951', 0.3),
+                },
+                '&.Mui-focused': {
+                  background: alpha('#183951', 0.4),
+                },
+              },
+              '& .MuiSelect-select': {
+                color: alpha('#ffffff', 0.9),
+              },
+              '& .MuiSelect-icon': {
+                color: alpha('#ffffff', 0.7),
+              },
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  background: alpha('#183951', 0.9),
+                  backdropFilter: 'blur(20px)',
+                  border: `1px solid ${alpha('#ffffff', 0.2)}`,
+                  borderRadius: 2,
+                  '& .MuiMenuItem-root': {
+                    color: alpha('#ffffff', 0.9),
+                    '&:hover': {
+                      background: alpha('#ffffff', 0.1),
+                    },
+                    '&.Mui-selected': {
+                      background: alpha('#ffffff', 0.2),
+                      '&:hover': {
+                        background: alpha('#ffffff', 0.25),
+                      },
+                    },
+                  },
+                },
+              },
+            }}
           >
             {CONFIG.map((d) => (
               <MenuItem key={d.label} value={d.value}>

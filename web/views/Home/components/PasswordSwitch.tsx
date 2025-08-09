@@ -16,6 +16,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import FormHelperText from '@mui/material/FormHelperText'
 import { useLanguage } from '../../../helpers'
+import { alpha } from '@mui/material/styles'
 
 interface PasswordSwitchProps {
   value?: string
@@ -58,8 +59,21 @@ function PasswordDialog({
   }, [])
 
   return (
-    <Dialog open={open} onClose={() => onClose(null)}>
-      <DialogTitle>{t('home.password.title')}</DialogTitle>
+    <Dialog
+      open={open}
+      onClose={() => onClose(null)}
+      PaperProps={{
+        sx: {
+          background: alpha('#183951', 0.9),
+          backdropFilter: 'blur(20px)',
+          border: `1px solid ${alpha('#ffffff', 0.2)}`,
+          borderRadius: 3,
+        },
+      }}
+    >
+      <DialogTitle sx={{ color: alpha('#ffffff', 0.9) }}>
+        {t('home.password.title')}
+      </DialogTitle>
       <DialogContent>
         <OutlinedInput
           ref={el}
@@ -72,6 +86,7 @@ function PasswordDialog({
                 onMouseDown={handleMouseDownPassword}
                 onMouseUp={handleMouseUpPassword}
                 edge="end"
+                sx={{ color: alpha('#ffffff', 0.7) }}
               >
                 {show ? <VisibilityOff /> : <Visibility />}
               </IconButton>
@@ -90,8 +105,29 @@ function PasswordDialog({
           fullWidth
           value={result}
           onChange={(event) => setResult(event.currentTarget.value)}
+          sx={{
+            background: alpha('#183951', 0.2),
+            backdropFilter: 'blur(10px)',
+            border: `1px solid ${alpha('#ffffff', 0.2)}`,
+            borderRadius: 2,
+            '& fieldset': {
+              border: 'none',
+            },
+            '&:hover': {
+              background: alpha('#183951', 0.3),
+            },
+            '&.Mui-focused': {
+              background: alpha('#183951', 0.4),
+            },
+            '& input': {
+              color: alpha('#ffffff', 0.9),
+              '&::placeholder': {
+                color: alpha('#ffffff', 0.5),
+              },
+            },
+          }}
         />
-        <FormHelperText sx={{ mt: 2 }}>
+        <FormHelperText sx={{ mt: 2, color: alpha('#ffffff', 0.6) }}>
           {t('home.password.helpText')}
         </FormHelperText>
       </DialogContent>
@@ -107,6 +143,14 @@ function PasswordDialog({
             variant="outlined"
             color="error"
             onClick={() => onClose('')}
+            sx={{
+              borderColor: alpha('#ffffff', 0.3),
+              color: alpha('#ffffff', 0.8),
+              '&:hover': {
+                borderColor: alpha('#ffffff', 0.5),
+                background: alpha('#ff5252', 0.1),
+              },
+            }}
           >
             {t('home.password.clearPassword')}
           </Button>
@@ -115,6 +159,14 @@ function PasswordDialog({
           className="flex-1"
           variant="contained"
           onClick={() => onClose(result)}
+          sx={{
+            background:
+              'linear-gradient(135deg, rgb(24, 33, 57) 0%, rgb(18, 25, 43) 100%)',
+            '&:hover': {
+              background:
+                'linear-gradient(135deg, rgb(30, 40, 70) 0%, rgb(25, 32, 55) 100%)',
+            },
+          }}
         >
           {t('common.confirm')}
         </Button>

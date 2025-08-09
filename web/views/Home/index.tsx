@@ -793,7 +793,7 @@ export function AppMain(props: LayoutProps) {
         anchor="right"
         PaperProps={{
           sx: {
-            background: alpha('#ffffff', 0.1),
+            background: alpha('#183951', 0.2),
             backdropFilter: 'blur(20px)',
             border: `1px solid ${alpha('#ffffff', 0.1)}`,
             '&:hover': {
