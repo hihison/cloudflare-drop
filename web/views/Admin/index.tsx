@@ -32,6 +32,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
+import Switch from '@mui/material/Switch'
 import Info from '@mui/icons-material/InfoOutlined'
 import LockClose from '@mui/icons-material/Lock'
 
@@ -110,6 +111,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       disablePadding: true,
       label: t('admin.table.encrypted'),
       width: 100,
+    },
+    {
+      disablePadding: true,
+      label: t('admin.table.burnAfterReading'),
+      width: 120,
     },
     {
       id: 'created_at',
@@ -287,12 +293,14 @@ function AdminMain(props: AdminProps) {
     file: FileType | null
     expiryType: 'permanent' | 'custom'
     customDate: string
+    burnAfterReading: boolean
     isLoading: boolean
   }>({
     open: false,
     file: null,
     expiryType: 'permanent',
     customDate: '',
+    burnAfterReading: false,
     isLoading: false,
   })
 
@@ -427,6 +435,7 @@ function AdminMain(props: AdminProps) {
       customDate: file.due_date
         ? dayjs(file.due_date).format('YYYY-MM-DDTHH:mm')
         : dayjs().add(1, 'day').format('YYYY-MM-DDTHH:mm'),
+      burnAfterReading: file.is_ephemeral || false,
       isLoading: false,
     })
   }
@@ -443,6 +452,10 @@ function AdminMain(props: AdminProps) {
     setEditDialog((prev) => ({ ...prev, customDate: date }))
   }
 
+  const handleBurnAfterReadingChange = (checked: boolean) => {
+    setEditDialog((prev) => ({ ...prev, burnAfterReading: checked }))
+  }
+
   const handleSaveEdit = async () => {
     if (!editDialog.file) return
 
@@ -456,6 +469,7 @@ function AdminMain(props: AdminProps) {
 
       const response = await adminApi.updateFile(editDialog.file.id, {
         due_date,
+        is_ephemeral: editDialog.burnAfterReading,
       })
 
       if (response.result) {
@@ -570,6 +584,17 @@ function AdminMain(props: AdminProps) {
                         <LockClose sx={{ fontSize: 18 }} color="action" />
                       )}
                     </TableCell>
+                    <TableCell sx={{ fontSize: 0 }} padding="none">
+                      {row.is_ephemeral && (
+                        <Typography
+                          variant="caption"
+                          color="warning.main"
+                          sx={{ fontSize: 12 }}
+                        >
+                          ✓
+                        </Typography>
+                      )}
+                    </TableCell>
                     <TableCell>
                       <Tooltip
                         title={dayjs(row.created_at).format(DATE_FORMAT)}
@@ -616,7 +641,7 @@ function AdminMain(props: AdminProps) {
                     height: 53 * emptyRows,
                   }}
                 >
-                  <TableCell colSpan={8} />
+                  <TableCell colSpan={9} />
                 </TableRow>
               )}
             </TableBody>
@@ -736,6 +761,28 @@ function AdminMain(props: AdminProps) {
                 }}
               />
             )}
+
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={editDialog.burnAfterReading}
+                  onChange={(e) =>
+                    handleBurnAfterReadingChange(
+                      (e.target as HTMLInputElement).checked,
+                    )
+                  }
+                />
+              }
+              label={t('admin.edit.burnAfterReading')}
+              sx={{ mt: 2 }}
+            />
+            <Typography
+              variant="caption"
+              color="textSecondary"
+              sx={{ display: 'block', mt: 0.5 }}
+            >
+              {t('admin.edit.burnAfterReadingHelp')}
+            </Typography>
           </Box>
         </DialogContent>
         <DialogActions>

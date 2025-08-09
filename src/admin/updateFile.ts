@@ -9,6 +9,7 @@ import { MAX_DURATION } from '../common'
 
 const updateFileSchema = z.object({
   due_date: z.number().optional().nullable(), // timestamp or null for permanent
+  is_ephemeral: z.boolean().optional(), // burn after reading
 })
 
 export class UpdateFile extends Endpoint {
@@ -48,7 +49,7 @@ export class UpdateFile extends Endpoint {
   async handle(c: Context) {
     const { params, body } = await this.getValidatedData<typeof this.schema>()
     const { id } = params
-    const { due_date } = body
+    const { due_date, is_ephemeral } = body
 
     const db = this.getDB(c)
 
@@ -71,12 +72,15 @@ export class UpdateFile extends Endpoint {
           ? new Date(due_date)
           : undefined
 
-    await db
-      .update(files)
-      .set({
-        due_date: actualDueDate,
-      })
-      .where(eq(files.id, id))
+    const updateData: { due_date?: Date; is_ephemeral?: boolean } = {}
+    if (due_date !== undefined) {
+      updateData.due_date = actualDueDate
+    }
+    if (is_ephemeral !== undefined) {
+      updateData.is_ephemeral = is_ephemeral
+    }
+
+    await db.update(files).set(updateData).where(eq(files.id, id))
 
     return c.json({
       success: true,

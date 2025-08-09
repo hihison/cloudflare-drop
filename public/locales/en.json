@@ -104,6 +104,7 @@
       "sizeTooltip": "Using binary units: 1 MiB = 1024 × 1024 bytes, slightly different from macOS display",
       "dueDate": "Expires At",
       "encrypted": "Encrypted",
+      "burnAfterReading": "Burn After Reading",
       "createdAt": "Created At",
       "actions": "Actions"
     },
@@ -121,6 +122,8 @@
       "permanent": "Never expires",
       "customDate": "Custom expiry date",
       "selectDate": "Select date and time",
+      "burnAfterReading": "Burn After Reading",
+      "burnAfterReadingHelp": "Delete file after first download",
       "save": "Save Changes",
       "cancel": "Cancel",
       "saving": "Saving...",

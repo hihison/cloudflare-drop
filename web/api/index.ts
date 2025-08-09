@@ -219,7 +219,7 @@ export function createAdminApi(token: string) {
 
     updateFile: async (
       fileId: string,
-      updates: { due_date?: number | null },
+      updates: { due_date?: number | null; is_ephemeral?: boolean },
     ): Promise<ApiResponseType<unknown>> => {
       const response = await fetch(`/api/admin/files/${fileId}`, {
         method: 'PUT',
