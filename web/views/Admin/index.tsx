@@ -473,32 +473,19 @@ function AdminMain(props: AdminProps) {
         is_ephemeral: editDialog.burnAfterReading,
       })
 
-      if (response.result) {
-        // Close dialog immediately
-        setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
+      console.log('API Response:', response)
 
+      if (response.result) {
         // Show success message
         message.success(t('admin.edit.success'))
 
-        // Update the local row data immediately for better UX
-        const updatedDueDate =
-          editDialog.expiryType === 'permanent'
-            ? null
-            : new Date(editDialog.customDate).getTime()
+        // Close dialog
+        setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
 
-        setRows((prevRows) =>
-          prevRows.map((row) =>
-            row.id === editDialog.file!.id
-              ? {
-                  ...row,
-                  due_date: updatedDueDate,
-                  is_ephemeral: editDialog.burnAfterReading,
-                }
-              : row,
-          ),
-        )
+        // Small delay to ensure backend processing is complete
+        await new Promise((resolve) => setTimeout(resolve, 100))
 
-        // Refresh from server to ensure consistency
+        // Force refresh from server to get the latest data
         await fetchList(page)
       } else {
         message.error(response.message || t('admin.edit.error'))

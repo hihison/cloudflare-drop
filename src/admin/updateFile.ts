@@ -65,17 +65,15 @@ export class UpdateFile extends Endpoint {
     }
 
     // Update the file
-    const actualDueDate =
-      due_date === null
-        ? MAX_DURATION.toDate()
-        : due_date
-          ? new Date(due_date)
-          : undefined
-
     const updateData: { due_date?: Date; is_ephemeral?: boolean } = {}
+
     if (due_date !== undefined) {
-      updateData.due_date = actualDueDate
+      // If due_date is null (permanent), use MAX_DURATION
+      // Otherwise, convert timestamp to Date
+      updateData.due_date =
+        due_date === null ? MAX_DURATION.toDate() : new Date(due_date)
     }
+
     if (is_ephemeral !== undefined) {
       updateData.is_ephemeral = is_ephemeral
     }
