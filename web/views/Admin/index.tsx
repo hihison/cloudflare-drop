@@ -507,7 +507,7 @@ function AdminMain(props: AdminProps) {
         />
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 1100 }}
             aria-labelledby="tableTitle"
             size={'medium'}
           >
