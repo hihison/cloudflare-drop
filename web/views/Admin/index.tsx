@@ -305,7 +305,6 @@ function AdminMain(props: AdminProps) {
   })
 
   const fetchList = async (pageNumber = page) => {
-    console.log('fetchList called with pageNumber:', pageNumber)
     setBackdropOpen(true)
 
     const response = await adminApi.list<{
@@ -313,11 +312,8 @@ function AdminMain(props: AdminProps) {
       total: number
     }>(pageNumber, rowsPerPage, orderBy, order)
 
-    console.log('fetchList response:', response)
-
     if (response.result) {
       const { items, total } = response.data!
-      console.log('Setting new items:', items)
       setTotal(total)
       setRows(items)
       setSelected([])
@@ -477,10 +473,11 @@ function AdminMain(props: AdminProps) {
         is_ephemeral: editDialog.burnAfterReading,
       })
 
-      console.log('Update response:', response)
-
       if (response.result) {
-        console.log('Update successful, updating local state...')
+        // Close dialog immediately
+        setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
+
+        // Show success message
         message.success(t('admin.edit.success'))
 
         // Update the local row data immediately for better UX
@@ -489,47 +486,27 @@ function AdminMain(props: AdminProps) {
             ? null
             : new Date(editDialog.customDate).getTime()
 
-        console.log('Updating row with:', {
-          fileId: editDialog.file.id,
-          due_date: updatedDueDate,
-          is_ephemeral: editDialog.burnAfterReading,
-        })
-
-        setRows((prevRows) => {
-          const updated = prevRows.map((row) =>
+        setRows((prevRows) =>
+          prevRows.map((row) =>
             row.id === editDialog.file!.id
               ? {
                   ...row,
                   due_date: updatedDueDate,
                   is_ephemeral: editDialog.burnAfterReading,
-                  // Force re-render by updating a timestamp
-                  _updated: Date.now(),
                 }
               : row,
-          )
-          console.log('Updated rows:', updated)
-          console.log('Previous rows:', prevRows)
-          console.log(
-            'Row with ID',
-            editDialog.file!.id,
-            'updated to:',
-            updated.find((r) => r.id === editDialog.file!.id),
-          )
-          return updated
-        })
+          ),
+        )
 
-        setEditDialog((prev) => ({ ...prev, open: false }))
-
-        // Also refresh from server to ensure consistency
-        console.log('Refreshing from server...')
-        await fetchList(page) // Refresh the current page
+        // Refresh from server to ensure consistency
+        await fetchList(page)
       } else {
         message.error(response.message || t('admin.edit.error'))
+        setEditDialog((prev) => ({ ...prev, isLoading: false }))
       }
     } catch (error) {
       console.error('Edit failed:', error)
       message.error(t('admin.edit.error'))
-    } finally {
       setEditDialog((prev) => ({ ...prev, isLoading: false }))
     }
   }
@@ -632,9 +609,6 @@ function AdminMain(props: AdminProps) {
                       )}
                     </TableCell>
                     <TableCell sx={{ fontSize: 0 }} padding="none">
-                      {console.log(
-                        `Row ${row.id}: is_ephemeral = ${row.is_ephemeral}`,
-                      )}
                       {row.is_ephemeral && (
                         <Typography
                           variant="caption"
