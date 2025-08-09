@@ -418,7 +418,7 @@ export function AppMain(props: LayoutProps) {
                   minWidth: 'fit-content',
                 }}
               >
-                {t('home.downloadSection.title')}�?
+                {t('home.downloadSection.title')}
               </Typography>
               <Code
                 length={6}
