@@ -3,7 +3,7 @@ interface FileType {
   code: string
   filename: string
   hash: string
-  due_date: number
+  due_date: number | null
   type: string
   size: number
   is_ephemeral?: boolean

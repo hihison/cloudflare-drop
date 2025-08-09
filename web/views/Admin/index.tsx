@@ -304,13 +304,13 @@ function AdminMain(props: AdminProps) {
     isLoading: false,
   })
 
-  const fetchList = async (pageSize = page) => {
+  const fetchList = async (pageNumber = page) => {
     setBackdropOpen(true)
 
     const response = await adminApi.list<{
       items: FileType[]
       total: number
-    }>(pageSize, rowsPerPage, orderBy, order)
+    }>(pageNumber, rowsPerPage, orderBy, order)
     if (response.result) {
       const { items, total } = response.data!
       setTotal(total)
@@ -474,8 +474,27 @@ function AdminMain(props: AdminProps) {
 
       if (response.result) {
         message.success(t('admin.edit.success'))
+
+        // Update the local row data immediately for better UX
+        setRows((prevRows) =>
+          prevRows.map((row) =>
+            row.id === editDialog.file!.id
+              ? {
+                  ...row,
+                  due_date:
+                    editDialog.expiryType === 'permanent'
+                      ? null
+                      : new Date(editDialog.customDate).getTime(),
+                  is_ephemeral: editDialog.burnAfterReading,
+                }
+              : row,
+          ),
+        )
+
         setEditDialog((prev) => ({ ...prev, open: false }))
-        await fetchList() // Refresh the list
+
+        // Also refresh from server to ensure consistency
+        await fetchList(page) // Refresh the current page
       } else {
         message.error(response.message || t('admin.edit.error'))
       }
