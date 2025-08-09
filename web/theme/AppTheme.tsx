@@ -67,18 +67,12 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         dark: '#059669',
       },
       background: {
-        default: mode === 'light' ? '#f8fafc' : '#0f172a',
-        paper: mode === 'light' ? alpha('#ffffff', 0.9) : alpha('#1e293b', 0.9),
+        default: '#0f172a',
+        paper: alpha('#1e293b', 0.9),
       },
       text: {
-        primary:
-          mode === 'light'
-            ? modernColors.neutral[900]
-            : modernColors.neutral[50],
-        secondary:
-          mode === 'light'
-            ? modernColors.neutral[600]
-            : modernColors.neutral[300],
+        primary: modernColors.neutral[50],
+        secondary: modernColors.neutral[300],
       },
       divider:
         mode === 'light'
@@ -93,10 +87,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         fontWeight: 800,
         lineHeight: 1.1,
         letterSpacing: '-0.025em',
-        background:
-          mode === 'light'
-            ? 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)'
-            : 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
+        background: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         backgroundClip: 'text',
@@ -420,6 +411,40 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             backgroundColor: alpha('#ffffff', 0.15),
             border: `1px solid ${alpha('#ffffff', 0.2)}`,
             fontWeight: 500,
+          },
+        },
+      },
+      MuiTypography: {
+        styleOverrides: {
+          root: {
+            color: '#fafafa',
+          },
+          h1: {
+            color: 'transparent', // Keep gradient text transparent
+          },
+          h2: {
+            color: '#fafafa',
+          },
+          h3: {
+            color: '#fafafa',
+          },
+          h4: {
+            color: '#fafafa',
+          },
+          h5: {
+            color: '#fafafa',
+          },
+          h6: {
+            color: '#fafafa',
+          },
+          body1: {
+            color: '#fafafa',
+          },
+          body2: {
+            color: '#d4d4d4',
+          },
+          caption: {
+            color: '#d4d4d4',
           },
         },
       },
