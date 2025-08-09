@@ -40,31 +40,31 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
     palette: {
       mode,
       primary: {
-        main: modernColors.primary[600],
-        light: modernColors.primary[400],
-        dark: modernColors.primary[800],
-        contrastText: '#ffffff',
+        main: '#52525b',
+        light: '#71717a',
+        dark: '#3f3f46',
+        contrastText: '#a1a1aa',
       },
       secondary: {
-        main: '#ec4899',
-        light: '#f472b6',
-        dark: '#be185d',
-        contrastText: '#ffffff',
+        main: '#52525b',
+        light: '#71717a',
+        dark: '#3f3f46',
+        contrastText: '#a1a1aa',
       },
       error: {
-        main: '#ef4444',
-        light: '#f87171',
-        dark: '#dc2626',
+        main: '#71717a',
+        light: '#a1a1aa',
+        dark: '#52525b',
       },
       warning: {
-        main: '#f59e0b',
-        light: '#fbbf24',
-        dark: '#d97706',
+        main: '#71717a',
+        light: '#a1a1aa',
+        dark: '#52525b',
       },
       success: {
-        main: '#10b981',
-        light: '#34d399',
-        dark: '#059669',
+        main: '#71717a',
+        light: '#a1a1aa',
+        dark: '#52525b',
       },
       background: {
         default: '#0a0e1a',
@@ -87,10 +87,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         fontWeight: 800,
         lineHeight: 1.1,
         letterSpacing: '-0.025em',
-        background: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundClip: 'text',
+        color: '#71717a',
       },
       h2: {
         fontSize: '2.5rem',
@@ -146,10 +143,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             scrollBehavior: 'smooth',
           },
           body: {
-            background:
-              mode === 'light'
-                ? 'linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%)'
-                : 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f1729 100%)',
+            background: '#0a0e1a',
             minHeight: '100vh',
             backgroundAttachment: 'fixed',
             fontSmooth: 'always',
@@ -329,18 +323,18 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
       MuiTabs: {
         styleOverrides: {
           root: {
-            backgroundColor: alpha('#ffffff', 0.1),
+            backgroundColor: alpha('#0f1419', 0.8),
             borderRadius: 20,
             padding: 6,
             backdropFilter: 'blur(10px)',
-            border: `1px solid ${alpha('#ffffff', 0.1)}`,
+            border: `1px solid ${alpha('#27272a', 0.3)}`,
           },
           indicator: {
             height: '100%',
             borderRadius: 16,
-            backgroundColor: alpha('#ffffff', 0.2),
+            backgroundColor: alpha('#27272a', 0.5),
             backdropFilter: 'blur(10px)',
-            boxShadow: '0 4px 20px rgba(24, 33, 57, 0.2)',
+            boxShadow: 'none',
           },
         },
       },
@@ -349,13 +343,17 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
           root: {
             borderRadius: 16,
             margin: '0 4px',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'none',
             fontWeight: 500,
             textTransform: 'none',
             fontSize: '0.95rem',
+            color: '#71717a',
             '&.Mui-selected': {
-              color: '#ffffff',
+              color: '#a1a1aa',
               fontWeight: 600,
+            },
+            '&:hover': {
+              color: '#71717a',
             },
           },
         },
@@ -363,12 +361,14 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
       MuiTableCell: {
         styleOverrides: {
           root: {
-            borderBottom: `1px solid ${alpha(modernColors.neutral[200], 0.1)}`,
+            borderBottom: `1px solid ${alpha('#27272a', 0.3)}`,
             padding: '16px',
+            color: '#71717a',
           },
           head: {
             fontWeight: 600,
-            backgroundColor: alpha('#ffffff', 0.05),
+            backgroundColor: alpha('#0f1419', 0.5),
+            color: '#a1a1aa',
           },
         },
       },
@@ -381,10 +381,12 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             borderRadius: 12,
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'none',
+            color: '#71717a',
             '&:hover': {
-              backgroundColor: alpha('#ffffff', 0.1),
-              transform: 'scale(1.1)',
+              backgroundColor: 'transparent',
+              transform: 'none',
+              color: '#71717a',
             },
           },
         },
@@ -394,9 +396,10 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
           root: {
             borderRadius: 12,
             backdropFilter: 'blur(10px)',
-            backgroundColor: alpha('#ffffff', 0.15),
-            border: `1px solid ${alpha('#ffffff', 0.2)}`,
+            backgroundColor: alpha('#0f1419', 0.8),
+            border: `1px solid ${alpha('#27272a', 0.5)}`,
             fontWeight: 500,
+            color: '#71717a',
           },
         },
       },
@@ -406,7 +409,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             color: '#a1a1aa',
           },
           h1: {
-            color: 'transparent', // Keep gradient text transparent
+            color: '#71717a',
           },
           h2: {
             color: '#a1a1aa',
@@ -438,29 +441,16 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
   })
 }
 
-export default function AppTheme({ children, mode = 'light' }: AppThemeProps) {
-  const [currentMode, setCurrentMode] = React.useState<'light' | 'dark'>(
-    'light',
-  )
+export default function AppTheme({ children, mode = 'dark' }: AppThemeProps) {
+  const [currentMode, setCurrentMode] = React.useState<'light' | 'dark'>('dark')
 
   React.useEffect(() => {
-    if (mode === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      setCurrentMode(mediaQuery.matches ? 'dark' : 'light')
-
-      const handleChange = (e: MediaQueryListEvent) => {
-        setCurrentMode(e.matches ? 'dark' : 'light')
-      }
-
-      mediaQuery.addEventListener('change', handleChange)
-      return () => mediaQuery.removeEventListener('change', handleChange)
-    } else {
-      setCurrentMode(mode)
-    }
+    // Always use dark mode
+    setCurrentMode('dark')
   }, [mode])
 
   const theme = React.useMemo(() => {
-    return getModern2025Theme(currentMode)
+    return getModern2025Theme('dark')
   }, [currentMode])
 
   return (
