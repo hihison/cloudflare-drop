@@ -305,6 +305,12 @@ function AdminMain(props: AdminProps) {
   })
 
   const fetchList = async (pageNumber = page) => {
+    console.log(
+      'fetchList called with pageNumber:',
+      pageNumber,
+      'current page:',
+      page,
+    )
     setBackdropOpen(true)
 
     const response = await adminApi.list<{
@@ -314,12 +320,19 @@ function AdminMain(props: AdminProps) {
 
     if (response.result) {
       const { items, total } = response.data!
+      console.log(
+        'fetchList success - updating table with',
+        items.length,
+        'items',
+      )
       setTotal(total)
       setRows(items)
       setSelected([])
     } else {
+      console.error('fetchList failed:', response.message)
       message.error(response.message)
     }
+    console.log('fetchList completed - setting backdrop to false')
     setBackdropOpen(false)
   }
 
@@ -460,6 +473,7 @@ function AdminMain(props: AdminProps) {
   const handleSaveEdit = async () => {
     if (!editDialog.file) return
 
+    console.log('Starting handleSaveEdit...')
     setEditDialog((prev) => ({ ...prev, isLoading: true }))
 
     try {
@@ -467,6 +481,12 @@ function AdminMain(props: AdminProps) {
         editDialog.expiryType === 'permanent'
           ? null
           : new Date(editDialog.customDate).getTime()
+
+      console.log('Calling updateFile API with:', {
+        id: editDialog.file.id,
+        due_date,
+        is_ephemeral: editDialog.burnAfterReading,
+      })
 
       const response = await adminApi.updateFile(editDialog.file.id, {
         due_date,
@@ -476,6 +496,8 @@ function AdminMain(props: AdminProps) {
       console.log('API Response:', response)
 
       if (response.result) {
+        console.log('API success - closing dialog and refreshing table...')
+
         // Close dialog immediately
         setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
 
@@ -483,10 +505,13 @@ function AdminMain(props: AdminProps) {
         message.success(t('admin.edit.success'))
 
         // Match the delete pattern exactly: set backdrop, then fetch list
+        console.log('Setting backdrop and fetching list...')
         setBackdropOpen(true)
         await fetchList(page)
+        console.log('Table refresh completed')
         // Note: fetchList will call setBackdropOpen(false) when done
       } else {
+        console.error('API failed with message:', response.message)
         message.error(response.message || t('admin.edit.error'))
         setEditDialog((prev) => ({ ...prev, isLoading: false }))
       }
@@ -495,9 +520,7 @@ function AdminMain(props: AdminProps) {
       message.error(t('admin.edit.error'))
       setEditDialog((prev) => ({ ...prev, isLoading: false }))
     }
-  }
-
-  // Avoid a layout jump when reaching the last page with empty rows.
+  } // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = rowsPerPage - rows.length
 
   return (
