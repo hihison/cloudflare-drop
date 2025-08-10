@@ -482,10 +482,8 @@ function AdminMain(props: AdminProps) {
         // Close dialog
         setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
 
-        // Small delay to ensure backend processing is complete
-        await new Promise((resolve) => setTimeout(resolve, 100))
-
-        // Force refresh from server to get the latest data
+        // Use the same pattern as delete: set backdrop and refresh
+        setBackdropOpen(true)
         await fetchList(page)
       } else {
         message.error(response.message || t('admin.edit.error'))
