@@ -495,7 +495,13 @@ function AdminMain(props: AdminProps) {
 
       console.log('API Response:', response)
 
-      if (response.result) {
+      // Handle both response formats: {result: true} and {success: true}
+      const isSuccess =
+        'result' in response
+          ? response.result
+          : (response as { success: boolean }).success
+
+      if (isSuccess) {
         console.log('API success - closing dialog and refreshing table...')
 
         // Close dialog immediately
