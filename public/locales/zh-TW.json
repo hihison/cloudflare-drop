@@ -104,6 +104,7 @@
       "sizeTooltip": "使用二進位單位：1 MiB = 1024 × 1024 位元組，與 macOS 顯示略有不同",
       "dueDate": "有效期至",
       "encrypted": "是否加密",
+      "burnAfterReading": "閱後即焚",
       "createdAt": "建立時間",
       "actions": "操作"
     },
@@ -121,6 +122,8 @@
       "permanent": "永不過期",
       "customDate": "自訂過期時間",
       "selectDate": "選擇日期和時間",
+      "burnAfterReading": "閱後即焚",
+      "burnAfterReadingHelp": "首次下載後刪除檔案",
       "save": "儲存變更",
       "cancel": "取消",
       "saving": "儲存中...",
