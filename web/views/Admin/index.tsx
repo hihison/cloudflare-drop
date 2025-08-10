@@ -476,15 +476,16 @@ function AdminMain(props: AdminProps) {
       console.log('API Response:', response)
 
       if (response.result) {
+        // Close dialog immediately
+        setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
+
         // Show success message
         message.success(t('admin.edit.success'))
 
-        // Close dialog
-        setEditDialog((prev) => ({ ...prev, open: false, isLoading: false }))
-
-        // Use the same pattern as delete: set backdrop and refresh
+        // Match the delete pattern exactly: set backdrop, then fetch list
         setBackdropOpen(true)
         await fetchList(page)
+        // Note: fetchList will call setBackdropOpen(false) when done
       } else {
         message.error(response.message || t('admin.edit.error'))
         setEditDialog((prev) => ({ ...prev, isLoading: false }))
