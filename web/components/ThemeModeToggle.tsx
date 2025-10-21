@@ -1,39 +1,61 @@
 import { IconButton, Tooltip } from '@mui/material'
-import { LightMode, DarkMode, SettingsBrightness } from '@mui/icons-material'
 import { useThemeMode } from '../theme/AppTheme'
 
 export const ThemeModeToggle = () => {
-  const { mode, toggleMode } = useThemeMode()
+  try {
+    const { mode, toggleMode } = useThemeMode()
 
-  const getIcon = () => {
-    switch (mode) {
-      case 'light':
-        return <LightMode />
-      case 'dark':
-        return <DarkMode />
-      default:
-        return <SettingsBrightness />
+    const handleToggle = () => {
+      console.log('Theme toggle clicked, current mode:', mode)
+      toggleMode()
     }
-  }
 
-  const getTooltip = () => {
-    switch (mode) {
-      case 'light':
-        return 'Switch to Dark Mode'
-      case 'dark':
-        return 'Switch to System Mode'
-      default:
-        return 'Switch to Light Mode'
+    const getIcon = () => {
+      switch (mode) {
+        case 'light':
+          return '☀️'
+        case 'dark':
+          return '🌙'
+        default:
+          return '💻'
+      }
     }
-  }
 
-  return (
-    <Tooltip title={getTooltip()}>
-      <IconButton onClick={toggleMode} size="small">
-        {getIcon()}
+    const getTooltip = () => {
+      switch (mode) {
+        case 'light':
+          return 'Switch to Dark Mode'
+        case 'dark':
+          return 'Switch to System Mode'
+        default:
+          return 'Switch to Light Mode'
+      }
+    }
+
+    return (
+      <Tooltip title={getTooltip()}>
+        <IconButton 
+          onClick={handleToggle} 
+          size="small"
+          sx={{
+            fontSize: '1.2rem',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            },
+          }}
+        >
+          {getIcon()}
+        </IconButton>
+      </Tooltip>
+    )
+  } catch (error) {
+    console.error('ThemeModeToggle error:', error)
+    return (
+      <IconButton size="small">
+        🌙
       </IconButton>
-    </Tooltip>
-  )
+    )
+  }
 }
 
 export default ThemeModeToggle

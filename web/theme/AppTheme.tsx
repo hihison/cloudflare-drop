@@ -7,6 +7,15 @@ interface AppThemeProps {
   mode?: 'light' | 'dark' | 'system'
 }
 
+// Theme Context
+interface ThemeContextType {
+  mode: 'light' | 'dark' | 'system'
+  setMode: (mode: 'light' | 'dark' | 'system') => void
+  toggleMode: () => void
+}
+
+const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined)
+
 // Square UI Design System - Modern & Clean
 const squareColors = {
   primary: {
@@ -480,8 +489,17 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
   })
 }
 
-export const AppTheme: React.FC<AppThemeProps> = ({ children, mode = 'system' }) => {
+export const AppTheme: React.FC<AppThemeProps> = ({ children, mode: initialMode = 'system' }) => {
+  const [mode, setMode] = React.useState<'light' | 'dark' | 'system'>(initialMode)
   const [currentMode, setCurrentMode] = React.useState<'light' | 'dark'>('dark')
+
+  const toggleMode = React.useCallback(() => {
+    setMode(prev => {
+      if (prev === 'light') return 'dark'
+      if (prev === 'dark') return 'system'
+      return 'light'
+    })
+  }, [])
 
   React.useEffect(() => {
     if (mode === 'system') {
@@ -501,27 +519,29 @@ export const AppTheme: React.FC<AppThemeProps> = ({ children, mode = 'system' })
 
   const theme = React.useMemo(() => getSquareTheme(currentMode), [currentMode])
 
+  const contextValue = React.useMemo(() => ({
+    mode,
+    setMode,
+    toggleMode
+  }), [mode, toggleMode])
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline enableColorScheme />
-      {children}
-    </ThemeProvider>
+    <ThemeContext.Provider value={contextValue}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline enableColorScheme />
+        {children}
+      </ThemeProvider>
+    </ThemeContext.Provider>
   )
 }
 
-// Hook to toggle theme mode
+// Hook to use theme mode
 export const useThemeMode = () => {
-  const [mode, setMode] = React.useState<'light' | 'dark' | 'system'>('system')
-  
-  const toggleMode = () => {
-    setMode(prev => {
-      if (prev === 'light') return 'dark'
-      if (prev === 'dark') return 'system'
-      return 'light'
-    })
+  const context = React.useContext(ThemeContext)
+  if (context === undefined) {
+    throw new Error('useThemeMode must be used within an AppTheme provider')
   }
-  
-  return { mode, setMode, toggleMode }
+  return context
 }
 
 export default AppTheme
