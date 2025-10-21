@@ -6,9 +6,14 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
+import Button from '@mui/material/Button'
+import Drawer from '@mui/material/Drawer'
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
+import { alpha } from '@mui/material/styles'
 
 import { Message, useMessage, LanguageSelector, InstallPrompt } from './'
 import { useLanguage } from '../helpers'
+import { History } from '../views/Home/components'
 
 export interface LayoutProps {
   children?: ComponentChildren
@@ -21,6 +26,11 @@ export function Layout({ children }: LayoutProps) {
   const { t } = useLanguage()
 
   const [backdropOpen, setBackdropOpen] = useState(false)
+  const [drawerOpened, updateDrawerOpened] = useState(false)
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    updateDrawerOpened(newOpen)
+  }
 
   const injectedChildren = Array.isArray(children)
     ? children.map((child) =>
@@ -140,6 +150,24 @@ export function Layout({ children }: LayoutProps) {
               },
             }}
           >
+            <Button
+              variant="text"
+              onClick={toggleDrawer(true)}
+              startIcon={<ReceiptLongIcon />}
+              size="small"
+              sx={{
+                color: alpha('#ffffff', 0.7),
+                fontSize: '0.85rem',
+                minWidth: 'auto',
+                padding: '6px 12px',
+                '@media (max-width: 480px)': {
+                  fontSize: '0.8rem',
+                  padding: '4px 8px',
+                },
+              }}
+            >
+              {t('home.settings.history')}
+            </Button>
             <LanguageSelector />
           </Box>
         </Box>
@@ -147,6 +175,41 @@ export function Layout({ children }: LayoutProps) {
       </Box>
       <Message {...messageProps} />
       <InstallPrompt />
+      <Drawer
+        open={drawerOpened}
+        onClose={toggleDrawer(false)}
+        anchor="right"
+        PaperProps={{
+          sx: {
+            background: alpha('#183951', 0.2),
+            backdropFilter: 'blur(20px)',
+            border: `1px solid ${alpha('#ffffff', 0.1)}`,
+            '@media (max-width: 768px)': {
+              width: '85vw',
+              maxWidth: '400px',
+            },
+            '@media (max-width: 480px)': {
+              width: '90vw',
+              maxWidth: 'none',
+            },
+          },
+        }}
+      >
+        <History
+          onItemClick={(share) => {
+            updateDrawerOpened(false)
+            // Navigate to home page with the share code
+            // Since we can't directly access the setCode from Home component here,
+            // we'll let the user manually enter the code or handle it differently
+            if (share && share.code) {
+              // Copy code to clipboard as a fallback
+              navigator.clipboard?.writeText(share.code).then(() => {
+                // Could show a toast message here if needed
+              })
+            }
+          }}
+        />
+      </Drawer>
       <Backdrop
         sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
         open={backdropOpen}

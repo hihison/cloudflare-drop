@@ -17,8 +17,6 @@ import FileIcon from '@mui/icons-material/Description'
 import Divider from '@mui/material/Divider'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
-import Drawer from '@mui/material/Drawer'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 
@@ -27,7 +25,6 @@ import {
   FileDialog,
   ShareDialog,
   historyApi,
-  History,
   Progress,
   Duration,
   PasswordSwitch,
@@ -210,13 +207,7 @@ export function AppMain(props: LayoutProps) {
 
   const [progress, updateProgress] = useState<null | number>(null)
 
-  const [drawerOpened, updateDrawerOpened] = useState(false)
-
   const [password, updatePassword] = useState('')
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    updateDrawerOpened(newOpen)
-  }
 
   const handleBackdropClose = () => {
     setBackdropOpen(false)
@@ -694,7 +685,7 @@ export function AppMain(props: LayoutProps) {
             <Box
               sx={{
                 display: 'flex',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 alignItems: 'center',
                 flexDirection: { xs: 'column', sm: 'row' },
                 gap: 2,
@@ -703,22 +694,6 @@ export function AppMain(props: LayoutProps) {
                 },
               }}
             >
-              <Button
-                variant="text"
-                onClick={toggleDrawer(true)}
-                startIcon={<ReceiptLongIcon />}
-                disableRipple
-                sx={{
-                  color: alpha('#ffffff', 0.7),
-                  '@media (max-width: 480px)': {
-                    fontSize: '0.85rem',
-                    minWidth: 'auto',
-                    padding: '8px 16px',
-                  },
-                }}
-              >
-                {t('home.settings.history')}
-              </Button>
 
               <Box
                 sx={{
@@ -756,34 +731,6 @@ export function AppMain(props: LayoutProps) {
           </Box>
         </CardContent>
       </ModernCard>
-
-      <Drawer
-        open={drawerOpened}
-        onClose={toggleDrawer(false)}
-        anchor="right"
-        PaperProps={{
-          sx: {
-            background: alpha('#183951', 0.2),
-            backdropFilter: 'blur(20px)',
-            border: `1px solid ${alpha('#ffffff', 0.1)}`,
-            '@media (max-width: 768px)': {
-              width: '85vw',
-              maxWidth: '400px',
-            },
-            '@media (max-width: 480px)': {
-              width: '90vw',
-              maxWidth: 'none',
-            },
-          },
-        }}
-      >
-        <History
-          onItemClick={(item: { code: string }) => {
-            updateDrawerOpened(false)
-            setCode(item.code)
-          }}
-        />
-      </Drawer>
 
       <Progress open={progress !== null} value={progress ?? 0} />
     </GlassContainer>
