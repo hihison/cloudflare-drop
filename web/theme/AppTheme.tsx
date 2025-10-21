@@ -335,24 +335,33 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             '& .MuiOutlinedInput-root': {
-              borderRadius: 16,
-              backgroundColor: alpha('#0f1419', 0.6),
+              borderRadius: 8, // More square for better iOS compatibility
+              backgroundColor: isDark 
+                ? alpha(squareColors.gray[800], 0.6)
+                : alpha('#ffffff', 0.8),
               backdropFilter: 'blur(10px)',
+              border: `1px solid ${isDark ? squareColors.gray[600] : squareColors.gray[300]}`,
               '@media (max-width: 768px)': {
-                borderRadius: 14,
+                borderRadius: 6, // Even more square on mobile
                 fontSize: '16px', // Prevents zoom on iOS
               },
               '@media (max-width: 480px)': {
-                borderRadius: 12,
+                borderRadius: 4, // Very square for iOS input compatibility
                 padding: '4px 8px',
               },
               '&.Mui-focused': {
-                backgroundColor: alpha('#0f1419', 0.8),
-                transform: 'translateY(-2px)',
-                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                backgroundColor: isDark 
+                  ? alpha(squareColors.gray[700], 0.8)
+                  : alpha('#ffffff', 0.95),
+                transform: 'translateY(-1px)',
+                boxShadow: isDark 
+                  ? `0 6px 20px ${alpha(squareColors.primary[500], 0.2)}`
+                  : `0 6px 20px ${alpha(squareColors.primary[400], 0.15)}`,
                 '@media (max-width: 768px)': {
                   transform: 'translateY(0px)',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.3)',
+                  boxShadow: isDark 
+                    ? `0 3px 12px ${alpha(squareColors.primary[500], 0.25)}`
+                    : `0 3px 12px ${alpha(squareColors.primary[400], 0.2)}`,
                 },
               },
             },

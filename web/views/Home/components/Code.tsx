@@ -143,7 +143,14 @@ export function Code({ length, value, onChange, disabled }: CodeProps) {
                 background: alpha('#183951', 0.2),
                 backdropFilter: 'blur(10px)',
                 border: `1px solid ${alpha('#ffffff', 0.2)}`,
-                borderRadius: 2,
+                borderRadius: 1, // More square for better iOS number display
+                '@media (max-width: 768px)': {
+                  borderRadius: 0.5, // Even more square on mobile
+                },
+                '@media (max-width: 480px)': {
+                  borderRadius: 0, // Completely square on iOS for better compatibility
+                  fontSize: 18,
+                },
                 '& fieldset': {
                   border: 'none',
                 },
