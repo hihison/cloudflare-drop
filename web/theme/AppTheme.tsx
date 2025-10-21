@@ -418,6 +418,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             borderRadius: 12,
             transition: 'none',
             color: '#71717a',
+            zIndex: 999, // Ensure close button (X) is below navigation header (1000)
             '&:hover': {
               backgroundColor: 'transparent',
               transform: 'none',
