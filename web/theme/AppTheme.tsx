@@ -181,10 +181,12 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             backgroundImage: 'none',
-            backgroundColor: alpha('#0f1419', 0.8),
-            backdropFilter: 'blur(20px) saturate(180%)',
-            border: `1px solid ${alpha('#27272a', 0.3)}`,
-            borderRadius: 20,
+            backgroundColor: isDark 
+              ? alpha(squareColors.gray[800], 0.8)
+              : alpha('#ffffff', 0.9),
+            backdropFilter: 'blur(20px)',
+            border: `1px solid ${isDark ? squareColors.gray[700] : squareColors.gray[200]}`,
+            borderRadius: 12, // Square design
           },
         },
       },
@@ -266,30 +268,6 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
             '@media (max-width: 480px)': {
               borderRadius: 8,
               margin: '0 4px',
-            },
-          },
-        },
-      },
-      MuiBox: {
-        styleOverrides: {
-          root: {
-            // Global header styling override for better light mode support
-            '&.header-box': {
-              backgroundColor: isDark 
-                ? alpha('#000000', 0.3) 
-                : alpha('#ffffff', 0.9),
-              borderBottom: `1px solid ${isDark 
-                ? alpha('#ffffff', 0.1) 
-                : alpha('#000000', 0.1)}`,
-              backdropFilter: 'blur(20px)',
-              '& .MuiTypography-root': {
-                color: isDark ? '#ffffff' : squareColors.gray[900],
-              },
-              '& .MuiTypography-caption': {
-                color: isDark 
-                  ? alpha('#ffffff', 0.7) 
-                  : alpha(squareColors.gray[600], 0.8),
-              },
             },
           },
         },

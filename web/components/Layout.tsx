@@ -63,17 +63,24 @@ export function Layout({ children }: LayoutProps) {
         }}
       >
         <Box 
-          className="flex justify-between items-center header-box" 
-          sx={{ 
+          className="flex justify-between items-center" 
+          sx={(theme) => ({ 
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
             zIndex: 1000,
+            backgroundColor: theme.palette.mode === 'dark' 
+              ? 'rgba(0, 0, 0, 0.3)' 
+              : 'rgba(255, 255, 255, 0.9)',
+            borderBottom: theme.palette.mode === 'dark'
+              ? '1px solid rgba(255, 255, 255, 0.1)'
+              : '1px solid rgba(0, 0, 0, 0.1)',
+            backdropFilter: 'blur(20px)',
             p: 1,
             flexDirection: { xs: 'column', sm: 'row' },
             gap: { xs: 1, sm: 0 },
-          }}
+          })}
         >
           <Link 
             href="/" 
