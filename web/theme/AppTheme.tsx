@@ -264,22 +264,36 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
           },
         },
       },
+      MuiModal: {
+        styleOverrides: {
+          root: {
+            zIndex: 1400, // Higher than navigation header (1000) and drawer (1200)
+            // Extra z-index boost for mobile PWA
+            '@media (max-width: 768px)': {
+              zIndex: 1500,
+            },
+          },
+        },
+      },
+      MuiBackdrop: {
+        styleOverrides: {
+          root: {
+            zIndex: -1, // Behind the dialog content
+          },
+        },
+      },
       MuiDialog: {
         styleOverrides: {
           root: {
             zIndex: 1400, // Higher than navigation header (1000) and drawer (1200)
-            '& .MuiBackdrop-root': {
-              zIndex: 1350, // Ensure backdrop is also above navigation
-            },
             // Extra z-index boost for mobile PWA
             '@media (max-width: 768px)': {
               zIndex: 1500,
-              '& .MuiBackdrop-root': {
-                zIndex: 1450,
-              },
             },
           },
           paper: {
+            position: 'relative',
+            zIndex: 1, // Above the backdrop
             borderRadius: 28,
             backgroundColor: alpha('#0f1419', 0.9),
             backdropFilter: 'blur(40px) saturate(200%)',
@@ -304,10 +318,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
         styleOverrides: {
           root: {
             position: 'relative',
-            zIndex: 1401, // Ensure dialog title is above everything
-            '@media (max-width: 768px)': {
-              zIndex: 1501, // Extra boost for mobile PWA
-            },
+            // No need for high z-index since dialog paper handles layering
           },
         },
       },
