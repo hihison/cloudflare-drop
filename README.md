@@ -1,67 +1,316 @@
-# Cloudflare Drop.
-
-基于 Cloudflare Worker、D1Database 和 KV 实现的轻量级文件分享工具。
-
-<img src="assets/IMG_5898.png" width="200">
-<img src="assets/IMG_5899.png" width="200">
-<img src="assets/IMG_5900.png" width="200">
-<img src="assets/IMG_5901.png" width="200">
-
-## 自动部署
+# 🚀 Cloudflare Drop
 
 [![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/oustn/cloudflare-drop)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-4.9%2B-blue)](https://www.typescriptlang.org/)
 
-1. 点击按钮，跳转到自动部署页面
-2. 根据页面指引，关联 GitHub & Cloudflare，配置 Cloudflare Account ID & API Key
-3. Fork 仓库
-4. 开启 Action
-5. 部署
+**Secure, Fast, Simple File Sharing Platform** built on Cloudflare's edge infrastructure.
 
-> 创建 Cloudflare API Key 时，如果使用 worker 模板创建，请记得添加 D1 的编辑权限。
+A lightweight, modern file sharing solution powered by **Cloudflare Workers**, **D1 Database**, and **KV Storage**. Share files and text securely with end-to-end encryption, automatic expiration, and a beautiful responsive interface.
 
-## 更新
+## ✨ Features
 
-同步 Fork 的仓库即可自动更新 & 构建。
+### 🔐 **Security First**
+- **End-to-end AES-GCM encryption** with user-defined passwords
+- **Client-side encryption** - server never sees your passwords
+- **Automatic expiration** with configurable timeouts
+- **"Burn after reading"** for ephemeral content
+- **SHA256 hash verification** for file integrity
 
-<img src="assets/IMG_01.png" width="200">
+### 📱 **Modern Experience**
+- **Progressive Web App (PWA)** - install on any device
+- **Responsive design** optimized for mobile and desktop
+- **Dark/Light mode** with system preference detection
+- **Square UI design** with iOS-optimized input fields
+- **Multilingual support** (English, Chinese Simplified, Chinese Traditional)
 
-## 配置 GitHub Action Secret
+### ⚡ **Performance & Scale**
+- **Global edge deployment** via Cloudflare Workers
+- **Instant file uploads** with chunked transfer
+- **Real-time progress tracking**
+- **Automatic cleanup** of expired content
+- **Rate limiting** protection
 
-1. 在初次部署完成后，还需要创建 [D1Database](https://developers.cloudflare.com/d1/get-started/#2-create-a-database) & [KV](https://developers.cloudflare.com/kv/get-started/#2-create-a-kv-namespace)，参考对应文档。
-2. 配置 Secret：在 forked 的仓库 -> **Settings** -> **Secrets and variables** -> **Actions** -> **New repository secret**
-3. 配置以下 Secret：
-   - CUSTOM_DOMAIN （可选，域名，如 drop.example.cn）
-   - D1_ID (D1Database ID)
-   - D1_NAME (D1Database Name)
-   - KV_ID (KV Namespace ID)
-4. 重新运行 Github Actions
+### 📤 **Flexible Sharing**
+- **File sharing** (up to configurable size limit)
+- **Text sharing** with syntax highlighting
+- **QR code generation** for easy mobile access
+- **6-character share codes** for simple sharing
+- **Download history** tracking
 
-## 其他配置
+## 🖼️ Screenshots
 
-### 文件大小限制
+<div align="center">
+  <img src="assets/IMG_5898.png" width="200" alt="Home Screen">
+  <img src="assets/IMG_5899.png" width="200" alt="Upload Interface">
+  <img src="assets/IMG_5900.png" width="200" alt="Share Dialog">
+  <img src="assets/IMG_5901.png" width="200" alt="Download View">
+</div>
 
-默认文件限制为 10M，可以通过添加 Action 变量来修改。
+## 🚀 Quick Start
 
-新增 `SHARE_MAX_SIZE_IN_MB` Action 变量，值为最大允许的 MB 数字，例如 20，配置路径：在 forked 的仓库 -> **Settings** -> **Secrets and variables** -> **Actions** -> **New repository variable**
+### One-Click Deployment
 
-### 分享过期时间配置
+1. **Click the deploy button** above to start automatic deployment
+2. **Connect GitHub & Cloudflare** following the guided setup
+3. **Configure Cloudflare Account ID & API Key**
+4. **Fork the repository** to your GitHub account
+5. **Enable GitHub Actions** in your forked repository
 
-分享默认有效期是一个小时，可以通过添加 Action 变量来修改。
+> 💡 **Tip**: When creating your Cloudflare API Key, use the worker template and ensure you add **D1 Database edit permissions**.
 
-新增 `SHARE_DURATION` Action 变量，配置格式为 `数值+单位`，比如 (5minute)，支持的单位有 `minute`, `hour`, `day`, `week`, `month`, `year`
+### Manual Setup
 
-### 新增 IP 上传频率限制
+```bash
+# Clone the repository
+git clone https://github.com/oustn/cloudflare-drop.git
+cd cloudflare-drop
 
-默认无限制，可以通过添加 Action 变量来修改。
+# Install dependencies
+pnpm install
 
-新增 `RATE_LIMIT` Action 变量，值为每 10s 可请求数，比如 10
+# Set up environment
+cp .dev.vars.example .dev.vars
+# Edit .dev.vars with your configuration
 
-## 过期清理
+# Create Cloudflare resources
+npx wrangler d1 create airdrop
+npx wrangler kv:namespace create "file_drops"
 
-Worker 添加了一个 10 分钟的定时任务，自动清理过期的 KV 存储和 D1 中的记录。
+# Start development server
+pnpm start
+```
 
-## 后台管理
+## ⚙️ Configuration
 
-通过配置 ADMIN_TOKEN Secret，可以访问管理后台：`https://your.drop.com/admin/{ADMIN_TOKEN}`， 在管理后台可以删除分享。
+### Required Cloudflare Resources
 
-<img src="assets/IMG_6000.png" width="400">
+#### 1. Create D1 Database
+```bash
+npx wrangler d1 create airdrop
+```
+Save the **Database ID** for GitHub secrets configuration.
+
+#### 2. Create KV Namespace
+```bash
+npx wrangler kv:namespace create "file_drops"
+```
+Save the **Namespace ID** for GitHub secrets configuration.
+
+### GitHub Secrets Configuration
+
+Navigate to your forked repository: **Settings** → **Secrets and variables** → **Actions** → **New repository secret**
+
+| Secret Name | Description | Required |
+|-------------|-------------|----------|
+| `D1_ID` | D1 Database ID | ✅ Yes |
+| `D1_NAME` | D1 Database Name | ✅ Yes |
+| `KV_ID` | KV Namespace ID | ✅ Yes |
+| `CUSTOM_DOMAIN` | Custom domain (e.g., drop.example.com) | ❌ Optional |
+| `ADMIN_TOKEN` | Admin panel access token | ❌ Optional |
+
+### Environment Variables
+
+Configure these in **Actions** → **Variables**:
+
+| Variable | Description | Default | Example |
+|----------|-------------|---------|---------|
+| `SHARE_MAX_SIZE_IN_MB` | Maximum file size in MB | `10` | `50` |
+| `SHARE_DURATION` | Default expiration time | `1hour` | `24hour`, `7day` |
+| `RATE_LIMIT` | Requests per 10 seconds | `unlimited` | `10` |
+
+#### Duration Format
+Use format: `{number}{unit}` where unit can be:
+- `minute`, `hour`, `day`, `week`, `month`, `year`
+- Examples: `5minute`, `24hour`, `7day`, `1month`
+
+## 🔧 Development
+
+### Tech Stack
+
+- **Frontend**: Preact + TypeScript + Material-UI
+- **Backend**: Hono.js on Cloudflare Workers
+- **Database**: Drizzle ORM + Cloudflare D1
+- **Storage**: Cloudflare KV
+- **Build**: Vite + TypeScript
+- **Deployment**: Wrangler CLI
+
+### Project Structure
+
+```
+cloudflare-drop/
+├── src/                    # Backend Workers code
+│   ├── admin/             # Admin panel APIs
+│   ├── files/             # File handling APIs
+│   └── middlewares/       # Auth, DB, Rate limiting
+├── web/                   # Frontend application
+│   ├── api/               # Client-side API calls
+│   ├── components/        # Reusable UI components
+│   ├── helpers/           # Utilities and encryption
+│   ├── theme/             # Material-UI theming
+│   └── views/             # Page components
+├── data/                  # Database schemas and migrations
+└── public/                # Static assets and PWA files
+```
+
+### Local Development
+
+```bash
+# Start development environment
+pnpm start
+
+# Build for production
+pnpm run build:web
+
+# Deploy to production
+pnpm run deploy
+
+# Generate database migrations
+pnpm run generate
+
+# Run linting and formatting
+pnpm run lint
+```
+
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `pnpm start` | Start development servers (web + worker) |
+| `pnpm dev:web` | Start web development server only |
+| `pnpm dev:app` | Start worker development server only |
+| `pnpm build:web` | Build web application for production |
+| `pnpm deploy` | Deploy to Cloudflare Workers |
+| `pnpm generate` | Generate database migrations |
+| `pnpm lint` | Run ESLint and Prettier |
+
+## 🛡️ Admin Panel
+
+Access the admin panel to manage shared files and monitor usage.
+
+**URL**: `https://your-domain.com/admin/{ADMIN_TOKEN}`
+
+### Admin Features
+- **View all shared files** with metadata
+- **Delete shares** manually
+- **Monitor file usage** and expiration
+- **Download files** with admin privileges
+- **Preview text content** inline
+
+<div align="center">
+  <img src="assets/IMG_6000.png" width="400" alt="Admin Panel">
+</div>
+
+## 🔄 Updates & Maintenance
+
+### Automatic Updates
+- **Sync your fork** to automatically trigger deployment
+- **GitHub Actions** will build and deploy changes
+- **Database migrations** run automatically during deployment
+
+### Scheduled Cleanup
+- **10-minute cron job** automatically cleans expired content
+- **KV storage cleanup** removes expired file chunks
+- **D1 database cleanup** removes expired metadata
+
+## 🌐 Internationalization
+
+Supported languages:
+- 🇺🇸 **English** (`en`)
+- 🇨🇳 **简体中文** (`zh-CN`)
+- 🇹🇼 **繁體中文** (`zh-TW`)
+
+### Adding New Languages
+
+1. Create translation file in `public/locales/{lang}.json`
+2. Follow existing translation structure
+3. Add language option to language selector component
+
+## 📱 PWA Features
+
+### Installation
+- **Add to Home Screen** on mobile devices
+- **Desktop installation** via browser
+- **Offline functionality** for cached content
+- **App shortcuts** for quick actions
+
+### iOS Installation
+1. Open in Safari
+2. Tap the **Share** button
+3. Scroll down and tap **"Add to Home Screen"**
+4. Tap **"Add"** to install
+
+## 🔒 Security & Privacy
+
+### Encryption Details
+- **AES-GCM 256-bit** encryption for password-protected shares
+- **Client-side key derivation** using PBKDF2
+- **Random IV generation** for each encrypted file
+- **Server never stores** plaintext passwords
+
+### Privacy Features
+- **No user accounts** required
+- **Automatic expiration** prevents indefinite storage
+- **Optional burn-after-reading** for sensitive content
+- **No tracking** or analytics
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+#### Deployment Fails
+- Verify **D1 Database** and **KV Namespace** are created
+- Check **GitHub Secrets** are properly configured
+- Ensure **Cloudflare API Key** has sufficient permissions
+
+#### File Upload Errors
+- Check file size against `SHARE_MAX_SIZE_IN_MB` limit
+- Verify **KV Namespace** is accessible
+- Check browser console for detailed errors
+
+#### Admin Panel Access
+- Verify `ADMIN_TOKEN` secret is configured
+- Use correct URL format: `/admin/{token}`
+- Check worker logs for authentication errors
+
+### Getting Help
+
+1. **Check the logs** in Cloudflare Workers dashboard
+2. **Review GitHub Actions** for deployment issues
+3. **Open an issue** on GitHub with detailed error information
+
+## 🤝 Contributing
+
+We welcome contributions! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Workflow
+
+1. **Fork the repository**
+2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+3. **Make your changes** and add tests
+4. **Run linting**: `pnpm run lint`
+5. **Commit changes**: `git commit -m 'Add amazing feature'`
+6. **Push to branch**: `git push origin feature/amazing-feature`
+7. **Open a Pull Request**
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Cloudflare** for the amazing Workers platform
+- **Material-UI** for the beautiful component library
+- **Preact** for the lightweight React alternative
+- **Drizzle ORM** for the excellent database toolkit
+
+---
+
+<div align="center">
+  <p>Made with ❤️ using Cloudflare's edge infrastructure</p>
+  <p>
+    <a href="https://github.com/oustn/cloudflare-drop/stargazers">⭐ Star us on GitHub</a> |
+    <a href="https://github.com/oustn/cloudflare-drop/issues">🐛 Report Bug</a> |
+    <a href="https://github.com/oustn/cloudflare-drop/issues">💡 Request Feature</a>
+  </p>
+</div>
