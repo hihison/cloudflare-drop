@@ -299,16 +299,17 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             backdropFilter: 'blur(40px) saturate(200%)',
             border: `1px solid ${alpha('#27272a', 0.3)}`,
             boxShadow: '0 25px 50px rgba(0, 0, 0, 0.8)',
+            marginTop: '80px', // Move dialog below navigation header
             '@media (max-width: 768px)': {
               borderRadius: 20,
-              margin: 16,
-              maxHeight: 'calc(100vh - 32px)',
+              margin: '80px 16px 16px 16px', // Top margin to clear nav header
+              maxHeight: 'calc(100vh - 96px)', // Adjust height for top margin
               width: 'calc(100vw - 32px)',
             },
             '@media (max-width: 480px)': {
               borderRadius: 16,
-              margin: 8,
-              maxHeight: 'calc(100vh - 16px)',
+              margin: '80px 8px 8px 8px', // Top margin to clear nav header
+              maxHeight: 'calc(100vh - 88px)', // Adjust height for top margin
               width: 'calc(100vw - 16px)',
             },
           },
