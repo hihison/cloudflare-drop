@@ -248,19 +248,8 @@ export function AppMain(props: LayoutProps) {
     updatePassword('')
   })
 
-  // Handle URL parameters and custom events for history code selection
+  // Handle custom events for history code selection
   useEffect(() => {
-    // Check URL parameters on mount
-    const urlParams = new URLSearchParams(window.location.search)
-    const codeParam = urlParams.get('code')
-    if (codeParam && codeParam.length === 6) {
-      handleResolveFile.current(codeParam)
-      // Clean up URL
-      const url = new URL(window.location.href)
-      url.searchParams.delete('code')
-      window.history.replaceState({}, '', url.toString())
-    }
-
     // Listen for custom events from history
     const handleHistoryCodeSelected = (event: CustomEvent) => {
       if (event.detail && event.detail.code) {

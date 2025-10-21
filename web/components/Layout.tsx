@@ -198,14 +198,8 @@ export function Layout({ children }: LayoutProps) {
         <History
           onItemClick={(share) => {
             updateDrawerOpened(false)
-            // Navigate to home page with the share code as URL parameter
+            // Dispatch a custom event to notify the home component
             if (share && share.code) {
-              // Update URL with the code parameter
-              const url = new URL(window.location.href)
-              url.searchParams.set('code', share.code)
-              window.history.pushState({}, '', url.toString())
-              
-              // Dispatch a custom event to notify the home component
               const event = new CustomEvent('historyCodeSelected', { 
                 detail: { code: share.code } 
               })
