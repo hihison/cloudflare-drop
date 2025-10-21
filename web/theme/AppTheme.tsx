@@ -7,8 +7,8 @@ interface AppThemeProps {
   mode?: 'light' | 'dark' | 'system'
 }
 
-// Modern 2025 color palette
-const modernColors = {
+// Square UI Design System - Modern & Clean
+const squareColors = {
   primary: {
     50: '#eff6ff',
     100: '#dbeafe',
@@ -21,63 +21,62 @@ const modernColors = {
     800: '#1e40af',
     900: '#1e3a8a',
   },
-  neutral: {
-    50: '#fafafa',
-    100: '#f5f5f5',
-    200: '#e5e5e5',
-    300: '#d4d4d4',
-    400: '#a3a3a3',
-    500: '#737373',
-    600: '#525252',
-    700: '#404040',
-    800: '#262626',
-    900: '#171717',
+  gray: {
+    50: '#f9fafb',
+    100: '#f3f4f6',
+    200: '#e5e7eb',
+    300: '#d1d5db',
+    400: '#9ca3af',
+    500: '#6b7280',
+    600: '#4b5563',
+    700: '#374151',
+    800: '#1f2937',
+    900: '#111827',
   },
 }
 
-const getModern2025Theme = (mode: 'light' | 'dark') => {
+const getSquareTheme = (mode: 'light' | 'dark') => {
+  const isDark = mode === 'dark'
+  
   return createTheme({
     palette: {
       mode,
       primary: {
-        main: '#52525b',
-        light: '#71717a',
-        dark: '#3f3f46',
-        contrastText: '#a1a1aa',
+        main: squareColors.primary[600],
+        light: squareColors.primary[400],
+        dark: squareColors.primary[800],
+        contrastText: '#ffffff',
       },
       secondary: {
-        main: '#52525b',
-        light: '#71717a',
-        dark: '#3f3f46',
-        contrastText: '#a1a1aa',
+        main: squareColors.gray[isDark ? 400 : 600],
+        light: squareColors.gray[isDark ? 300 : 500],
+        dark: squareColors.gray[isDark ? 500 : 700],
+        contrastText: isDark ? '#000000' : '#ffffff',
       },
       error: {
-        main: '#71717a',
-        light: '#a1a1aa',
-        dark: '#52525b',
+        main: '#ef4444',
+        light: '#f87171',
+        dark: '#dc2626',
       },
       warning: {
-        main: '#71717a',
-        light: '#a1a1aa',
-        dark: '#52525b',
+        main: '#f59e0b',
+        light: '#fbbf24',
+        dark: '#d97706',
       },
       success: {
-        main: '#71717a',
-        light: '#a1a1aa',
-        dark: '#52525b',
+        main: '#10b981',
+        light: '#34d399',
+        dark: '#059669',
       },
       background: {
-        default: '#0a0e1a',
-        paper: alpha('#0f1419', 0.95),
+        default: isDark ? '#0f172a' : '#ffffff',
+        paper: isDark ? '#1e293b' : '#f8fafc',
       },
       text: {
-        primary: '#a1a1aa',
-        secondary: '#71717a',
+        primary: isDark ? '#f1f5f9' : '#0f172a',
+        secondary: isDark ? '#94a3b8' : '#64748b',
       },
-      divider:
-        mode === 'light'
-          ? alpha(modernColors.neutral[200], 0.5)
-          : alpha(modernColors.neutral[700], 0.5),
+      divider: isDark ? alpha('#334155', 0.5) : alpha('#e2e8f0', 0.8),
     },
     typography: {
       fontFamily:
@@ -134,7 +133,7 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
       },
     },
     shape: {
-      borderRadius: 20,
+      borderRadius: 8, // Square design - minimal rounded corners
     },
     components: {
       MuiCssBaseline: {
@@ -143,10 +142,10 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
             scrollBehavior: 'smooth',
           },
           body: {
-            background: '#0a0e1a',
+            background: isDark ? '#0f172a' : '#ffffff',
             minHeight: '100vh',
             backgroundAttachment: 'fixed',
-            fontSmooth: 'always',
+            fontSmoth: 'always',
             WebkitFontSmoothing: 'antialiased',
             MozOsxFontSmoothing: 'grayscale',
           },
@@ -156,14 +155,14 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
               height: 8,
             },
             '&::-webkit-scrollbar-track': {
-              background: alpha(modernColors.neutral[200], 0.1),
-              borderRadius: 8,
+              background: isDark ? alpha(squareColors.gray[800], 0.3) : alpha(squareColors.gray[200], 0.5),
+              borderRadius: 4,
             },
             '&::-webkit-scrollbar-thumb': {
-              background: alpha(modernColors.neutral[400], 0.3),
-              borderRadius: 8,
+              background: isDark ? alpha(squareColors.gray[600], 0.5) : alpha(squareColors.gray[400], 0.7),
+              borderRadius: 4,
               '&:hover': {
-                background: alpha(modernColors.neutral[400], 0.5),
+                background: isDark ? alpha(squareColors.gray[500], 0.7) : alpha(squareColors.gray[500], 0.8),
               },
             },
           },
@@ -183,54 +182,57 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
       MuiButton: {
         styleOverrides: {
           root: {
-            borderRadius: 16,
+            borderRadius: 8, // Square buttons
             textTransform: 'none',
-            fontWeight: 600,
+            fontWeight: 500,
             fontSize: '0.95rem',
-            padding: '14px 28px',
-            transition: 'none',
-            position: 'relative',
-            overflow: 'hidden',
+            padding: '12px 24px',
+            boxShadow: 'none',
+            '&:hover': {
+              boxShadow: isDark 
+                ? `0 4px 12px ${alpha(squareColors.primary[500], 0.3)}`
+                : `0 4px 12px ${alpha(squareColors.primary[600], 0.15)}`,
+              transform: 'translateY(-1px)',
+            },
+            '&:active': {
+              transform: 'translateY(0px)',
+            },
             '@media (max-width: 768px)': {
-              padding: '12px 24px',
+              padding: '10px 20px',
               fontSize: '0.9rem',
-              borderRadius: 14,
             },
             '@media (max-width: 480px)': {
-              padding: '10px 20px',
+              padding: '8px 16px',
               fontSize: '0.85rem',
-              borderRadius: 12,
-            },
-            '&:hover': {
-              transform: 'none',
-              '@media (max-width: 768px)': {
-                transform: 'none',
-              },
             },
           },
           contained: {
-            background: '#0f1419',
-            boxShadow: 'none',
-            border: '1px solid #27272a',
-            color: '#a1a1aa',
+            background: isDark 
+              ? `linear-gradient(135deg, ${squareColors.primary[600]}, ${squareColors.primary[700]})`
+              : `linear-gradient(135deg, ${squareColors.primary[500]}, ${squareColors.primary[600]})`,
+            color: '#ffffff',
+            border: 'none',
             '&:hover': {
-              background: '#0f1419',
-              boxShadow: 'none',
-              color: '#a1a1aa',
-            },
-            '&:active': {
-              transform: 'none',
+              background: isDark 
+                ? `linear-gradient(135deg, ${squareColors.primary[500]}, ${squareColors.primary[600]})`
+                : `linear-gradient(135deg, ${squareColors.primary[600]}, ${squareColors.primary[700]})`,
             },
           },
           outlined: {
             borderWidth: 2,
-            backgroundColor: alpha('#0f1419', 0.6),
-            backdropFilter: 'blur(10px)',
-            borderColor: alpha('#27272a', 0.5),
+            borderColor: isDark ? squareColors.gray[600] : squareColors.gray[300],
+            backgroundColor: isDark ? alpha(squareColors.gray[800], 0.5) : alpha(squareColors.gray[50], 0.8),
+            color: isDark ? squareColors.gray[200] : squareColors.gray[700],
             '&:hover': {
               borderWidth: 2,
-              backgroundColor: alpha('#0f1419', 0.8),
-              borderColor: alpha('#27272a', 0.7),
+              borderColor: isDark ? squareColors.gray[400] : squareColors.gray[400],
+              backgroundColor: isDark ? alpha(squareColors.gray[700], 0.8) : alpha(squareColors.gray[100], 0.9),
+            },
+          },
+          text: {
+            color: isDark ? squareColors.gray[300] : squareColors.gray[600],
+            '&:hover': {
+              backgroundColor: isDark ? alpha(squareColors.gray[700], 0.3) : alpha(squareColors.gray[100], 0.8),
             },
           },
         },
@@ -478,17 +480,26 @@ const getModern2025Theme = (mode: 'light' | 'dark') => {
   })
 }
 
-export default function AppTheme({ children, mode = 'dark' }: AppThemeProps) {
+export const AppTheme: React.FC<AppThemeProps> = ({ children, mode = 'system' }) => {
   const [currentMode, setCurrentMode] = React.useState<'light' | 'dark'>('dark')
 
   React.useEffect(() => {
-    // Always use dark mode
-    setCurrentMode('dark')
+    if (mode === 'system') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+      setCurrentMode(mediaQuery.matches ? 'dark' : 'light')
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        setCurrentMode(e.matches ? 'dark' : 'light')
+      }
+      
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
+    } else {
+      setCurrentMode(mode)
+    }
   }, [mode])
 
-  const theme = React.useMemo(() => {
-    return getModern2025Theme('dark')
-  }, [currentMode])
+  const theme = React.useMemo(() => getSquareTheme(currentMode), [currentMode])
 
   return (
     <ThemeProvider theme={theme}>
@@ -497,3 +508,20 @@ export default function AppTheme({ children, mode = 'dark' }: AppThemeProps) {
     </ThemeProvider>
   )
 }
+
+// Hook to toggle theme mode
+export const useThemeMode = () => {
+  const [mode, setMode] = React.useState<'light' | 'dark' | 'system'>('system')
+  
+  const toggleMode = () => {
+    setMode(prev => {
+      if (prev === 'light') return 'dark'
+      if (prev === 'dark') return 'system'
+      return 'light'
+    })
+  }
+  
+  return { mode, setMode, toggleMode }
+}
+
+export default AppTheme

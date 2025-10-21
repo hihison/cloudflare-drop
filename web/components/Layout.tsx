@@ -11,7 +11,7 @@ import Drawer from '@mui/material/Drawer'
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong'
 import { alpha } from '@mui/material/styles'
 
-import { Message, useMessage, LanguageSelector, InstallPrompt } from './'
+import { Message, useMessage, LanguageSelector, InstallPrompt, ThemeModeToggle } from './'
 import { useLanguage } from '../helpers'
 import { History } from '../views/Home/components'
 
@@ -168,6 +168,7 @@ export function Layout({ children }: LayoutProps) {
             >
               {t('home.settings.history')}
             </Button>
+            <ThemeModeToggle />
             <LanguageSelector />
           </Box>
         </Box>
