@@ -63,16 +63,13 @@ export function Layout({ children }: LayoutProps) {
         }}
       >
         <Box 
-          className="flex justify-between items-center" 
+          className="flex justify-between items-center header-box" 
           sx={{ 
             position: 'fixed',
             top: 0,
             left: 0,
             right: 0,
             zIndex: 1000,
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-            backdropFilter: 'blur(10px)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
             p: 1,
             flexDirection: { xs: 'column', sm: 'row' },
             gap: { xs: 1, sm: 0 },
@@ -124,7 +121,6 @@ export function Layout({ children }: LayoutProps) {
               <Typography
                 variant="caption"
                 sx={{
-                  color: 'rgba(255, 255, 255, 0.7)',
                   fontSize: '0.75rem',
                   fontWeight: 400,
                   '@media (max-width: 768px)': {
@@ -156,7 +152,6 @@ export function Layout({ children }: LayoutProps) {
               startIcon={<ReceiptLongIcon />}
               size="small"
               sx={{
-                color: alpha('#ffffff', 0.7),
                 fontSize: '0.85rem',
                 minWidth: 'auto',
                 padding: '6px 12px',

@@ -249,28 +249,47 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
       MuiCard: {
         styleOverrides: {
           root: {
-            borderRadius: 24,
-            backgroundColor: alpha('#0f1419', 0.8),
-            backdropFilter: 'blur(20px) saturate(180%)',
-            border: `1px solid ${alpha('#27272a', 0.3)}`,
+            borderRadius: 12, // Square design
+            backgroundColor: isDark 
+              ? alpha(squareColors.gray[800], 0.8)
+              : alpha('#ffffff', 0.9),
+            border: `1px solid ${isDark ? squareColors.gray[700] : squareColors.gray[200]}`,
+            boxShadow: isDark 
+              ? `0 8px 32px ${alpha('#000000', 0.3)}`
+              : `0 8px 32px ${alpha(squareColors.gray[500], 0.1)}`,
+            backdropFilter: 'blur(20px)',
             overflow: 'hidden',
             position: 'relative',
             '@media (max-width: 768px)': {
-              borderRadius: 20,
+              borderRadius: 10,
             },
             '@media (max-width: 480px)': {
-              borderRadius: 16,
+              borderRadius: 8,
               margin: '0 4px',
             },
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '1px',
-              background:
-                'linear-gradient(90deg, transparent, rgba(39,39,42,0.6), transparent)',
+          },
+        },
+      },
+      MuiBox: {
+        styleOverrides: {
+          root: {
+            // Global header styling override for better light mode support
+            '&.header-box': {
+              backgroundColor: isDark 
+                ? alpha('#000000', 0.3) 
+                : alpha('#ffffff', 0.9),
+              borderBottom: `1px solid ${isDark 
+                ? alpha('#ffffff', 0.1) 
+                : alpha('#000000', 0.1)}`,
+              backdropFilter: 'blur(20px)',
+              '& .MuiTypography-root': {
+                color: isDark ? '#ffffff' : squareColors.gray[900],
+              },
+              '& .MuiTypography-caption': {
+                color: isDark 
+                  ? alpha('#ffffff', 0.7) 
+                  : alpha(squareColors.gray[600], 0.8),
+              },
             },
           },
         },
@@ -454,34 +473,43 @@ const getSquareTheme = (mode: 'light' | 'dark') => {
       MuiTypography: {
         styleOverrides: {
           root: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[200] : squareColors.gray[800],
           },
           h1: {
-            color: '#71717a',
+            color: isDark ? squareColors.gray[100] : squareColors.gray[900],
+            fontWeight: 800,
           },
           h2: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[100] : squareColors.gray[900],
+            fontWeight: 700,
           },
           h3: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[200] : squareColors.gray[800],
+            fontWeight: 600,
           },
           h4: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[200] : squareColors.gray[800],
+            fontWeight: 600,
           },
           h5: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[200] : squareColors.gray[800],
+            fontWeight: 500,
           },
           h6: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[300] : squareColors.gray[700],
+            fontWeight: 500,
           },
           body1: {
-            color: '#a1a1aa',
+            color: isDark ? squareColors.gray[200] : squareColors.gray[800],
+            fontWeight: 400,
           },
           body2: {
-            color: '#71717a',
+            color: isDark ? squareColors.gray[300] : squareColors.gray[600],
+            fontWeight: 400,
           },
           caption: {
-            color: '#52525b',
+            color: isDark ? squareColors.gray[400] : squareColors.gray[500],
+            fontWeight: 400,
           },
         },
       },
