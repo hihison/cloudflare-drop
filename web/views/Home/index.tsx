@@ -253,7 +253,9 @@ export function AppMain(props: LayoutProps) {
     // Listen for custom events from history
     const handleHistoryCodeSelected = (event: CustomEvent) => {
       if (event.detail && event.detail.code) {
-        handleResolveFile.current(event.detail.code)
+        // Don't call handleResolveFile here to avoid double execution
+        // Just set the code and let the Code component's onChange handle it
+        setCode(event.detail.code)
       }
     }
 
