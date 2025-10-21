@@ -198,14 +198,18 @@ export function Layout({ children }: LayoutProps) {
         <History
           onItemClick={(share) => {
             updateDrawerOpened(false)
-            // Navigate to home page with the share code
-            // Since we can't directly access the setCode from Home component here,
-            // we'll let the user manually enter the code or handle it differently
+            // Navigate to home page with the share code as URL parameter
             if (share && share.code) {
-              // Copy code to clipboard as a fallback
-              navigator.clipboard?.writeText(share.code).then(() => {
-                // Could show a toast message here if needed
+              // Update URL with the code parameter
+              const url = new URL(window.location.href)
+              url.searchParams.set('code', share.code)
+              window.history.pushState({}, '', url.toString())
+              
+              // Dispatch a custom event to notify the home component
+              const event = new CustomEvent('historyCodeSelected', { 
+                detail: { code: share.code } 
               })
+              window.dispatchEvent(event)
             }
           }}
         />

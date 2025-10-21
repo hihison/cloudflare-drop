@@ -1,4 +1,4 @@
-import { useState, useRef } from 'preact/hooks'
+import { useState, useRef, useEffect } from 'preact/hooks'
 import { useDialogs } from '@toolpad/core/useDialogs'
 import { useLanguage } from '../../helpers/i18n'
 import Container from '@mui/material/Container'
@@ -247,6 +247,33 @@ export function AppMain(props: LayoutProps) {
     updateEphemeral(false)
     updatePassword('')
   })
+
+  // Handle URL parameters and custom events for history code selection
+  useEffect(() => {
+    // Check URL parameters on mount
+    const urlParams = new URLSearchParams(window.location.search)
+    const codeParam = urlParams.get('code')
+    if (codeParam && codeParam.length === 6) {
+      handleResolveFile.current(codeParam)
+      // Clean up URL
+      const url = new URL(window.location.href)
+      url.searchParams.delete('code')
+      window.history.replaceState({}, '', url.toString())
+    }
+
+    // Listen for custom events from history
+    const handleHistoryCodeSelected = (event: CustomEvent) => {
+      if (event.detail && event.detail.code) {
+        handleResolveFile.current(event.detail.code)
+      }
+    }
+
+    window.addEventListener('historyCodeSelected', handleHistoryCodeSelected as EventListener)
+    
+    return () => {
+      window.removeEventListener('historyCodeSelected', handleHistoryCodeSelected as EventListener)
+    }
+  }, [])
 
   const handleResolveFile = useRef(async (code: string) => {
     if (!code || code.length !== 6) return
